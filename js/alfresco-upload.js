@@ -142,7 +142,7 @@ function sendToAlfresco() {
 }
 
 function upload() {
-	console.log("upload!");
+	console.log("upload new!");
 	var form = document.getElementById('form-id');
 	var formData = new FormData(form);
 }
