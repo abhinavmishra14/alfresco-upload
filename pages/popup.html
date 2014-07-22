@@ -45,7 +45,7 @@
 	Password <input type="password" id="password"><br>
 	-->
 	<div id="upload-form-wrapper">
-		<form id="upload-form" name="uploadForm" method="post" enctype='multipart/form-data' action="upload">
+		<form id="upload-form" name="uploadForm" enctype='multipart/form-data'>
 			<label>User: </label><input id="username" type="text" value="stefano"><br>
 			<label>Password: </label><input id="password" type="password" value="stefano"><br>
 			<label>Site: </label><input id="siteid" type="text" name="siteid" value="repository" /><br />
@@ -57,7 +57,7 @@
 			<input id="contenttype" type="hidden" name="contenttype" value="cm:content" /><br />
 			<input id="containerid" type="hidden" name="containerid" value="documentLibrary" />
 			
-			<input id="submit" type="submit" name="submit" class="button" value="Send" />
+			<input id="submit" type="button" name="submit" class="button" value="Send" />
 		</form>
 		<div id="status"></div>
 		<div id="upload-message"></div>

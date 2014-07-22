@@ -143,7 +143,7 @@ function sendToAlfresco() {
 
 function upload() {
 	console.log("upload new!");
-	var form = document.getElementById('form-id');
+	var form = document.getElementById("upload-form");
 	var formData = new FormData(form);
 }
 
@@ -203,3 +203,4 @@ function alfrescoAjax() {
 //document.getElementById("send").addEventListener("click", sendToAlfresco);
 //document.getElementById("files").addEventListener("change", storeFiles);
 document.getElementById("filedata").addEventListener("change", fileInfo);
+document.getElementById("submit").addEventListener("click", upload); //submit button upload to Alfresco
