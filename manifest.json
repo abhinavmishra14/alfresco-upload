@@ -19,7 +19,7 @@
 			"19": "img/alfresco_logo_19.png", 
 			"38": "img/alfresco_logo_38.png"
 		},
-		"default_popup": "popup.html",
+		"default_popup": "pages/popup.html",
 		"default_title": "Carica file"
 	},
 	
@@ -29,7 +29,7 @@
 		"128": "img/alfresco_logo_128.png" 
 	},
 
-	"options_page": "options.html",	
+	"options_page": "pages/options.html",	
 	
 	"permissions": [
 		"notifications",
