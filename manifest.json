@@ -9,7 +9,7 @@
 	"background": {
 		"scripts": [ 
 			"js/jquery-2.1.1.min.js",
-			"js/alfresco-upload.js"
+			"js/upload.js"
 		],
 		"persistent": false
 	},
@@ -19,7 +19,7 @@
 			"19": "img/alfresco_logo_19.png", 
 			"38": "img/alfresco_logo_38.png"
 		},
-		"default_popup": "pages/popup.html",
+		//"default_popup": "pages/upload.html",
 		"default_title": "Carica file"
 	},
 	

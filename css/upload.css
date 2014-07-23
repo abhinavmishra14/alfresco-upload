@@ -1,0 +1,14 @@
+#filedata {
+	border: 3px dotted #0B85A1;
+	height: 120px;
+	width: 250px;
+	color: #92AAB0;
+	text-align: left;
+	vertical-align: middle;
+	padding: 10px 10px 10 10px;
+	margin-bottom: 10px;
+}
+
+#ajax-message {
+	font-size: 12px;
+}
