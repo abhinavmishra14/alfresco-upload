@@ -3,12 +3,14 @@ chrome.browserAction.onClicked.addListener(function(activeTab){
 	var newURL = "pages/upload.html";
 	chrome.tabs.create({ url: newURL });
 });
+initParams();
 
 ////vars
 var data = new FormData(); //used to store data to upload in Alfresco
 var resp; //stores ajax response
 var SUCCESS = 0;
 var FAILURE = 1;
+var alfrescoRoot = "http://intra.e-projectsrl.net/alfresco"; //ep alfresco
 
 ////listeners
 //document.addEventListener("DOMContentLoaded", restoreOptions);
@@ -26,7 +28,24 @@ $("#filedata").change(function (e) {
 	showMessage("stored " + files.length + " files", SUCCESS);
 });
 $("#submit").click(upload); //submit button upload to Alfresco
+$("#overwrite").change(function (e) { 
+	$(this).val($(this).is(":checked")?"true":"false");
+});
+
+$("#check-param").click(checkFormParam);
 /////////////
+
+//DEBUG-MODE ONLY
+if (document.getElementById('debug').checked) {
+	console.log("DEBUG-MODE: ON");
+	alfrescoRoot = "http://localhost:8080/alfresco";
+	$("#debug-div").show();
+}
+////////
+
+function initParams() {
+	$("#overwrite").val("true"); //overwrite di default è "true"
+}
 
 //mostra info su file caricati
 function showFileInfo(event) {
@@ -43,11 +62,17 @@ function showFileInfo(event) {
 	showMessage("stored " + files.length + " files", SUCCESS);
 }
 
+function checkFormParam() {
+	$("input").each(function(input) {
+		console.log($( this ).attr("id") + ": " + $( this ).val() );
+		$("#status").append($( this ).attr("id") + ": " + $( this ).val() + "<br>");
+	});
+}
+
 /**
 * Carico il file sulla repo Alfresco 
 */
 function upload() {
-	var alfrescoRoot = "http://intra.e-projectsrl.net/alfresco"; //ep alfresco
 	var usr = {
 		"username": $("#username").val(), 
 		"password": $("#password").val()
@@ -55,13 +80,6 @@ function upload() {
 	
 	//preparo i dati per l'upload prendendoli dal form in pagina
 	var formData = new FormData(document.getElementById("upload-form"));
-	
-	//koopa: DEBUG-MODE ONLY
-	if (document.getElementById('debug').checked) {
-		alfrescoRoot = "http://localhost:8080/alfresco";
-		console.log("DEBUG-MODE: ON");
-	}
-	////////
 	
 	//chiamata ajax per gestire il login-ticket
 	$.ajax({

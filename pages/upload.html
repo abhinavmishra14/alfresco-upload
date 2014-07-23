@@ -18,13 +18,14 @@
 			<input id="containerid" type="hidden" name="containerid" value="documentLibrary" />				
 			<label>Directory: </label><input id="uploaddirectory" type="text" name="uploaddirectory" value="/rapportini/" /><br />
 			<label>Description: </label><input id="description" type="text" name="description" value="nuova versione" /><br />
-			<label>Overwrite: </label><input id="overwrite" type="checkbox" name="overwrite" value="true" />
+			<label>Overwrite: </label><input id="overwrite" type="checkbox" name="overwrite" checked /><br />
 			<input id="filedata" type="file" name="filedata" />
-			<input id="contenttype" type="hidden" name="contenttype" value="cm:content" /><br />
+			<input id="contenttype" type="hidden" name="contenttype" value="cm:content" />
 		</form>
-		<label>Debug: </label><input id="debug" type="checkbox" checked><br />
+		<label>Debug: </label><input id="debug" type="checkbox" checked /><br />
 		<input id="submit" type="button" name="submit" class="button" value="Send" />
 
+		<div id="debug-div" style="display:none;"><input id="check-param" type='button' value='check parameters' /></div>
 		<div id="status"></div>
 		<div id="upload-message"></div>
 	</div>
