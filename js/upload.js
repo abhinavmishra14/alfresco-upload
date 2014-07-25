@@ -10,12 +10,15 @@ var data = new FormData(); //used to store data to upload in Alfresco
 var resp; //stores ajax response
 var SUCCESS = 0;
 var FAILURE = 1;
+var PERCENT_10 = 0.1; //login percentage
+var PERCENT_90 = 0.9; //alfresco file upload
 var alfrescoRoot = "http://intra.e-projectsrl.net/alfresco"; //ep alfresco
+var bar = $("#bar");
+//var percent = $(".percent");
+var status = $("#status-message");
 
 ////listeners
 //document.addEventListener("DOMContentLoaded", restoreOptions);
-//document.getElementById("send").addEventListener("click", sendToAlfresco);
-//document.getElementById("files").addEventListener("change", storeFiles);
 $("#filedata").on("dragenter", function (e) {
 	e.stopPropagation();
 	e.preventDefault();
@@ -29,9 +32,8 @@ $("#filedata").change(function (e) {
 });
 $("#submit").click(upload); //submit button upload to Alfresco
 $("#overwrite").change(function (e) { 
-	$(this).val($(this).is(":checked")?"true":"false");
+	$(this).val($(this).is(":checked"));
 });
-
 $("#check-param").click(checkFormParam);
 /////////////
 
@@ -44,7 +46,7 @@ if (document.getElementById('debug').checked) {
 ////////
 
 function initParams() {
-	$("#overwrite").val("true"); //overwrite di default è "true"
+	$("#overwrite").val($("#overwrite").is(":checked"));
 }
 
 //mostra info su file caricati
@@ -65,21 +67,24 @@ function showFileInfo(event) {
 function checkFormParam() {
 	$("input").each(function(input) {
 		console.log($( this ).attr("id") + ": " + $( this ).val() );
-		$("#status").append($( this ).attr("id") + ": " + $( this ).val() + "<br>");
+		$("#status-message").append($( this ).attr("id") + ": " + $( this ).val() + "<br>");
 	});
 }
 
 /**
-* Carico il file sulla repo Alfresco 
+* Login e carico il file sulla repo Alfresco 
 */
 function upload() {
+	//stoppo animazioni se ce ne sono attive
+	$("#status").finish();
+	//pulisco area messaggi
+	$("#status-message").empty();
+	
+	//preparo i dati per l'upload prendendoli dal form in pagina
 	var usr = {
 		"username": $("#username").val(), 
 		"password": $("#password").val()
 	};
-	
-	//preparo i dati per l'upload prendendoli dal form in pagina
-	var formData = new FormData(document.getElementById("upload-form"));
 	
 	//chiamata ajax per gestire il login-ticket
 	$.ajax({
@@ -87,36 +92,79 @@ function upload() {
 		url: alfrescoRoot + "/service/api/login",
 		contentType: "application/json; charset=utf-8", //questo è fondamentale
 		data: JSON.stringify(usr),
+		
+		//prima
+		beforeSend: function() {
+			$("#status").show();
+			showMessage("Login...", SUCCESS);
+		},
+
 		success: function (json) {
 			console.log("login-resp = " + JSON.stringify(json));
 			resp = JSON.parse(JSON.stringify(json));
+			$("#bar").val(PERCENT_10);
 			showMessage("LOGIN OK!", SUCCESS);
 			var ticket = resp.data.ticket; //salvo il ticket per effettuare il caricamento
 			
-			//carico file su Alfresco col ticket appena ricevuto
-			$.ajax({
-				type: "POST",
-				url: alfrescoRoot + "/service/api/upload?alf_ticket=" + ticket,
-				cache: false,
-				contentType: false, //altrimenti jQuery manipola i dati
-				processData: false,
-				dataType: "json",
-				//data: JSON.stringify(formData),
-				data: formData,
-				success: function (json) {     
-					console.log("upload-resp = " + JSON.stringify(json) );
-					console.log("UPLOAD OK");
-					showMessage("UPLOAD OK", SUCCESS);
-				},
-				error: function (json) {
-					//console.log("upload-resp = " + JSON.stringify(json));
-					manageAjaxError(json);
-				}
-			});
+			//ajax per upload del form con il file
+			alfrescoUpload(ticket);
 		},
+		
 		error: function (json) {
 			console.log("login-resp = " + JSON.stringify(json));
 			manageAjaxError(json);
+		}
+	});
+}
+
+function alfrescoUpload(ticket) {
+	var formData = new FormData(document.getElementById("upload-form"));
+	$.ajax({
+		type: "POST",
+		url: alfrescoRoot + "/service/api/upload?alf_ticket=" + ticket,
+		cache: false,
+		contentType: false, //altrimenti jQuery manipola i dati
+		processData: false,
+		dataType: "json",
+		data: formData,
+				
+		//prima
+		beforeSend: function() {
+			showMessage("Upload...", SUCCESS);
+			console.log("Upload...");
+		},				
+				
+		//aggiornamento barra durante l'upload dei dati
+		xhr: function() {
+			var xhr = new window.XMLHttpRequest();
+			xhr.upload.addEventListener("progress", function(e) {
+				if (e.lengthComputable) {
+					var percentComplete = e.loaded / e.total;
+					percentComplete = PERCENT_10 + percentComplete * PERCENT_90;
+					$("#bar").val(percentComplete);
+					console.log("percent = " + percentComplete);
+					if (percentComplete === 1) {
+						//percentComplete
+					}
+				}
+			}, false);
+			return xhr;
+		},				
+				
+		success: function (json) {     
+			console.log("upload-resp = " + JSON.stringify(json) );
+			console.log("UPLOAD OK");
+			showMessage("UPLOAD OK", SUCCESS);
+		},
+		
+		error: function (json) {
+			//console.log("upload-resp = " + JSON.stringify(json));
+			manageAjaxError(json);
+		},
+		
+		complete: function () {
+			//faccio sparire la barra di caricamento
+			$("#status").delay(4000).fadeOut("slow");
 		}
 	});
 }
@@ -139,27 +187,26 @@ function manageAjaxError(json) {
 //show message in page (type=0 means success, type=1 means error)
 function showMessage(message, type) {
 	if (type == SUCCESS)
-		$("#upload-message").css("color", "green");
+		$("#status-message").css("color", "green");
 	else
-		$("#upload-message").css("color", "red");
-	$("#upload-message").html(message);
+		$("#status-message").css("color", "red");
+	//$("#status-message").html(message);
+	$("#status-message").append(message);
 }
 
 //restores input box state using the preferences stored in chrome.storage.
 function restoreOptions() {
 	// Use default values
 	chrome.storage.sync.get({
-		site: '',
-		folder: '',
-		file: '',
-		description: '',
-		overwrite: true
+		site: "",
+		folder: "",
+		file: "",
+		overwrite: "true"
 	}, function(items) {
-		document.getElementById('site').value = items.site;
-		document.getElementById('folder').value = items.folder;
-		document.getElementById('file').value = items.file;
-		document.getElementById('description').value = items.description;
-		document.getElementById('overwrite').checked = items.overwrite;
+		$("#site").value = items.site;
+		$("#folder").value = items.folder;
+		$("#file").value = items.file;
+		$("#overwrite").value = items.overwrite;
 	});
 }
 

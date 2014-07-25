@@ -6,9 +6,31 @@
 	text-align: left;
 	vertical-align: middle;
 	padding: 10px 10px 10 10px;
-	margin-bottom: 10px;
+	margin-bottom: 10px
+}
+#status {
+	display: none;
+	overflow: hidden
+}
+#status-bar {
+	float: left
+}
+#status-message {
+	float: right
+}
+#upload-form-wrapper {
+	clear: both
 }
 
-#ajax-message {
-	font-size: 12px;
+.always-visible {
+	display: inline-block;
+	float: left;
+	margin: 0; 
+	text-align: center
 }
+
+progress::-webkit-progress-bar, progress::-moz-progress-bar, progress::progress-bar {
+  background-color: #0080FF;
+  border-radius: 2px;
+}
+	
