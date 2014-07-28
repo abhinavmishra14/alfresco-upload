@@ -1,7 +1,20 @@
 //at click on browser action it opens up a new tab
+/* 
+//new tab
 chrome.browserAction.onClicked.addListener(function(activeTab){
 	var newURL = "pages/upload.html";
 	chrome.tabs.create({ url: newURL });
+});
+*/
+
+//apre pagina di popup
+chrome.browserAction.onClicked.addListener(function() {
+	var w = 500;
+	var h = 500;
+	var left = (screen.width/2) - (w/2);
+	var top = (screen.height/2) - ( h/2);
+	chrome.windows.create({'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top} , function(window) {
+	});
 });
 initParams();
 

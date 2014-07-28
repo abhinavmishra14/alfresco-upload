@@ -1,7 +1,6 @@
 #filedata {
 	border: 3px dotted #0B85A1;
 	height: 120px;
-	width: 250px;
 	color: #92AAB0;
 	text-align: left;
 	vertical-align: middle;
@@ -19,7 +18,14 @@
 	float: right
 }
 #upload-form-wrapper {
-	clear: both
+	clear: both;
+	display: inline-block;
+	
+	border-radius: 6px; 
+	-moz-border-radius: 6px; 
+	-webkit-border-radius: 6px; 
+	border: 1px solid #0000ED;
+	padding: 15px
 }
 
 .always-visible {
@@ -28,6 +34,14 @@
 	margin: 0; 
 	text-align: center
 }
+
+label {
+	clear: left;
+	float: left;
+	width: 80px;
+	text-align: right;
+	padding-right: 10px;    
+}​
 
 progress::-webkit-progress-bar, progress::-moz-progress-bar, progress::progress-bar {
   background-color: #0080FF;
