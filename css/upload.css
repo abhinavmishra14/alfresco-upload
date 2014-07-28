@@ -1,48 +1,87 @@
+#container {
+	position: relative;
+	padding: 15px;
+	height: 340px;
+	width: 350px;
+	margin: 0 auto
+}
+#control {
+	position: absolute;
+	height: 60px;
+	margin: 0 auto;
+	bottom: 0;
+	right: 0;
+}
 #filedata {
 	border: 3px dotted #0B85A1;
 	height: 120px;
+	width: inherit;
 	color: #92AAB0;
 	text-align: left;
 	vertical-align: middle;
 	padding: 10px 10px 10 10px;
 	margin-bottom: 10px
 }
+
 #status {
 	display: none;
-	overflow: hidden
 }
+/*
 #status-bar {
 	float: left
 }
 #status-message {
 	float: right
 }
+*/
+#submit {
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background-color: #0049E6;
+	border-radius: 4px;
+	border: 0px solid;
+	color: #ffffff;
+	float: right;
+	padding: 5px 15px 5px 15px;
+	text-decoration: none;
+	text-align: right
+}
+#submit:hover {
+	background-color: #0070F0;
+}
 #upload-form-wrapper {
-	clear: both;
+	position: absolute;
+	top: 0;
+	height: 290px;
 	display: inline-block;
-	
-	border-radius: 6px; 
-	-moz-border-radius: 6px; 
-	-webkit-border-radius: 6px; 
-	border: 1px solid #0000ED;
-	padding: 15px
 }
 
+.absolute-center {
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
 .always-visible {
 	display: inline-block;
-	float: left;
-	margin: 0; 
-	text-align: center
+	margin: 0 auto
 }
 
+input[type=text] {
+	width: 240px;
+}
+input[type=password] {
+	width: 240px;
+}
 label {
 	clear: left;
 	float: left;
-	width: 80px;
+	width: 60px;
 	text-align: right;
 	padding-right: 10px;    
 }​
-
 progress::-webkit-progress-bar, progress::-moz-progress-bar, progress::progress-bar {
   background-color: #0080FF;
   border-radius: 2px;

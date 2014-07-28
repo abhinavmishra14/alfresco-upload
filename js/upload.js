@@ -14,9 +14,9 @@ chrome.browserAction.onClicked.addListener(function() {
 	var left = (screen.width/2) - (w/2);
 	var top = (screen.height/2) - ( h/2);
 	chrome.windows.create({'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top} , function(window) {
+		initParams();
 	});
 });
-initParams();
 
 ////vars
 var data = new FormData(); //used to store data to upload in Alfresco
@@ -47,14 +47,12 @@ $("#submit").click(upload); //submit button upload to Alfresco
 $("#overwrite").change(function (e) { 
 	$(this).val($(this).is(":checked"));
 });
-$("#check-param").click(checkFormParam);
 /////////////
 
 //DEBUG-MODE ONLY
 if (document.getElementById('debug').checked) {
 	console.log("DEBUG-MODE: ON");
 	alfrescoRoot = "http://localhost:8080/alfresco";
-	$("#debug-div").show();
 }
 ////////
 
