@@ -5,34 +5,36 @@
 	<title>Alfresco Upload</title>
 	<style type="text/css" title="currentStyle">
 		@import "../css/upload.css";
+		@import "../css/nprogress.css";
 	</style>
 </head>
 
 <body>
-	<div id="container">
-		<div id="upload-form-wrapper">
-			<label>User</label><input id="username" type="text" value="stefano"><br>
-			<label>Password</label><input id="password" type="password" value="stefano"><br>
-			<form id="upload-form" name="uploadForm" enctype="multipart/form-data">
-				<label>Site</label><input id="siteid" type="text" name="siteid" value="repository" /><br />
-				<label>Directory</label><input id="uploaddirectory" type="text" name="uploaddirectory" value="/rapportini/" /><br />
-				<label>Overwrite</label><input id="overwrite" type="checkbox" name="overwrite" checked /><br />
-				<label>File</label><input id="filedata" type="file" name="filedata" />
-				<input id="containerid" type="hidden" name="containerid" value="documentLibrary" />
-				<input id="contenttype" type="hidden" name="contenttype" value="cm:content" />
-			</form>
-			<label>Debug</label><input id="debug" type="checkbox" checked /><br />
-			<input id="submit" type="button" name="submit" value="Send" />
-		</div>
-		<div id="control">
-			<div id="status" class="always-visible">
-				<div id="status-bar"><progress id="bar" max="1.0" value="0.0" /></div>
-				<div id="status-message"></div>
-			</div>
-		</div>
+	<div id="logo-wrapper" class="div-center">
+		<img src="../img/ep_logo_azzurro.svg" height="52px" width="250px" alt="E-Project" />
 	</div>
 	
+	<div id="upload-form-wrapper" class="div-center">
+		<label>User</label><input id="username" type="text" value="stefano"><br>
+		<label>Password</label><input id="password" type="password" value="stefano"><br>
+		<form id="upload-form" name="uploadForm" enctype="multipart/form-data">
+			<label>Site</label><input id="siteid" type="text" name="siteid" value="repository" /><br />
+			<label>Directory</label><input id="uploaddirectory" type="text" name="uploaddirectory" value="/rapportini/" /><br />
+			<label>Overwrite</label><input id="overwrite" type="checkbox" name="overwrite" checked /><br />
+			<label>File</label><input id="filedata" type="file" name="filedata" />
+			<input id="aspects" type="hidden" name="aspects" value="cm:versionable" />
+			<input id="containerid" type="hidden" name="containerid" value="documentLibrary" />
+			<input id="contenttype" type="hidden" name="contenttype" value="cm:content" />
+		</form>
+		<p id="submit-btn-wrap">
+			<input id="submit" type="button" name="submit" value="Send" />
+		</p>
+	</div>
+	
+	<div id="status-message" class="div-center"></div>
+	
 	<script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../js/nprogress.js"></script>
 	<script type="text/javascript" src="../js/upload.js"></script>
 	<script type="text/javascript" src="../js/classes.js"></script>
 </body>
