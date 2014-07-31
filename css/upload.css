@@ -1,10 +1,18 @@
+#control {
+	text-align: right;
+}
 #filedata {
 	border: 3px dotted #0B85A1;
 	height: 120px;
 	color: #92AAB0;
 }
+#heart-icon {
+	font-size: 22px;
+	color:#006FE6
+}
 #status-message {
 	text-align: center;
+	height: 45px;
 	padding-top: 1px;
 }
 #submit-btn-wrap {
@@ -25,7 +33,12 @@
 	display: inline-block;
 	margin: 0 auto
 }
-
+.btn-submit {
+	background-color: #001DD6;
+}
+.btn-control {
+	background-color: #006FE6
+}
 .div-center {
 	width: 350px;
 	padding: 20px;
@@ -38,7 +51,6 @@ img {
 input[type=button] {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	background-color: #0049E6;
 	border-radius: 4px;
 	border: 0px solid;
 	color: #ffffff;
@@ -46,8 +58,12 @@ input[type=button] {
 	text-decoration: none;
 }
 input[type=button]:hover {
-	background-color: #0070F0;
+	background-color: #24B2FF;
 }
+input[type=button]:disabled {
+	background-color: #63808F;
+}
+
 input[type=file] {
 	width: 270px;
 }

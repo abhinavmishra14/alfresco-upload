@@ -6,6 +6,7 @@
 	<style type="text/css" title="currentStyle">
 		@import "../css/upload.css";
 		@import "../css/nprogress.css";
+		@import "../other/heart_font/css/heart.css";
 	</style>
 </head>
 
@@ -27,15 +28,30 @@
 			<input id="contenttype" type="hidden" name="contenttype" value="cm:content" />
 		</form>
 		<p id="submit-btn-wrap">
-			<input id="submit" type="button" name="submit" value="Send" />
+			<input id="submit" type="button" name="submit" class="btn-submit" value="Send" />
 		</p>
 	</div>
 	
 	<div id="status-message" class="div-center"></div>
 	
+	<div id="control" class="div-center">
+		<!--<label>Carica sessione</label>-->
+		<span id="heart-icon" class="icon-heart-empty"></span>
+		<input id="session-name" name="session-name" list="browsers" placeholder="Nome sessione" value="sessione-1">
+		<datalist id="browsers">
+			<option value="Internet Explorer">
+			<option value="Firefox">
+			<option value="Chrome">
+			<option value="Opera">
+			<option value="Safari">
+		</datalist>
+		<input id="session-save" type="button" name="session-save" class="btn-control" value="Save" />
+		<input id="session-delete" type="button" name="session-delete" class="btn-control" value="Delete" />
+	</div>
+	
 	<script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="../js/nprogress.js"></script>
 	<script type="text/javascript" src="../js/upload.js"></script>
-	<script type="text/javascript" src="../js/classes.js"></script>
+	<script type="text/javascript" src="../js/utils.js"></script>
 </body>
 </html>

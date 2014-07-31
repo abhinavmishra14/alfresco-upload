@@ -23,7 +23,7 @@ initParams(); //inizializzo parametri
 //document.addEventListener("DOMContentLoaded", restoreOptions);
 chrome.browserAction.onClicked.addListener(function() { //apre pagina di popup
 	var w = 500;
-	var h = 580;
+	var h = 590;
 	var left = (screen.width/2) - (w/2);
 	var top = (screen.height/2) - ( h/2);
 	chrome.windows.create({'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top} , function(window) {
@@ -39,6 +39,10 @@ $("#filedata").change(function (e) {
 	e.preventDefault();
 	var files = event.target.files || event.originalEvent.dataTransfer.files;
 	showMessage("stored " + files.length + " files", SUCCESS);
+});
+//gestisce favoriti al click sul cuore
+$("#heart-icon").click(function(e) {
+	$(this).toggleClass("icon-heart-empty icon-heart");
 });
 $("#submit").click(upload); //submit button upload to Alfresco
 $("#overwrite").change(function (e) { 
@@ -83,7 +87,8 @@ function upload() {
 	//$("#status").finish();
 	//pulisco area messaggi
 	$("#status-message").empty();
-		
+	disableButtonById("submit");
+	
 	//preparo i dati per l'upload prendendoli dal form in pagina
 	var usr = {
 		"username": $("#username").val(), 
@@ -117,6 +122,8 @@ function upload() {
 			console.log("login-resp = " + JSON.stringify(json));
 			NProgress.done();
 			manageAjaxError(json);
+			
+			enableButtonById("submit"); //riabilito pulsante invio
 		}
 	});
 }
@@ -162,6 +169,7 @@ function alfrescoUpload(ticket) {
 		},
 		complete: function () {
 			console.log("upload-complete");
+			$("#submit").prop("disabled", true); //riabilito pulsante invio
 			NProgress.done();
 		}
 	});
