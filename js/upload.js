@@ -15,6 +15,9 @@ var FAILURE = 1;
 var PERCENT_15 = 0.15; //login percentage
 var PERCENT_75 = 0.75; //alfresco file upload
 var alfrescoRoot = "http://intra.e-projectsrl.net/alfresco"; //ep alfresco
+var heartEmpty = "icon-heart-empty";
+var heart = "icon-heart";
+
 alfrescoRoot = "http://localhost:8080/alfresco";
 initParams(); //inizializzo parametri
 
@@ -22,8 +25,8 @@ initParams(); //inizializzo parametri
 ////listeners
 //document.addEventListener("DOMContentLoaded", restoreOptions);
 chrome.browserAction.onClicked.addListener(function() { //apre pagina di popup
-	var w = 500;
-	var h = 590;
+	var w = 510;
+	var h = 620;
 	var left = (screen.width/2) - (w/2);
 	var top = (screen.height/2) - ( h/2);
 	chrome.windows.create({'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top} , function(window) {
@@ -42,7 +45,16 @@ $("#filedata").change(function (e) {
 });
 //gestisce favoriti al click sul cuore
 $("#heart-icon").click(function(e) {
-	$(this).toggleClass("icon-heart-empty icon-heart");
+	$(this).toggleClass(heartEmpty + " " + heart);
+});
+$(".icon").hover( function(e) {
+	$(this).toggleClass("icon icon-highlited"); 
+});
+$(".icon").mousedown( function(e) {
+	$(this).toggleClass("icon-yellow"); 
+});
+$(".icon").mouseup( function(e) {
+	$(this).toggleClass("icon-yellow"); 
 });
 $("#submit").click(upload); //submit button upload to Alfresco
 $("#overwrite").change(function (e) { 

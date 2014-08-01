@@ -6,7 +6,7 @@
 	<style type="text/css" title="currentStyle">
 		@import "../css/upload.css";
 		@import "../css/nprogress.css";
-		@import "../other/heart_font/css/heart.css";
+		@import "../entypo-font/css/entypo.css";
 	</style>
 </head>
 
@@ -28,7 +28,8 @@
 			<input id="contenttype" type="hidden" name="contenttype" value="cm:content" />
 		</form>
 		<p id="submit-btn-wrap">
-			<input id="submit" type="button" name="submit" class="btn-submit" value="Send" />
+			<!--<input id="submit" type="button" name="submit" class="btn-submit" value="Send" />-->
+			<span id="upload-icon" class="icon-upload-cloud icon"></span>
 		</p>
 	</div>
 	
@@ -36,7 +37,6 @@
 	
 	<div id="control" class="div-center">
 		<!--<label>Carica sessione</label>-->
-		<span id="heart-icon" class="icon-heart-empty"></span>
 		<input id="session-name" name="session-name" list="browsers" placeholder="Nome sessione" value="sessione-1">
 		<datalist id="browsers">
 			<option value="Internet Explorer">
@@ -45,8 +45,14 @@
 			<option value="Opera">
 			<option value="Safari">
 		</datalist>
+		<span id="heart-icon" class="icon-heart-empty icon"></span>
+		<span id="save-icon" class="icon-floppy icon"></span>
+		<span id="trash-icon" class="icon-trash icon"></span>
+			
+		<!--
 		<input id="session-save" type="button" name="session-save" class="btn-control" value="Save" />
 		<input id="session-delete" type="button" name="session-delete" class="btn-control" value="Delete" />
+		-->
 	</div>
 	
 	<script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>

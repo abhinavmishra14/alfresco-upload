@@ -6,10 +6,6 @@
 	height: 120px;
 	color: #92AAB0;
 }
-#heart-icon {
-	font-size: 22px;
-	color:#006FE6
-}
 #status-message {
 	text-align: center;
 	height: 45px;
@@ -17,8 +13,12 @@
 }
 #submit-btn-wrap {
 	text-align: right;
+	font-size: 30px;
 	padding: 10px 0px 0px 0px;
 	margin: 0px
+}
+#upload-icon {
+	font-size: 50px;
 }
 
 .absolute-center {
@@ -44,6 +44,19 @@
 	padding: 20px;
 	margin: 0 auto;	
 }
+.icon {
+	font-size: 25px;
+	color: #006FE6
+}
+.icon-highlited {
+	font-size: 25px;
+	color: #24B2FF
+}
+.icon-yellow {
+	font-size: 25px;
+	color: #15E82E
+}
+
 img {
 	display: block;
 	margin: 0 auto;
@@ -63,7 +76,6 @@ input[type=button]:hover {
 input[type=button]:disabled {
 	background-color: #63808F;
 }
-
 input[type=file] {
 	width: 270px;
 }
