@@ -7,3 +7,4 @@ function enableButtonById(id) {
 	//abilito pulsante di invio
 	$("#" + id).prop("disabled", false);
 }
+

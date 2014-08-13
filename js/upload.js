@@ -7,6 +7,56 @@ chrome.browserAction.onClicked.addListener(function(activeTab){
 });
 */
 
+//on DOM content loaded
+$(function() {
+	//ADD LISTENERS
+	//document.addEventListener("DOMContentLoaded", restoreOptions);
+	chrome.browserAction.onClicked.addListener(function() { //apre pagina di popup
+		var w = 540;
+		var h = 620;
+		var left = (screen.width/2) - (w/2);
+		var top = (screen.height/2) - ( h/2);
+		chrome.windows.create({'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top} , function(window) {});
+	});
+	$("#filedata").on("dragenter", function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+		$(this).css("border", "3px solid #0B85A1");
+	});
+	$("#filedata").change(function (e) {
+		$("#filedata").css("border", "3px dotted #0B85A1");
+		e.preventDefault();
+		var files = event.target.files || event.originalEvent.dataTransfer.files;
+		showMessage("stored " + files.length + " files", SUCCESS);
+	});
+	//gestisce favoriti al click sul cuore
+	$("#heart-icon").click(function(e) {
+		//$(this).toggleClass(clHeartEmpty + " " + clHeart);
+		isProfileStored($("#profile-name").val(), function(exists) {
+			console.log($("#profile-name").val() + " esiste? " + exists);
+		});
+	});
+	$(".icon").hover( function(e) {
+		$(this).toggleClass("icon icon-highlited"); 
+		$(this).removeClass(clGreen); //gestisce il caso in cui si tiene premuto il pulsante sinistro del mouse e lo si rilascia fuori dall'elemento 
+	}).mousedown(function(e) {
+		$(this).toggleClass(clGreen); 
+	}).mouseup( function(e) {
+		$(this).toggleClass(clGreen); 
+	});
+	$("#overwrite").change(function (e) { 
+		$(this).val($(this).is(":checked"));
+	});
+	$("#save-icon").click(saveProfile); //salva profilo
+	$("#upload-icon").click(upload); //submit button upload to Alfresco
+	
+	//INIZIALIZZA PARAMETRI
+	initParams();
+	
+	//CARICA PROFILI
+	restoreProfile();
+});
+
 ////vars
 var data = new FormData(); //used to store data to upload in Alfresco
 var resp; //stores ajax response
@@ -15,55 +65,14 @@ var FAILURE = 1;
 var PERCENT_15 = 0.15; //login percentage
 var PERCENT_75 = 0.75; //alfresco file upload
 var alfrescoRoot = "http://intra.e-projectsrl.net/alfresco"; //ep alfresco
-var heartEmpty = "icon-heart-empty";
-var heart = "icon-heart";
-
-alfrescoRoot = "http://localhost:8080/alfresco";
-initParams(); //inizializzo parametri
-
-
-////listeners
-//document.addEventListener("DOMContentLoaded", restoreOptions);
-chrome.browserAction.onClicked.addListener(function() { //apre pagina di popup
-	var w = 510;
-	var h = 620;
-	var left = (screen.width/2) - (w/2);
-	var top = (screen.height/2) - ( h/2);
-	chrome.windows.create({'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top} , function(window) {
-	});
-});
-$("#filedata").on("dragenter", function (e) {
-	e.stopPropagation();
-	e.preventDefault();
-	$(this).css("border", "3px solid #0B85A1");
-});
-$("#filedata").change(function (e) {
-	$("#filedata").css("border", "3px dotted #0B85A1");
-	e.preventDefault();
-	var files = event.target.files || event.originalEvent.dataTransfer.files;
-	showMessage("stored " + files.length + " files", SUCCESS);
-});
-//gestisce favoriti al click sul cuore
-$("#heart-icon").click(function(e) {
-	$(this).toggleClass(heartEmpty + " " + heart);
-});
-$(".icon").hover( function(e) {
-	$(this).toggleClass("icon icon-highlited"); 
-});
-$(".icon").mousedown( function(e) {
-	$(this).toggleClass("icon-yellow"); 
-});
-$(".icon").mouseup( function(e) {
-	$(this).toggleClass("icon-yellow"); 
-});
-$("#submit").click(upload); //submit button upload to Alfresco
-$("#overwrite").change(function (e) { 
-	$(this).val($(this).is(":checked"));
-});
-/////////////
+var clHeartEmpty = "icon-heart-empty";
+var clHeart = "icon-heart";
+var	clGreen = "icon-green";
+var alfrescoRoot = "http://localhost:8080/alfresco";
+var actualProfile;
 
 function initParams() {
-	console.log("Inizializzo valore di overwrite");
+	console.log("init");
 	$("#overwrite").val($("#overwrite").is(":checked"));
 }
 
@@ -98,6 +107,7 @@ function upload() {
 	//stoppo animazioni se ce ne sono attive
 	//$("#status").finish();
 	//pulisco area messaggi
+	saveLastUsedProfile($("#profile-name").val());
 	$("#status-message").empty();
 	disableButtonById("submit");
 	
@@ -211,20 +221,4 @@ function showMessage(message, type) {
 	$("#status-message").empty();
 	$("#status-message").append(message);
 	
-}
-
-//restores input box state using the preferences stored in chrome.storage.
-function restoreOptions() {
-	// Use default values
-	chrome.storage.sync.get({
-		site: "",
-		folder: "",
-		file: "",
-		overwrite: "true"
-	}, function(items) {
-		$("#site").value = items.site;
-		$("#folder").value = items.folder;
-		$("#file").value = items.file;
-		$("#overwrite").value = items.overwrite;
-	});
 }

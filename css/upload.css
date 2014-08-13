@@ -52,11 +52,15 @@
 	font-size: 25px;
 	color: #24B2FF
 }
-.icon-yellow {
+.icon-green {
 	font-size: 25px;
 	color: #15E82E
 }
 
+* {
+	font-family: 'Open Sans', sans-serif;
+	font-size: small
+}
 img {
 	display: block;
 	margin: 0 auto;
@@ -77,18 +81,18 @@ input[type=button]:disabled {
 	background-color: #63808F;
 }
 input[type=file] {
-	width: 270px;
+	width: 250px;
 }
 input[type=text] {
-	width: 270px;
+	width: 250px;
 }
 input[type=password] {
-	width: 270px;
+	width: 250px;
 }
 label {
 	clear: left;
 	float: left;
-	width: 60px;
+	width: 70px;
 	text-align: right;
-	padding-right: 10px;    
+	padding-right: 10px; 
 }​
