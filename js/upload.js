@@ -11,6 +11,7 @@ chrome.browserAction.onClicked.addListener(function(activeTab){
 $(function() {
 	//ADD LISTENERS
 	//document.addEventListener("DOMContentLoaded", restoreOptions);
+	
 	chrome.browserAction.onClicked.addListener(function() { //apre pagina di popup
 		var w = 540;
 		var h = 620;
@@ -49,6 +50,10 @@ $(function() {
 	});
 	$("#save-icon").click(saveProfile); //salva profilo
 	$("#upload-icon").click(upload); //submit button upload to Alfresco
+	
+	//SOLO PER TEST!!!!!
+	$("#clear-db").click(clearDb); //clear db
+	///////////////////////
 	
 	//INIZIALIZZA PARAMETRI
 	initParams();

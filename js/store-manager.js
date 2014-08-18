@@ -28,9 +28,6 @@ function saveProfile() {
 				$.each(result, function( index, value ){
 					console.log(value);
 				});
-				
-				//braso tutto
-				//chrome.storage.sync.clear(function () { console.log("Brasato lo storage") });
 			});
 		});
 	}
@@ -79,7 +76,7 @@ function isProfileStored(profileName, callback) {
 	}
 }
 
-//restores input box state using the preferences stored in chrome.storage.
+//restores input box state using the preferences stored in chrome.storage and update profile list.
 function restoreProfile() {
 	//use default values
 	chrome.storage.sync.get("ep_last_used_profile", function(result) {
@@ -100,6 +97,17 @@ function restoreProfile() {
 			console.log("caricato profilo " + data[profileId].profilename);
 		});
 	});
+}
+
+//aggiorna la lista dei profili in pagina
+function refreshProfilesList() {
+	
+}
+
+//braso lo storage
+function clearDb() {
+	//braso tutto
+	chrome.storage.sync.clear(function () { console.log("Brasato lo storage") });
 }
 
 /*

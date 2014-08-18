@@ -14,11 +14,11 @@
 	</div>
 	
 	<div id="upload-form-wrapper" class="div-center">
-		<label>User</label><input id="username" type="text" value="stefano"><br>
-		<label>Password</label><input id="password" type="password" value="stefano"><br>
+		<label>User</label><input id="username" type="text" placeholder="Alfresco user"><br>
+		<label>Password</label><input id="password" type="password" placeholder="Alfresco password"><br>
 		<form id="upload-form" name="uploadForm" enctype="multipart/form-data">
-			<label>Site</label><input id="siteid" type="text" name="siteid" value="repository" /><br />
-			<label>Directory</label><input id="uploaddirectory" type="text" name="uploaddirectory" value="/rapportini/" /><br />
+			<label>Site</label><input id="siteid" type="text" name="siteid" placeholder="Nome del sito" /><br />
+			<label>Directory</label><input id="uploaddirectory" type="text" name="uploaddirectory" placeholder="Directory di upload" /><br />
 			<label>Overwrite</label><input id="overwrite" type="checkbox" name="overwrite" checked /><br />
 			<label>File</label><input id="filedata" type="file" name="filedata" />
 			<input id="aspects" type="hidden" name="aspects" value="cm:versionable" />
@@ -46,6 +46,7 @@
 		<span id="heart-icon" class="icon-heart-empty icon"></span>
 		<span id="save-icon" class="icon-floppy icon"></span>
 		<span id="trash-icon" class="icon-trash icon"></span>
+		<input id="clear-db" type="button" name="cleardb" class="btn-submit" value="Clear DB" />
 			
 	</div>
 	
