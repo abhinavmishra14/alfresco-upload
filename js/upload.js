@@ -53,13 +53,19 @@ $(function() {
 	
 	//SOLO PER TEST!!!!!
 	$("#clear-db").click(clearDb); //clear db
+	//$("#save-prof").click(updateProfilesList); //save profiles
+	$("#refresh").click(refreshProfilesList); //refresh profiles
+
 	///////////////////////
 	
-	//INIZIALIZZA PARAMETRI
+	//inizializza parametri
 	initParams();
 	
-	//CARICA PROFILI
-	restoreProfile();
+	//carica la lista di profili esistenti in pagina
+	refreshProfilesList();
+	
+	//carica dati dell'ultimo profilo usato (se esiste)
+	loadLastUsedProfile();
 });
 
 ////vars
