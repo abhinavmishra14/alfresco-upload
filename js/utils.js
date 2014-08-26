@@ -8,3 +8,7 @@ function enableButtonById(id) {
 	$("#" + id).prop("disabled", false);
 }
 
+//verifica se la variabile è indefinita
+function isUndefined(obj) {
+	return typeof obj === 'undefined';
+}

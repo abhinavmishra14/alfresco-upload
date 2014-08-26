@@ -30,6 +30,7 @@ $(function() {
 		var files = event.target.files || event.originalEvent.dataTransfer.files;
 		showMessage("stored " + files.length + " files", SUCCESS);
 	});
+
 	//gestisce favoriti al click sul cuore
 	$("#heart-icon").click(function(e) {
 		//$(this).toggleClass(clHeartEmpty + " " + clHeart);
@@ -37,6 +38,8 @@ $(function() {
 			console.log($("#profile-name").val() + " esiste? " + exists);
 		});
 	});
+
+	//gestione dei colori delle icone
 	$(".icon").hover( function(e) {
 		$(this).toggleClass("icon icon-highlited"); 
 		$(this).removeClass(clGreen); //gestisce il caso in cui si tiene premuto il pulsante sinistro del mouse e lo si rilascia fuori dall'elemento 
@@ -45,10 +48,39 @@ $(function() {
 	}).mouseup( function(e) {
 		$(this).toggleClass(clGreen); 
 	});
+
 	$("#overwrite").change(function (e) { 
 		$(this).val($(this).is(":checked"));
 	});
-	$("#save-icon").click(saveProfile); //salva profilo
+
+	//salva profilo
+	$("#save-icon").click(function(e) {
+		if (!$("#profile-name").val().trim()) { //se non c'è il nome profilo (ha lunghezza 0)
+			showMessage("Dai un nome al profilo prima di salvarlo!", FAILURE);
+		}
+		else {
+			var data = {
+				profilename: $("#profile-name").val(),
+				username: $("#username").val(),
+				password: $("#password").val(),
+				siteid: $("#siteid").val(),
+				uploaddirectory: $("#uploaddirectory").val(),
+				overwrite: $("#overwrite").val()
+			};
+			saveProfile(data); //salva profilo su storage (vedi store-manager.js)
+		}
+	});
+
+	//cancella profilo
+	$("#trash-icon").click(function(e) {
+		var profileId = $("#profile-name").val().trim();
+		if (profileId.length > 0) {
+			console.log("elimino profilo " + profileId);
+			deleteProfile(profileId); //elimino profilo su storage (vedi store-manager.js)
+		}
+	});
+	
+	//carica su Alfresco
 	$("#upload-icon").click(upload); //submit button upload to Alfresco
 	
 	//SOLO PER TEST!!!!!

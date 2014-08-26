@@ -1,88 +1,81 @@
-//verifica validità di un profilo
-function isProfileNameEmpty() {
-	return !$("#profile-name").val().trim();
+/**
+ * Salva i dati di un profilo nello storage (chrome.storage). In input si aspetta un array con:
+ * profilename: stringa
+ * username: stringa
+ * password: stringa
+ * siteid: stringa
+ * uploaddirectory: stringa
+ * overwrite: stringa (true o false)
+ */
+function saveProfile(data) {
+	var id = data.profilename;
+	var profile = {}; //oggetto da salvare in storage
+	profile[id] = data;
+	var existsProfile;
+	
+	isProfileStored(id, function(exists) {
+		console.log("profilo " + id + " esiste su storage? " + exists);
+		existsProfile = exists;
+		console.log("existsProfile = " + existsProfile);
+	});
+	
+	//salvo su storage (se l'id è uguale sovrascrivo i dati)
+	chrome.storage.sync.set(profile, function (result) {
+		showMessage("Profilo " + id + " salvato", SUCCESS);
+		//aggiungo il profilo appena salvato alla lista dei profili su storage
+		if (!existsProfile) {
+			updateProfilesList(id);
+			console.log("aggiunto '" + id + "' alla lista profili su tendina");
+		}
+	});
 }
 
-//saves options to chrome.storage
-function saveProfile() {
-	if (isProfileNameEmpty()) {
-		showMessage("Dai un nome al profilo prima di salvarlo!", FAILURE);
-	}
-	else {
-		var id = "ep_" + $("#profile-name").val();
-		var data = {
-			profilename: $("#profile-name").val(),
-			username: $("#username").val(),
-			password: $("#password").val(),
-			siteid: $("#siteid").val(),
-			uploaddirectory: $("#uploaddirectory").val(),
-			overwrite: $("#overwrite").val()
-		};
-		var profile = {}; //oggetto da salvare in storage
-		profile[id] = data;
+/**
+ * Cancella profilo da db chrome.
+ * id: id del profilo da eliminare
+ */
+function deleteProfile(id) {
+	console.log("sono dentro deleteProfile");
+	
+	isProfileStored(id, function(exists) {
+		console.log(id + " esiste? " + exists);
+		console.log("rimuovo");
 		
-		//TODO
-		var exists = isProfileStored(data.profilename, function(exists) {
-			//non lo aggiungo alla lista su pagina perché sarebbe un doppione
-		});
-		
-		//salvo su storage (se l'id è uguale sovrascrivo i dati)
-		chrome.storage.sync.set(profile, function () {
-			showMessage("Profilo " + data.profilename + " salvato", SUCCESS);
-			
-			//aggiungo il profilo appena salvato alla lista dei profili su storage
-			updateProfilesList(data.profilename);
-			
-			/*
-			chrome.storage.sync.get(id, function(result) {
-				$.each(result, function( index, value ){
-					console.log(value);
-				});
+		///////////////
+		chrome.storage.sync.remove(id, function () {
+			//console.log("remove result: " + JSON.stringify(result[0]));
+			isProfileStored(id, function(exists) {
+				console.log(id + " esiste? " + exists);
+				showMessage("Profilo " + id + " rimosso con successo", SUCCESS);
 			});
-			*/
+			
 		});
-		
-	}
+		/////////////////////
+
+	});
+
+
 }
 
 //salvo ultimo profilo usato (al click sul pulsante di upload)
 function saveLastUsedProfile(profileName) {
-	console.log("saveLastUsedProfile");
-	if (!isProfileNameEmpty()) {
-
+	console.log("profileName empty? " + (profileName.trim().length == 0));
+	if ( !(profileName.trim().length == 0)) {
 		isProfileStored(profileName, function(exists) {
 			if (exists) {				
 				console.log("il profilo " + profileName + " esiste e lo salvo come ultimo usato");
-				chrome.storage.sync.set({"ep_last_used_profile": "ep_" + profileName}, function(result) {
-					console.log("salvato ultimo profilo usato: " + profileName);
-					
-					chrome.storage.sync.get("ep_last_used_profile", function(profile) {
-						//console.log("eccolo: " + profile.ep_last_used_profile);
-					});
-					
+				chrome.storage.sync.set({"ep_last_used_profile": profileName}, function(result) {
+					console.log("salvato ultimo profilo usato: " + profileName);					
 				});
 			}
 		});
 	}
 }
 
-//verifico l'esistenza di un profilo nello store
-function isProfileStored(profileName, callback) {
-	/*
-	if (!isProfileNameEmpty()) {
-		var id = "ep_" + profileName;
-		chrome.storage.sync.get(id, function(result) {
-			if ($.isEmptyObject(result)) {
-				callback(false); //return false;
-			}
-			else {
-				callback(true); //return true;
-			}
-		});
-	}
-	*/
-
-	var id = "ep_" + profileName;
+/**
+ * verifico l'esistenza di un profilo nello store
+*/
+function isProfileStored(id, callback) {
 	chrome.storage.sync.get(id, function(result) {
 		if ($.isEmptyObject(result)) {
 			callback(false); //return false;
@@ -100,18 +93,23 @@ function loadLastUsedProfile() {
 		var profileId = result.ep_last_used_profile;
 		//console.log("id profilo da cercare nello store: " + profileId);
 		chrome.storage.sync.get(profileId, function(data) {
-			var d = JSON.stringify(data);
-			//console.log("JSON.stringify(data) = " + d);
-			
-			$("#siteid").val(data[profileId].siteid);
-			$("#username").val(data[profileId].username);
-			$("#password").val(data[profileId].password);
-			$("#uploaddirectory").val(data[profileId].uploaddirectory);
-			$("#overwrite").val(data[profileId].overwrite);
-			
-			$("#profile-name").val(data[profileId].profilename);
+			if (!$.isEmptyObject(data)) { //se il pofilo esiste
+				var d = JSON.stringify(data);
+				//console.log("JSON.stringify(data) = " + d);
+				
+				$("#siteid").val(data[profileId].siteid);
+				$("#username").val(data[profileId].username);
+				$("#password").val(data[profileId].password);
+				$("#uploaddirectory").val(data[profileId].uploaddirectory);
+				$("#overwrite").val(data[profileId].overwrite);
+				
+				$("#profile-name").val(data[profileId].profilename);
 
-			console.log("caricato profilo " + data[profileId].profilename);
+				console.log("caricato profilo " + data[profileId].profilename);
+			}
+			else {
+				console.log("Il profilo " + profileId + " non risulta presente sullo storage");
+			}
 		});
 	});
 }
