@@ -151,9 +151,7 @@ $(function() {
 	
 	//carica ultimi dati di upload utilizzati(se esistenti)
 	loadLastUsedUploadData();
-	
-	//fixa il problema dei webfonts non renderizzati
-	$("body").hide().show();
+
 });
 
 ////vars
@@ -185,7 +183,7 @@ function showFileInfo(event) {
 		console.log("[main] f[" + i + "].name = " + f.name);
 		console.log("[main] f[" + i + "].size = " + f.size);
 		console.log("[main] f[" + i + "].lastModifiedDate = " + f.lastModifiedDate.toLocaleDateString());
-	}	
+	}
 	showMessage("[main] stored " + files.length + " files", SUCCESS);
 }
 
@@ -385,5 +383,4 @@ function showMessage(message, type) {
 	}
 	$("#status-message").empty();
 	$("#status-message").text(message);
-	
 }

@@ -23,6 +23,39 @@ function appendToProfilesList(id, callback) {
 }
 
 /**
+ * Aggiorna il dato contenente la lista profili su storage togliendone uno
+ *
+ * id: il nome profilo da togliere
+ *
+ */
+function removeFromProfilesList(id, callback) {
+	var values = [];
+	chrome.storage.sync.get({"ep_profiles_list": []}, function(result) {
+		if (chrome.runtime.lastError) {
+			callback(chrome.runtime.lastError.message);
+		}	
+		values = result.ep_profiles_list;
+		var newValues = [];
+
+		for (var i=0; i < values.length; i++) {
+			if (values[i] != id) {
+				newValues.push(values[i]);
+			}
+		}
+		newValues.sort(); //ordino la lista
+		
+		//aggiorno lista nello storage
+		chrome.storage.sync.set({"ep_profiles_list": newValues}, function() {
+			if (chrome.runtime.lastError) {
+				callback(chrome.runtime.lastError.message);
+			}
+			console.log("[removeFromProfilesList] aggiornata lista profili su store: [" + newValues + "]");
+			callback("ok");
+		});
+	});
+}
+
+/**
  * Restituisce in callback un array che rappresenta la lista profili oppure un messaggio d'errore
  *
  */
@@ -114,8 +147,16 @@ function deleteProfile(id, callback) {
 		//se esiste lo elimino
 		if (exists) {
 			chrome.storage.sync.remove(id, function () {
-				console.log("[deleteProfile] il profilo '" + id + "' esiste e l'ho eliminato");						
-				callback("ok");
+				console.log("[deleteProfile] il profilo '" + id + "' esiste e l'ho eliminato");
+				removeFromProfilesList(id, function(result) {
+					if (chrome.runtime.lastError) {
+						callback(chrome.runtime.lastError.message); //restituisco errore
+					}
+					else {
+						console.log("[deleteProfile] eliminato profilo '" + id + "' anche dalla lista");
+						callback("ok");
+					}				
+				});
 			});
 		}
 		else {
