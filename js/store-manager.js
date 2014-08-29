@@ -1,4 +1,45 @@
 /**
+ * Aggiorna il dato contenente la lista profili su storage aggiungendone uno
+ *
+ * id: il nome profilo da aggiungere
+ *
+ */
+function appendToProfilesList(id, callback) {
+	var values = [];
+	chrome.storage.sync.get({"ep_profiles_list": []}, function(result) {
+		values = result.ep_profiles_list;
+		values.push(id);
+		values.sort(); //ordino la lista
+		
+		//aggiorno lista nello storage
+		chrome.storage.sync.set({"ep_profiles_list": values}, function() {
+			if (chrome.runtime.lastError) {
+				callback(chrome.runtime.lastError.message);
+			}
+			console.log("[appendToProfilesList] aggiornata lista profili su store: [" + values + "]");
+			callback("ok");
+		});
+	});
+}
+
+/**
+ * Restituisce in callback un array che rappresenta la lista profili oppure un messaggio d'errore
+ *
+ */
+function getProfilesList(callback) {
+	chrome.storage.sync.get({"ep_profiles_list": []}, function(result) {
+		//in caso di errore restituisco il messaggio d'errore di chrome
+		if (chrome.runtime.lastError) {
+			callback(chrome.runtime.lastError.message); //restituisco errore
+		}
+		else {
+			console.log("[getProfilesList] restituisco lista: [" + result.ep_profiles_list + "]");
+			callback(result.ep_profiles_list); //restituisco la lista
+		}
+	});
+}
+
+/**
  * Salva i dati di un profilo nello storage (chrome.storage). In input si aspetta un array con:
  * profilename: stringa
  * username: stringa
@@ -6,77 +47,127 @@
  * siteid: stringa
  * uploaddirectory: stringa
  * overwrite: stringa (true o false)
+ *
+ * restituisce: "ok" se tutto bene, stringa d'errore se qualcosa va male 
  */
-function saveProfile(data) {
+function saveProfile(data, callback) {
 	var id = data.profilename;
 	var profile = {}; //oggetto da salvare in storage
 	profile[id] = data;
-	var existsProfile;
 	
-	isProfileStored(id, function(exists) {
-		console.log("profilo " + id + " esiste su storage? " + exists);
-		existsProfile = exists;
-		console.log("existsProfile = " + existsProfile);
+	//salvo profilo dopo aver verificato la sua esistenza
+	existsProfile(id, function(exists) {
+		//console.log("[saveProfile] profilo '" + id + "' esiste su storage? " + exists);
+		//salvo su storage (se l'id è uguale sovrascrivo i dati)
+		chrome.storage.sync.set(profile, function (result) {
+			//in caso di errore restituisco il messaggio d'errore di chrome
+			if (chrome.runtime.lastError) {
+				callback(chrome.runtime.lastError.message);
+			}
+			if (exists) {
+				console.log("[saveProfile] il profilo '" + id + "' esiste, ritorno ok");
+				callback("ok"); //ritorno
+			}
+			//se non esiste lo aggiugno alla lista profili su storage
+			else {
+				appendToProfilesList(id, function(result) {
+					if (chrome.runtime.lastError) {
+						callback(chrome.runtime.lastError.message);
+					}
+					if (result == "ok") {
+						console.log("[saveProfile] il profilo '" + id + "' non esiste, ma l'ho aggiunto in lista su storage e ritorno ok");						
+						callback("ok"); //ritorno ok
+					}	
+				});
+			}
+		});
 	});
-	
-	//salvo su storage (se l'id è uguale sovrascrivo i dati)
-	chrome.storage.sync.set(profile, function (result) {
-		showMessage("Profilo " + id + " salvato", SUCCESS);
-		//aggiungo il profilo appena salvato alla lista dei profili su storage
-		if (!existsProfile) {
-			updateProfilesList(id);
-			console.log("aggiunto '" + id + "' alla lista profili su tendina");
+}
+
+/**
+ * Restituisce in callback un array con i dati di un profilo oppure un messaggio d'errore se qualcosa va storto
+ *
+ */
+function getProfile(id, callback) {
+	chrome.storage.sync.get(id, function(result) {
+		//in caso di errore restituisco il messaggio d'errore di chrome
+		if (chrome.runtime.lastError) {
+			callback(chrome.runtime.lastError.message); //restituisco errore
+		}
+		else {
+			console.log("[getProfile] recupero profilo '" + id + "'");
+			callback(result[id]); //restituisco i dati del profilo
 		}
 	});
 }
+
 
 /**
  * Cancella profilo da db chrome.
  * id: id del profilo da eliminare
  */
-function deleteProfile(id) {
-	console.log("sono dentro deleteProfile");
-	
-	isProfileStored(id, function(exists) {
-		console.log(id + " esiste? " + exists);
-		console.log("rimuovo");
-		
-		///////////////
-		chrome.storage.sync.remove(id, function () {
-			//console.log("remove result: " + JSON.stringify(result[0]));
-			isProfileStored(id, function(exists) {
-				console.log(id + " esiste? " + exists);
-				showMessage("Profilo " + id + " rimosso con successo", SUCCESS);
+function deleteProfile(id, callback) {	
+	existsProfile(id, function(exists) {
+		if (chrome.runtime.lastError) {
+			callback(chrome.runtime.lastError.message);
+		}
+		//se esiste lo elimino
+		if (exists) {
+			chrome.storage.sync.remove(id, function () {
+				console.log("[deleteProfile] il profilo '" + id + "' esiste e l'ho eliminato");						
+				callback("ok");
 			});
-			
-		});
-		/////////////////////
-
+		}
+		else {
+			console.log("[deleteProfile] il profilo '" + id + "' NON esiste. Ritorno 'ne'");
+			callback("ne"); //non esiste
+		}
 	});
-
-
-}
-
-//salvo ultimo profilo usato (al click sul pulsante di upload)
-function saveLastUsedProfile(profileName) {
-	console.log("profileName empty? " + (profileName.trim().length == 0));
-	if ( !(profileName.trim().length == 0)) {
-		isProfileStored(profileName, function(exists) {
-			if (exists) {				
-				console.log("il profilo " + profileName + " esiste e lo salvo come ultimo usato");
-				chrome.storage.sync.set({"ep_last_used_profile": profileName}, function(result) {
-					console.log("salvato ultimo profilo usato: " + profileName);					
-				});
-			}
-		});
-	}
 }
 
 /**
- * verifico l'esistenza di un profilo nello store
-*/
-function isProfileStored(id, callback) {
+ * Salvo i dati utilizzati l'ultima volta in upload
+ *
+ * data: array con i metadati di upload
+ * callback: dove ritorno il risultato
+ */
+function saveLastUsedUploadData(data, callback) {
+	chrome.storage.sync.set({"last_used_upload_data": data}, function() {
+		if (chrome.runtime.lastError) {
+			callback(chrome.runtime.lastError.message);
+		}
+		else {
+			console.log("[saveLastUsedUploadData] salvati ultimi dati di upload usati: [" + data + "]");
+			callback("ok");
+		}
+	});
+}
+
+/**
+ * Recupero i dati utilizzati l'ultima volta in upload
+ *
+ * callback: dove ritorno il risultato
+ */
+function getLastUsedUploadData(callback) {
+	chrome.storage.sync.get("last_used_upload_data", function(result) {
+		if (chrome.runtime.lastError) {
+			callback(chrome.runtime.lastError.message);
+		}
+		else {
+			console.log("[getLastUsedUploadData] recuperati ultimi dati di upload usati: " + JSON.stringify(result.last_used_upload_data));
+			callback(result.last_used_upload_data);
+		}
+	});
+}
+
+/**
+ * Verifico l'esistenza di un profilo nello store
+ */
+function existsProfile(id, callback) {
 	chrome.storage.sync.get(id, function(result) {
+		if (chrome.runtime.lastError) {
+			callback(chrome.runtime.lastError.message);
+		}
 		if ($.isEmptyObject(result)) {
 			callback(false); //return false;
 		}
@@ -86,71 +177,62 @@ function isProfileStored(id, callback) {
 	});
 }
 
-//restores input box state using the preferences stored in chrome.storage and update profile list.
-function loadLastUsedProfile() {
-	//use default values
-	chrome.storage.sync.get("ep_last_used_profile", function(result) {
-		var profileId = result.ep_last_used_profile;
-		//console.log("id profilo da cercare nello store: " + profileId);
-		chrome.storage.sync.get(profileId, function(data) {
-			if (!$.isEmptyObject(data)) { //se il pofilo esiste
-				var d = JSON.stringify(data);
-				//console.log("JSON.stringify(data) = " + d);
-				
-				$("#siteid").val(data[profileId].siteid);
-				$("#username").val(data[profileId].username);
-				$("#password").val(data[profileId].password);
-				$("#uploaddirectory").val(data[profileId].uploaddirectory);
-				$("#overwrite").val(data[profileId].overwrite);
-				
-				$("#profile-name").val(data[profileId].profilename);
-
-				console.log("caricato profilo " + data[profileId].profilename);
-			}
-			else {
-				console.log("Il profilo " + profileId + " non risulta presente sullo storage");
-			}
-		});
-	});
-}
-
-//aggiorna la lista dei profili in pagina
-function refreshProfilesList() {
-	chrome.storage.sync.get({"ep_profiles_list": []}, function(result) {
-		var profiles = result.ep_profiles_list;	
-
-		$("#profiles").empty(); //svuoto la lista su pagina
-		//aggiorno la lista lista su pagina
-		for (var i = 0; i < profiles.length; i++) {
-			$("#profiles").append("<option value='" + profiles[i] + "'>");
+/**
+ * Resetto il db
+ */
+function clearDb() {
+	//braso tutto
+	chrome.storage.sync.clear(function () { 
+		if (chrome.runtime.lastError) {
+			console.log("[clearDb] errore nel clear del DB: " + chrome.runtime.lastError.message);
+		}
+		else {
+			console.log("[clearDb] brasato lo storage");
 		}
 	});
 }
 
-//salva la lista dei profili su storage aggiungendo il nome del nuovo profilo
-function updateProfilesList(profileName) {
-	var dataList = document.getElementById("profiles");
-	//console.log("profiles.length = " + dataList.options.length);
-	var values = [];
-	chrome.storage.sync.get({"ep_profiles_list": []}, function(result) {
-		values = result.ep_profiles_list;
-		values.push(profileName);
-		values.sort(); //ordino la lista
-		
-		//aggiorno oggetto nello storage
-		chrome.storage.sync.set({"ep_profiles_list": values}, function(result) {
-			console.log("aggiornata lista profili su store: " + values);
-			
-			//aggiorno lista profili su pagina
-			refreshProfilesList();
-		});
+/**
+ * Tutti i dati su storage
+ */
+function getAll(callback) {
+	chrome.storage.sync.get(null, function(items) {
+		if (chrome.runtime.lastError) {
+			callback(chrome.runtime.lastError.message);
+		}
+		if ($.isEmptyObject(items)) {
+			callback("db vuoto");
+		}
+		else {
+			var allKeys = Object.keys(items);
+			var allValues = Object.values(items);
+			console.log("[getAll] keys: [" + allKeys + "]");
+			console.log("[getAll] values: [" + allValues + "]");
+			callback(items);
+		}
 	});
 }
 
-//braso lo storage
-function clearDb() {
-	//braso tutto
-	chrome.storage.sync.clear(function () { 
-		console.log("Brasato lo storage")
+/**
+ * Quanti MB occupa il db?
+ */
+function getBytesInUse(callback) {
+	chrome.storage.sync.getBytesInUse(null, function(result) {
+		if (chrome.runtime.lastError) {
+			callback(chrome.runtime.lastError.message);
+		}
+		else {
+			console.log("[getBytesInUse] bytes used = " + result);
+			callback(result);
+		}
 	});
+}
+
+//serve per estrarre tutti i valori di un oggetto con chiave-valore
+Object.values = function(object) {
+	var values = [];
+	for (var property in object) {
+		values.push(object[property]);
+	}
+	return values;
 }

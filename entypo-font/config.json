@@ -8,32 +8,62 @@
   "glyphs": [
     {
       "uid": "0eabe5f8d71cc838484ff39436426d2d",
-      "css": "heart-1",
-      "code": 59395,
+      "css": "heart",
+      "code": 59392,
       "src": "entypo"
     },
     {
       "uid": "d18071bbf8f0a8cec8d1f556c91c6af0",
-      "css": "heart-empty-1",
+      "css": "heart-empty",
+      "code": 59393,
+      "src": "entypo"
+    },
+    {
+      "uid": "b08cfe8039de2ce815686aced2caef06",
+      "css": "download",
+      "code": 59400,
+      "src": "entypo"
+    },
+    {
+      "uid": "44199a54057e6e264fde61a49b034171",
+      "css": "upload",
       "code": 59396,
       "src": "entypo"
     },
     {
       "uid": "5d595124cecf472869d1cdc020da0ccc",
       "css": "upload-cloud",
-      "code": 59393,
+      "code": 59397,
+      "src": "entypo"
+    },
+    {
+      "uid": "390d6d13398cbf8c8c3c5493f7d34088",
+      "css": "export",
+      "code": 59398,
       "src": "entypo"
     },
     {
       "uid": "2626e3a1bbcd90e45849af3b58a1d594",
       "css": "trash",
-      "code": 59392,
+      "code": 59395,
+      "src": "entypo"
+    },
+    {
+      "uid": "91426c82d94428a33353e495418435e3",
+      "css": "share",
+      "code": 59401,
+      "src": "entypo"
+    },
+    {
+      "uid": "8c8f768607b8fc4c92c0f85b488e87e8",
+      "css": "up-bold",
+      "code": 59394,
       "src": "entypo"
     },
     {
       "uid": "191bcf63575a78def53c907c3d3bf7f0",
       "css": "floppy",
-      "code": 59394,
+      "code": 59399,
       "src": "entypo"
     }
   ]

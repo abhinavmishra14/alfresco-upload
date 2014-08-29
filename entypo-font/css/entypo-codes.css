@@ -1,6 +1,11 @@
 
-.icon-trash:before { content: '\e800'; } /* '' */
-.icon-upload-cloud:before { content: '\e801'; } /* '' */
-.icon-floppy:before { content: '\e802'; } /* '' */
-.icon-heart-1:before { content: '\e803'; } /* '' */
-.icon-heart-empty-1:before { content: '\e804'; } /* '' */
+.icon-heart:before { content: '\e800'; } /* '' */
+.icon-heart-empty:before { content: '\e801'; } /* '' */
+.icon-up-bold:before { content: '\e802'; } /* '' */
+.icon-trash:before { content: '\e803'; } /* '' */
+.icon-upload:before { content: '\e804'; } /* '' */
+.icon-upload-cloud:before { content: '\e805'; } /* '' */
+.icon-export:before { content: '\e806'; } /* '' */
+.icon-floppy:before { content: '\e807'; } /* '' */
+.icon-download:before { content: '\e808'; } /* '' */
+.icon-share:before { content: '\e809'; } /* '' */

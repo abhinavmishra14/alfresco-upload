@@ -10,8 +10,6 @@ chrome.browserAction.onClicked.addListener(function(activeTab){
 //on DOM content loaded
 $(function() {
 	//ADD LISTENERS
-	//document.addEventListener("DOMContentLoaded", restoreOptions);
-	
 	chrome.browserAction.onClicked.addListener(function() { //apre pagina di popup
 		var w = 540;
 		var h = 620;
@@ -31,14 +29,6 @@ $(function() {
 		showMessage("stored " + files.length + " files", SUCCESS);
 	});
 
-	//gestisce favoriti al click sul cuore
-	$("#heart-icon").click(function(e) {
-		//$(this).toggleClass(clHeartEmpty + " " + clHeart);
-		isProfileStored($("#profile-name").val(), function(exists) {
-			console.log($("#profile-name").val() + " esiste? " + exists);
-		});
-	});
-
 	//gestione dei colori delle icone
 	$(".icon").hover( function(e) {
 		$(this).toggleClass("icon icon-highlited"); 
@@ -52,13 +42,14 @@ $(function() {
 	$("#overwrite").change(function (e) { 
 		$(this).val($(this).is(":checked"));
 	});
-
+		
 	//salva profilo
 	$("#save-icon").click(function(e) {
 		if (!$("#profile-name").val().trim()) { //se non c'è il nome profilo (ha lunghezza 0)
 			showMessage("Dai un nome al profilo prima di salvarlo!", FAILURE);
 		}
 		else {
+			//preparo dati da salvare
 			var data = {
 				profilename: $("#profile-name").val(),
 				username: $("#username").val(),
@@ -67,17 +58,80 @@ $(function() {
 				uploaddirectory: $("#uploaddirectory").val(),
 				overwrite: $("#overwrite").val()
 			};
-			saveProfile(data); //salva profilo su storage (vedi store-manager.js)
+			var id = data.profilename;
+			
+			//salva profilo su storage (vedi store-manager.js)
+			saveProfile(data, function(result) {			
+				if (result == "ok") {
+					showMessage("Profilo '" + id + "' salvato", SUCCESS);
+					
+					//aggiorno lista profili su pagina solo se il profilo non è già elencato
+					var exists = false;
+					$("#profiles option").each(function(option) {
+						//console.log("[main] this.value = " + $(this).attr("value"));
+						if ($(this).attr("value") == id) {
+							console.log("[main] il profilo '" + id + "' esiste in tendina, non lo aggiungo");
+							exists = true;
+						}
+					});
+					if (!exists) {
+						refreshProfilesList(); //aggiorno tendina su pagina
+					}
+				}
+				else {
+					showMessage("Errore nel salvataggio del profilo  '" + id + "': " + result, FAILURE);
+				}						
+			});
 		}
 	});
 
 	//cancella profilo
 	$("#trash-icon").click(function(e) {
-		var profileId = $("#profile-name").val().trim();
-		if (profileId.length > 0) {
-			console.log("elimino profilo " + profileId);
-			deleteProfile(profileId); //elimino profilo su storage (vedi store-manager.js)
+		var id = $("#profile-name").val().trim();
+		if (id.length > 0) {
+			console.log("[main] elimino profilo '" + id + "'");
+			
+			//elimino profilo su storage (vedi store-manager.js)
+			deleteProfile(id, function(result) {
+				console.log("[main] elimina profilo result = " + result);
+				if (result === "ok") {
+					showMessage("Profilo '" + id + "' rimosso con successo", SUCCESS);
+					refreshProfilesList(); //aggiorno lista profili su tendina
+				}
+				else if (result === "ne") {
+					showMessage("Il profilo '" + id + "' non esiste, non posso eliminarlo", FAILURE);
+				}
+				else {
+					showMessage("Errore nella cancellazione del profilo '" + id + "': " + result, FAILURE);
+				}
+			});
 		}
+	});
+	
+	//gestisce favoriti al click su icona di up
+	$("#up-icon").click(function(e) {
+		var id = $("#profile-name").val();
+		if (id.trim().length == 0) {
+			return;
+		}
+		console.log("[main] recupero del profilo: '" + id + "'");
+		getProfile(id, function(result) {
+			if (typeof result === 'string' ) {
+				//errore
+				console.log("[main] errore nel recupero del profilo: '" + id + "'");
+				showMessage("Errore nel recupero del profilo: '" + id + "'", FAILURE);
+			}
+			else if (!$.isEmptyObject(result)) {
+				setUploadData(result);
+				showMessage("Caricato profilo '" + id + "'", SUCCESS);
+				console.log("[main] dati upload in form aggiornati");
+			}
+			else {
+				showMessage("Il profilo '" + id + "' non esiste, mi dispiace", FAILURE);
+				console.log("[main] profilo '" + id + "' inesistente o vuoto, non carico dati di upload su form");
+			}
+		});
+		
 	});
 	
 	//carica su Alfresco
@@ -86,8 +140,7 @@ $(function() {
 	//SOLO PER TEST!!!!!
 	$("#clear-db").click(clearDb); //clear db
 	//$("#save-prof").click(updateProfilesList); //save profiles
-	$("#refresh").click(refreshProfilesList); //refresh profiles
-
+	$("#mbusati").click(getBytesInUse);
 	///////////////////////
 	
 	//inizializza parametri
@@ -96,8 +149,11 @@ $(function() {
 	//carica la lista di profili esistenti in pagina
 	refreshProfilesList();
 	
-	//carica dati dell'ultimo profilo usato (se esiste)
-	loadLastUsedProfile();
+	//carica ultimi dati di upload utilizzati(se esistenti)
+	loadLastUsedUploadData();
+	
+	//fixa il problema dei webfonts non renderizzati
+	$("body").hide().show();
 });
 
 ////vars
@@ -115,7 +171,6 @@ var alfrescoRoot = "http://localhost:8080/alfresco";
 var actualProfile;
 
 function initParams() {
-	console.log("init");
 	$("#overwrite").val($("#overwrite").is(":checked"));
 }
 
@@ -127,18 +182,18 @@ function showFileInfo(event) {
 	var files = event.target.files || event.originalEvent.dataTransfer.files;
 	
 	for (var i = 0, f; f = files[i]; i++) {
-		console.log("f[" + i + "].name = " + f.name);
-		console.log("f[" + i + "].size = " + f.size);
-		console.log("f[" + i + "].lastModifiedDate = " + f.lastModifiedDate.toLocaleDateString());
+		console.log("[main] f[" + i + "].name = " + f.name);
+		console.log("[main] f[" + i + "].size = " + f.size);
+		console.log("[main] f[" + i + "].lastModifiedDate = " + f.lastModifiedDate.toLocaleDateString());
 	}	
-	showMessage("stored " + files.length + " files", SUCCESS);
+	showMessage("[main] stored " + files.length + " files", SUCCESS);
 }
 
 function checkFormParam() {
 	var report = "";
 	$("input").each(function(input) {
-		console.log($( this ).attr("id") + ": " + $( this ).val() );
-		report += ($( this ).attr("id") + ": " + $( this ).val() + "<br>");
+		console.log("[main]" + $( this ).attr("id") + ": " + $( this ).val() );
+		report += ("[main]" + $( this ).attr("id") + ": " + $( this ).val() + "<br>");
 	});
 	$("status-message").html(report);
 }
@@ -150,9 +205,26 @@ function upload() {
 	//stoppo animazioni se ce ne sono attive
 	//$("#status").finish();
 	//pulisco area messaggi
-	saveLastUsedProfile($("#profile-name").val());
 	$("#status-message").empty();
-	disableButtonById("submit");
+	disableButtonById("submit"); //disabilito temporaneamente il pulsante di invio
+	
+	//salvo dati di upload per la prossima volta
+	var toSave = {
+		siteid: $("#siteid").val(),
+		username: $("#username").val(),
+		password: $("#password").val(),
+		uploaddirectory: $("#uploaddirectory").val(),
+		overwrite: $("#overwrite").val()
+	}
+	saveLastUsedUploadData(toSave, function(result) {
+		if (result === "ok") {
+			console.log("[main] dati di upload salvati per la prossima volta");
+		}
+		else {
+			console.log("[main] errore nel salvataggio dei metadati di upload: " + result);
+			showMessage("Errore nel salvataggio dei metadati di upload: " + result, FAILURE);
+		}
+	});
 	
 	//preparo i dati per l'upload prendendoli dal form in pagina
 	var usr = {
@@ -175,7 +247,7 @@ function upload() {
 		},
 		success: function (json) {
 			NProgress.inc(PERCENT_15); //after login
-			console.log("login-resp = " + JSON.stringify(json));
+			console.log("[main] login-resp = " + JSON.stringify(json));
 			resp = JSON.parse(JSON.stringify(json));
 			showMessage("LOGIN OK!", SUCCESS);
 			var ticket = resp.data.ticket; //salvo il ticket per effettuare il caricamento
@@ -184,7 +256,7 @@ function upload() {
 			alfrescoUpload(ticket);
 		},	
 		error: function (json) {
-			console.log("login-resp = " + JSON.stringify(json));
+			console.log("[main] login-resp = " + JSON.stringify(json));
 			NProgress.done();
 			manageAjaxError(json);
 			
@@ -207,7 +279,7 @@ function alfrescoUpload(ticket) {
 		//prima
 		beforeSend: function() {
 			showMessage("Upload...", SUCCESS);
-			console.log("Upload...");
+			console.log("[main] upload...");
 		},				
 				
 		//aggiornamento progress-bar durante l'upload dei dati
@@ -223,25 +295,26 @@ function alfrescoUpload(ticket) {
 			return xhr;
 		},						
 		success: function (json) {   
-			console.log("upload-success");
+			console.log("[main] upload-success");
 			showMessage("UPLOAD OK", SUCCESS);		
-			console.log("upload-resp = " + JSON.stringify(json) );
-			console.log("UPLOAD OK");
+			console.log("[main] upload-resp = " + JSON.stringify(json) );
+			console.log("[main] upload ok");
 		},
 		error: function (json) {
-			//console.log("upload-resp = " + JSON.stringify(json));
+			//console.log("[main] upload-resp = " + JSON.stringify(json));
 			manageAjaxError(json);
 		},
 		complete: function () {
-			console.log("upload-complete");
+			console.log("[main] upload-complete");
 			$("#submit").prop("disabled", true); //riabilito pulsante invio
 			NProgress.done();
 		}
 	});
 }
 
+//gestisce errore nelle chiamate AJAX durante l'upload
 function manageAjaxError(json) {
-	console.log("upload-resp = " + JSON.stringify(json) );
+	console.log("[main] upload-resp = " + JSON.stringify(json) );
 	resp = JSON.parse(JSON.stringify(json));
 	var message;
 	if (resp.responseJSON !== undefined ) {
@@ -249,19 +322,68 @@ function manageAjaxError(json) {
 		message = resp.responseJSON.message;;
 	}
 	else {
-		message = "Unknown Error (maybe " + alfrescoRoot + " is not available)";
+		message = "Unknown Error (maybe '" + alfrescoRoot + "' is not available)";
 	}
-	console.log(message);
+	console.log("[main]" + message);
 	showMessage(message, FAILURE);
+}
+
+//aggiorna la lista dei profili in pagina
+function refreshProfilesList() {
+	//recupero lista profili (vedi store-manager.js)
+	getProfilesList(function(result) {
+		if (typeof result === 'string' ) {
+			//errore
+			showMessage("Errore nel recupero lista profili: " + result, FAILURE);
+		}
+		else {		
+			var profiles = result;	
+
+			$("#profiles").empty(); //svuoto la lista su pagina
+			//aggiorno la lista lista su pagina
+			for (var i = 0; i < profiles.length; i++) {
+				$("#profiles").append("<option value='" + profiles[i] + "'>");
+			}
+			console.log("[main] lista profili su pagina svuotata e ripopolata: [" + profiles + "]");
+		}
+	});
+}
+
+//carica in form ultimi dati di upload usati
+function loadLastUsedUploadData() {
+	getLastUsedUploadData(function(data) {
+		if (typeof data === 'string' ) {
+			//errore
+			showMessage("Errore nel recupero metadati di upload: " + data, FAILURE);
+		}
+		else if (isUndefined(data)) {
+			console.log("[main] nessun dato di upload salvato (mai tentato un upload?)");
+		}
+		else {
+			setUploadData(data);
+			console.log("[main] dati di upload caricati in form");
+		}
+	});
+}
+
+//carica dati di upload nel form in pagina
+function setUploadData(data) {
+	$("#siteid").val(data.siteid);
+	$("#username").val(data.username);
+	$("#password").val(data.password);
+	$("#uploaddirectory").val(data.uploaddirectory);
+	$("#overwrite").val(data.overwrite);
 }
 
 //show message in page (type=0 means success, type=1 means error)
 function showMessage(message, type) {
-	if (type == SUCCESS)
+	if (type == SUCCESS) {
 		$("#status-message").css("color", "green");
-	else
+	}
+	else {
 		$("#status-message").css("color", "red");
+	}
 	$("#status-message").empty();
-	$("#status-message").append(message);
+	$("#status-message").text(message);
 	
 }
