@@ -45,13 +45,13 @@ $(function() {
 		
 	//salva profilo
 	$("#save-icon").click(function(e) {
-		if (!$("#profile-name").val().trim()) { //se non c'è il nome profilo (ha lunghezza 0)
+		if (!$("#actual-profile").val().trim()) { //se non c'è il nome profilo (ha lunghezza 0)
 			showMessage("Dai un nome al profilo prima di salvarlo!", FAILURE);
 		}
 		else {
 			//preparo dati da salvare
 			var data = {
-				profilename: $("#profile-name").val(),
+				profilename: $("#actual-profile").val(),
 				username: $("#username").val(),
 				password: $("#password").val(),
 				siteid: $("#siteid").val(),
@@ -67,7 +67,7 @@ $(function() {
 					
 					//aggiorno lista profili su pagina solo se il profilo non è già elencato
 					var exists = false;
-					$("#profiles option").each(function(option) {
+					$("#select-profile option").each(function(option) {
 						//console.log("[main] this.value = " + $(this).attr("value"));
 						if ($(this).attr("value") == id) {
 							console.log("[main] il profilo '" + id + "' esiste in tendina, non lo aggiungo");
@@ -87,7 +87,7 @@ $(function() {
 
 	//cancella profilo
 	$("#trash-icon").click(function(e) {
-		var id = $("#profile-name").val().trim();
+		var id = $("#actual-profile").val().trim();
 		if (id.length > 0) {
 			console.log("[main] elimino profilo '" + id + "'");
 			
@@ -109,8 +109,9 @@ $(function() {
 	});
 	
 	//gestisce favoriti al click su icona di up
+	/*
 	$("#up-icon").click(function(e) {
-		var id = $("#profile-name").val();
+		var id = $("#actual-profile").val();
 		if (id.trim().length == 0) {
 			return;
 		}
@@ -133,6 +134,34 @@ $(function() {
 		});
 		
 	});
+	*/
+	
+	//cambia dati quando cambia il profilo scelto
+	$("#select-profile").change(function(e) {
+		$("#actual-profile").val($("#select-profile option:selected").text());
+		var id = $("#actual-profile").val();
+		if (id.trim().length == 0) {
+			return;
+		}
+		console.log("[main] recupero del profilo: '" + id + "'");
+		getProfile(id, function(result) {
+			if (typeof result === 'string' ) {
+				//errore
+				console.log("[main] errore nel recupero del profilo: '" + id + "'");
+				showMessage("Errore nel recupero del profilo: '" + id + "'", FAILURE);
+			}
+			else if (!$.isEmptyObject(result)) {
+				setUploadData(result);
+				showMessage("Caricato profilo '" + id + "'", SUCCESS);
+				console.log("[main] dati upload in form aggiornati");
+			}
+			else {
+				showMessage("Il profilo '" + id + "' non esiste, mi dispiace", FAILURE);
+				console.log("[main] profilo '" + id + "' inesistente o vuoto, non carico dati di upload su form");
+			}
+		});
+		
+	});	
 	
 	//carica su Alfresco
 	$("#upload-icon").click(upload); //submit button upload to Alfresco
@@ -296,7 +325,6 @@ function alfrescoUpload(ticket) {
 			console.log("[main] upload-success");
 			showMessage("UPLOAD OK", SUCCESS);		
 			console.log("[main] upload-resp = " + JSON.stringify(json) );
-			console.log("[main] upload ok");
 		},
 		error: function (json) {
 			//console.log("[main] upload-resp = " + JSON.stringify(json));
@@ -337,10 +365,10 @@ function refreshProfilesList() {
 		else {		
 			var profiles = result;	
 
-			$("#profiles").empty(); //svuoto la lista su pagina
+			$("#select-profile").empty(); //svuoto la lista su pagina
 			//aggiorno la lista lista su pagina
 			for (var i = 0; i < profiles.length; i++) {
-				$("#profiles").append("<option value='" + profiles[i] + "'>");
+				$("#select-profile").append("<option value='" + profiles[i] + "'>" + profiles[i] + "</option>");
 			}
 			console.log("[main] lista profili su pagina svuotata e ripopolata: [" + profiles + "]");
 		}
