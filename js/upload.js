@@ -63,19 +63,27 @@ $(function() {
 			//salva profilo su storage (vedi store-manager.js)
 			saveProfile(data, function(result) {			
 				if (result == "ok") {
-					showMessage("Profilo '" + id + "' salvato", SUCCESS);
+					showMessage("Profilo '" + id + "' salvato con successo", SUCCESS);
 					
 					//aggiorno lista profili su pagina solo se il profilo non è già elencato
 					var exists = false;
 					$("#select-profile option").each(function(option) {
 						//console.log("[main] this.value = " + $(this).attr("value"));
 						if ($(this).attr("value") == id) {
-							console.log("[main] il profilo '" + id + "' esiste in tendina, non lo aggiungo");
 							exists = true;
 						}
 					});
 					if (!exists) {
-						refreshProfilesList(); //aggiorno tendina su pagina
+						refreshProfilesList(function(result) {
+							//aggiorno tendina su pagina
+							console.log("[main] tendina su pagina aggiornata con aggiunto: " + id);
+							
+							//$("#select-profile option:selected").text(id); //seleziono profilo appena salvato
+						});
+					}
+					else {
+						console.log("[main] il profilo '" + id + "' esiste in tendina, non lo aggiungo");
+						//$("#select-profile option:selected").text(id); //seleziono profilo appena salvato
 					}
 				}
 				else {
@@ -87,7 +95,8 @@ $(function() {
 
 	//cancella profilo
 	$("#trash-icon").click(function(e) {
-		var id = $("#actual-profile").val().trim();
+		//var id = $("#actual-profile").val().trim();
+		var id = $("#select-profile option:selected").text().trim();
 		if (id.length > 0) {
 			console.log("[main] elimino profilo '" + id + "'");
 			
@@ -355,12 +364,13 @@ function manageAjaxError(json) {
 }
 
 //aggiorna la lista dei profili in pagina
-function refreshProfilesList() {
+function refreshProfilesList(callback) {
 	//recupero lista profili (vedi store-manager.js)
 	getProfilesList(function(result) {
 		if (typeof result === 'string' ) {
 			//errore
 			showMessage("Errore nel recupero lista profili: " + result, FAILURE);
+			callback("ko");
 		}
 		else {		
 			var profiles = result;	
@@ -371,6 +381,8 @@ function refreshProfilesList() {
 				$("#select-profile").append("<option value='" + profiles[i] + "'>" + profiles[i] + "</option>");
 			}
 			console.log("[main] lista profili su pagina svuotata e ripopolata: [" + profiles + "]");
+			$("#select-profile").prop("selectedIndex", -1); //default scelta vuota
+			callback("ok");
 		}
 	});
 }
