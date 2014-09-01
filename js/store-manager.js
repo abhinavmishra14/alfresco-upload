@@ -16,7 +16,7 @@ function appendToProfilesList(id, callback) {
 			if (chrome.runtime.lastError) {
 				callback(chrome.runtime.lastError.message);
 			}
-			console.log("[appendToProfilesList] aggiornata lista profili su store: [" + values + "]");
+			//console.log("[appendToProfilesList] aggiornata lista profili su store: [" + values + "]");
 			callback("ok");
 		});
 	});
@@ -49,7 +49,7 @@ function removeFromProfilesList(id, callback) {
 			if (chrome.runtime.lastError) {
 				callback(chrome.runtime.lastError.message);
 			}
-			console.log("[removeFromProfilesList] aggiornata lista profili su store: [" + newValues + "]");
+			//console.log("[removeFromProfilesList] aggiornata lista profili su store: [" + newValues + "]");
 			callback("ok");
 		});
 	});
@@ -66,7 +66,7 @@ function getProfilesList(callback) {
 			callback(chrome.runtime.lastError.message); //restituisco errore
 		}
 		else {
-			console.log("[getProfilesList] restituisco lista: [" + result.ep_profiles_list + "]");
+			//console.log("[getProfilesList] restituisco lista: [" + result.ep_profiles_list + "]");
 			callback(result.ep_profiles_list); //restituisco la lista
 		}
 	});
@@ -98,7 +98,7 @@ function saveProfile(data, callback) {
 				callback(chrome.runtime.lastError.message);
 			}
 			if (exists) {
-				console.log("[saveProfile] il profilo '" + id + "' esiste, ritorno ok");
+				//console.log("[saveProfile] il profilo '" + id + "' esiste, ritorno ok");
 				callback("ok"); //ritorno
 			}
 			//se non esiste lo aggiugno alla lista profili su storage
@@ -108,7 +108,7 @@ function saveProfile(data, callback) {
 						callback(chrome.runtime.lastError.message);
 					}
 					if (result == "ok") {
-						console.log("[saveProfile] il profilo '" + id + "' non esiste, ma l'ho aggiunto in lista su storage e ritorno ok");						
+						//console.log("[saveProfile] il profilo '" + id + "' non esiste, ma l'ho aggiunto in lista su storage e ritorno ok");						
 						callback("ok"); //ritorno ok
 					}	
 				});
@@ -128,7 +128,7 @@ function getProfile(id, callback) {
 			callback(chrome.runtime.lastError.message); //restituisco errore
 		}
 		else {
-			console.log("[getProfile] recupero profilo '" + id + "'");
+			//console.log("[getProfile] recupero profilo '" + id + "'");
 			callback(result[id]); //restituisco i dati del profilo
 		}
 	});
@@ -147,20 +147,20 @@ function deleteProfile(id, callback) {
 		//se esiste lo elimino
 		if (exists) {
 			chrome.storage.sync.remove(id, function () {
-				console.log("[deleteProfile] il profilo '" + id + "' esiste e l'ho eliminato");
+				//console.log("[deleteProfile] il profilo '" + id + "' esiste e l'ho eliminato");
 				removeFromProfilesList(id, function(result) {
 					if (chrome.runtime.lastError) {
 						callback(chrome.runtime.lastError.message); //restituisco errore
 					}
 					else {
-						console.log("[deleteProfile] eliminato profilo '" + id + "' anche dalla lista");
+						//console.log("[deleteProfile] eliminato profilo '" + id + "' anche dalla lista");
 						callback("ok");
 					}				
 				});
 			});
 		}
 		else {
-			console.log("[deleteProfile] il profilo '" + id + "' NON esiste. Ritorno 'ne'");
+			//console.log("[deleteProfile] il profilo '" + id + "' NON esiste. Ritorno 'ne'");
 			callback("ne"); //non esiste
 		}
 	});
@@ -178,7 +178,7 @@ function saveLastUsedUploadData(data, callback) {
 			callback(chrome.runtime.lastError.message);
 		}
 		else {
-			console.log("[saveLastUsedUploadData] salvati ultimi dati di upload usati: [" + data + "]");
+			//console.log("[saveLastUsedUploadData] salvati ultimi dati di upload usati: [" + data + "]");
 			callback("ok");
 		}
 	});
@@ -195,7 +195,7 @@ function getLastUsedUploadData(callback) {
 			callback(chrome.runtime.lastError.message);
 		}
 		else {
-			console.log("[getLastUsedUploadData] recuperati ultimi dati di upload usati: " + JSON.stringify(result.last_used_upload_data));
+			//console.log("[getLastUsedUploadData] recuperati ultimi dati di upload usati: " + JSON.stringify(result.last_used_upload_data));
 			callback(result.last_used_upload_data);
 		}
 	});
@@ -245,10 +245,10 @@ function getAll(callback) {
 			callback("db vuoto");
 		}
 		else {
-			var allKeys = Object.keys(items);
-			var allValues = Object.values(items);
-			console.log("[getAll] keys: [" + allKeys + "]");
-			console.log("[getAll] values: [" + allValues + "]");
+			//var allKeys = Object.keys(items);
+			//var allValues = Object.values(items);
+			//console.log("[getAll] keys: [" + allKeys + "]");
+			//console.log("[getAll] values: [" + allValues + "]");
 			callback(items);
 		}
 	});

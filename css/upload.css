@@ -62,6 +62,11 @@
 	font-size: 25px;
 	color: #15E82E
 }
+.icon-not-clickable {
+	pointer-events: none;
+	font-size: 25px;
+	color: #8E8F9C; /*grigio*/
+}
 
 * {
 	font-family: 'Open Sans', sans-serif;
