@@ -26,6 +26,9 @@ $(function() {
 		$("#filedata").css("border", "3px dotted #0B85A1");
 		e.preventDefault();
 		var files = event.target.files || event.originalEvent.dataTransfer.files;
+		
+		$("#upload-icon").removeClass("icon-not-clickable"); //permetto di inviare visto che c'è un file caricato
+		
 		showMessage("stored " + files.length + " files", SUCCESS);
 	});
 
@@ -206,10 +209,18 @@ function checkFormParam() {
 function upload() {
 	//stoppo animazioni se ce ne sono attive
 	//$("#status").finish();
-	//pulisco area messaggi
-	$("#status-message").empty();
+
+	$("#status-message").empty(); //pulisco area messaggi
 	$("#upload-icon").addClass("icon-not-clickable"); //rendo il pulsante di upload non cliccabile
 	$("#overwrite").val($("#overwrite").is(":checked")); //setto il valore di overwrite (true o false)
+
+	/* serve per un check se c'è un file stored nella memoria per caricarlo su Alfresco
+	if ($.isEmptyObject($("#filedata").val())) {
+		console.log("[main.upload]: nessun file caricato");
+		showMessage("Carica un file da inviare ad Alfresco", FAILURE);
+		return;
+	}
+	*/
 	
 	//salvo dati di upload per la prossima volta
 	var toSave = {
@@ -221,10 +232,10 @@ function upload() {
 	}
 	saveLastUsedUploadData(toSave, function(result) {
 		if (result === "ok") {
-			console.log("[main] dati di upload salvati per la prossima volta");
+			console.log("[main.upload] dati di upload salvati per la prossima volta");
 		}
 		else {
-			console.log("[main] errore nel salvataggio dei metadati di upload: " + result);
+			console.log("[main.upload] errore nel salvataggio dei metadati di upload: " + result);
 			showMessage("Errore nel salvataggio dei metadati di upload: " + result, FAILURE);
 		}
 	});
@@ -250,7 +261,7 @@ function upload() {
 		},
 		success: function (json) {
 			NProgress.inc(PERCENT_15); //after login
-			console.log("[main] login-resp = " + JSON.stringify(json));
+			console.log("[main.upload] login-resp = " + JSON.stringify(json));
 			resp = JSON.parse(JSON.stringify(json));
 			showMessage("LOGIN OK!", SUCCESS);
 			var ticket = resp.data.ticket; //salvo il ticket per effettuare il caricamento
@@ -259,7 +270,7 @@ function upload() {
 			alfrescoUpload(ticket);
 		},	
 		error: function (json) {
-			console.log("[main] login-resp = " + JSON.stringify(json));
+			console.log("[main.upload] login-resp = " + JSON.stringify(json));
 			NProgress.done();
 			manageAjaxError(json);
 			
@@ -271,7 +282,7 @@ function upload() {
 function alfrescoUpload(ticket) {
 	$("#uploaddirectory").val('/' + $("#uploaddirectory").val() + '/'); //metto le barre altrimenti ALfresco non riconosce la folder (vedi upload.post.js)
 	var formData = new FormData(document.getElementById("upload-form"));
-	console.log("[main-alfrescoUpload] formData = " + formData);
+	console.log("[main.alfrescoUpload] formData = " + formData);
 	$.ajax({
 		type: "POST",
 		url: alfrescoRoot + "/service/api/upload?alf_ticket=" + ticket,
@@ -303,16 +314,16 @@ function alfrescoUpload(ticket) {
 			return xhr;
 		},						
 		success: function (json) {   
-			console.log("[main] upload-success");
+			console.log("[main.alfrescoUpload] upload-success");
 			showMessage("UPLOAD OK", SUCCESS);		
-			console.log("[main] upload-resp = " + JSON.stringify(json) );
+			console.log("[main.alfrescoUpload] upload-resp = " + JSON.stringify(json) );
 		},
 		error: function (json) {
 			//console.log("[main] upload-resp = " + JSON.stringify(json));
 			manageAjaxError(json);
 		},
 		complete: function () {
-			console.log("[main] upload-complete");
+			console.log("[main.alfrescoUpload] upload-complete");
 			$("#upload-icon").removeClass("icon-not-clickable"); //riabilito il click sul pulsante di upload
 			NProgress.done();
 		}
@@ -321,7 +332,7 @@ function alfrescoUpload(ticket) {
 
 //gestisce errore nelle chiamate AJAX durante l'upload
 function manageAjaxError(json) {
-	console.log("[main] upload-resp = " + JSON.stringify(json) );
+	console.log("[main.manageAjaxError] upload-resp = " + JSON.stringify(json) );
 	resp = JSON.parse(JSON.stringify(json));
 	var message;
 	if (resp.responseJSON !== undefined ) {
@@ -331,7 +342,7 @@ function manageAjaxError(json) {
 	else {
 		message = "Unknown Error (maybe '" + alfrescoRoot + "' is not available)";
 	}
-	console.log("[main]" + message);
+	console.log("[main.manageAjaxError]" + message);
 	showMessage(message, FAILURE);
 }
 
