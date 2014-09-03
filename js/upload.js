@@ -209,8 +209,14 @@ function checkFormParam() {
 function upload() {
 	//stoppo animazioni se ce ne sono attive
 	//$("#status").finish();
-
 	$("#status-message").empty(); //pulisco area messaggi
+	
+	if (isEmptyString($("#siteid").val()) || isEmptyString($("#uploaddirectory").val()) || isEmptyString($("#username").val()) || isEmptyString($("#password").val())) {
+		console.log("[main.upload] mancano dati per l'upload, quindi non lo eseguo");
+		showMessage("Compila tutti i dati del form o non posso caricare il file");
+		return;
+	}
+	
 	$("#upload-icon").addClass("icon-not-clickable"); //rendo il pulsante di upload non cliccabile
 	$("#overwrite").val($("#overwrite").is(":checked")); //setto il valore di overwrite (true o false)
 

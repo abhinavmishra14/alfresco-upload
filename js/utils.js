@@ -12,3 +12,8 @@ function enableButtonById(id) {
 function isUndefined(obj) {
 	return typeof obj === 'undefined';
 }
+
+//return true if string has length 0, false otherwise
+function isEmptyString(s) {
+	return s.trim().length == 0;
+}
