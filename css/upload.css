@@ -14,8 +14,13 @@
 }
 #status-message {
 	text-align: center;
+	vertical-align: middle;
 	height: 45px;
-	padding-top: 1px
+	padding-top: 1px;
+	
+	border: 1px solid;
+	border-color: white;
+	border-radius: 5px
 }
 #submit-btn-wrap {
 	text-align: right;
@@ -39,6 +44,17 @@
 	display: inline-block;
 	margin: 0 auto
 }
+
+.blinking-border {
+    /*-webkit-transition: all 1s;*/
+    -webkit-animation: DIV-BORDER 1s 1; /*nome,durata,ripetizioni*/
+}
+@-webkit-keyframes DIV-BORDER {
+    0% { border-color: green }
+    30% { border-color: white }
+	100% { border-color: green }
+}
+
 .btn-submit {
 	background-color: #001DD6
 }
