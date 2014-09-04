@@ -3,9 +3,11 @@ function disableButtonById(id) {
 	$("#" + id).prop("disabled", true);
 }
 
-function enableButtonById(id) {
-	//abilito pulsante di invio
+function enableElementById(id) {
 	$("#" + id).prop("disabled", false);
+}
+function disableElementById(id) {
+	$("#" + id).prop("disabled", true);
 }
 
 //verifica se la variabile è indefinita

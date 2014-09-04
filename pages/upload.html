@@ -14,24 +14,35 @@
 	</div>
 	
 	<div id="upload-form-wrapper" class="div-center">
-		<label>User</label><input id="username" type="text" placeholder="Alfresco user"><br>
-		<label>Password</label><input id="password" type="password" placeholder="Alfresco password"><br>
+		<label>Alfresco URL</label>
+		<input id="alfroot" type="text" placeholder="Alfresco root (http://mio.server.com/alfresco)"><br>
+		<label>User</label>
+		<input id="username" type="text" placeholder="Alfresco user"><br>
+		<label>Password</label>
+		<input id="password" type="password" placeholder="Alfresco password"><br>
 		<form id="upload-form" name="uploadForm" enctype="multipart/form-data">
-			<label>Sito</label><input id="siteid" type="text" name="siteid" placeholder="Nome del sito" /><br />
-			<label>Directory</label><input id="uploaddirectory" type="text" name="uploaddirectory" placeholder="Directory di upload" /><br />
-			<label>Versiona</label><input id="overwrite" type="checkbox" name="overwrite" /><br />
-			<label>File</label><input id="filedata" type="file" name="filedata" />
+			<label>Sito</label>
+			<input id="siteid" type="text" name="siteid" placeholder="Nome del sito" /><br />
+			<label>Directory</label>
+			<input id="uploaddirectory" type="text" name="uploaddirectory" placeholder="Directory di upload" /><br />
+			<label>Versiona</label>
+			<input id="overwrite" type="checkbox" name="overwrite" /><br />
+			<label>File</label>
+			<input id="filedata" type="file" name="filedata" />
+			
+			<!-- campi di input nascosti -->
 			<input id="aspects" type="hidden" name="aspects" value="cm:versionable" />
 			<input id="containerid" type="hidden" name="containerid" value="documentLibrary" />
 			<input id="contenttype" type="hidden" name="contenttype" value="cm:content" />
 		</form>
 		<p id="submit-btn-wrap">
-			<!--<input id="submit" type="button" name="submit" class="btn-submit" value="Send" />-->
 			<span id="upload-icon" class="icon-upload-cloud icon-not-clickable icon"></span>
 		</p>
 	</div>
 	
-	<div id="status-message" class="div-center"></div>
+	<div id="status-message-wrap">
+		<div id="status-message"></div>
+	</div>
 	
 	<div id="control" class="div-center">
 		<input id="actual-profile" name="actual-profile" placeholder="Nome profilo">
@@ -41,7 +52,8 @@
 
 		<!--
 		<span id="up-icon" class="icon-up-bold icon"></span>
-		<span id="heart-icon" class="icon-heart-empty icon"></span>-->
+		<span id="heart-icon" class="icon-heart-empty icon"></span>
+		-->
 		<span id="save-icon" class="icon-floppy icon"></span>
 		<span id="trash-icon" class="icon-trash icon"></span>
 		
@@ -49,7 +61,6 @@
 		<input id="clear-db" type="button" name="cleardb" class="btn-submit" value="Clear DB" />
 		<input id="save-prof" type="button" name="saveprof" class="btn-submit" value="Salva Profili" />
 		<input id="mbusati" type="button" name="refresh" class="btn-submit" value="MB in uso?" />
-		-->
 		<input id="blink" type="button" name="blink" class="btn-submit" value="Blink" />
 		<!-- END TEST -->
 	

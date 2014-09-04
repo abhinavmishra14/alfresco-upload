@@ -1,25 +1,23 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>Alfresco Upload Options</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+	<title>Alfresco Upload - Options</title>
+	<link rel="stylesheet" type="text/css" href="../css/options.css">
+	<link rel="stylesheet" type="text/css" href="../css/nprogress.css">
+	<link rel="stylesheet" type="text/css" href="../entypo-font/css/entypo.css">	
 </head>
+
 <body>
-
-Site: <input type="text" id="site"><br>
-Folder: <input type="text" id="folder"><br>
-File: <input type="text" id="file"><br>
-Description: <input type="text" id="description"><br>
-
-<label>
-  <input type="checkbox" id="overwrite">
-  Always overwrite
-</label>
-
-<div id="status"></div>
-<button id="save">Save</button>
-
-<script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="../js/options.js"></script>
-
+	<div id="options-form-wrapper" class="div-center">
+		<label>Root Alfresco</label><input id="alfresco-root" type="text" placeholder="Root Alfresco"><br>
+	</div>
+	
+	<script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/nprogress.js"></script>
+	<script type="text/javascript" src="../js/store-manager.js"></script>
+	<script type="text/javascript" src="../js/upload.js"></script>
+	<script type="text/javascript" src="../js/utils.js"></script>
 </body>
 </html>

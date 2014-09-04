@@ -12,7 +12,7 @@ $(function() {
 	//ADD LISTENERS
 	chrome.browserAction.onClicked.addListener(function() { //apre pagina di popup
 		var w = 540;
-		var h = 620;
+		var h = 640;
 		var left = (screen.width/2) - (w/2);
 		var top = (screen.height/2) - ( h/2);
 		chrome.windows.create({'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top} , function(window) {});
@@ -29,7 +29,8 @@ $(function() {
 		
 		$("#upload-icon").removeClass("icon-not-clickable"); //permetto di inviare visto che c'è un file caricato
 		
-		showMessage("stored " + files.length + " files", GREEN_COLOR);
+		console.log("[main.#filedata.change] Pronto a spedire '" + files[0].name + "'");
+		showMessage("Pronto a spedire '" + files[0].name + "'", GREEN_COLOR);
 	});
 
 	//gestione dei colori delle icone
@@ -44,7 +45,7 @@ $(function() {
 
 	$("#overwrite").change(function (e) { 
 		$(this).val($(this).is(":checked"));
-		console.log("[main-overwrite_change] (#overwrite).val() = " + $("#overwrite").val());
+		console.log("[main.#overwrite.change] (#overwrite).val() = " + $("#overwrite").val());
 	});
 		
 	//salva profilo
@@ -56,6 +57,7 @@ $(function() {
 			//preparo dati da salvare
 			var data = {
 				profilename: $("#actual-profile").val(),
+				alfroot: $("#alfroot").val(),
 				username: $("#username").val(),
 				password: $("#password").val(),
 				siteid: $("#siteid").val(),
@@ -80,13 +82,13 @@ $(function() {
 					if (!exists) {
 						refreshProfilesList(function(result) {
 							//aggiorno tendina su pagina
-							console.log("[main] tendina su pagina aggiornata con aggiunto: " + id);
+							console.log("[main.#save-icon.click] tendina su pagina aggiornata con aggiunto: " + id);
 							
 							//$("#select-profile option:selected").text(id); //seleziono profilo appena salvato
 						});
 					}
 					else {
-						console.log("[main] il profilo '" + id + "' esiste in tendina, non lo aggiungo");
+						console.log("[main.#save-icon.click] il profilo '" + id + "' esiste in tendina, non lo aggiungo");
 						//$("#select-profile option:selected").text(id); //seleziono profilo appena salvato
 					}
 				}
@@ -102,11 +104,11 @@ $(function() {
 		//var id = $("#actual-profile").val().trim();
 		var id = $("#select-profile option:selected").text().trim();
 		if (id.length > 0) {
-			console.log("[main] elimino profilo '" + id + "'");
+			console.log("[main.#trash-icon.click] elimino profilo '" + id + "'");
 			
 			//elimino profilo su storage (vedi store-manager.js)
 			deleteProfile(id, function(result) {
-				console.log("[main] elimina profilo result = " + result);
+				console.log("[main.#trash-icon.click] elimina profilo result = " + result);
 				if (result === "ok") {
 					showMessage("Profilo '" + id + "' rimosso con successo", GREEN_COLOR);
 					refreshProfilesList(); //aggiorno lista profili su tendina
@@ -155,7 +157,6 @@ $(function() {
 	//$("#clear-db").click(clearDb); //clear db
 	//$("#save-prof").click(updateProfilesList); //save profiles
 	//$("#mbusati").click(getBytesInUse);
-	$("#blink").click(blinkBorder);
 	///////////////////////
 	
 	//carica la lista di profili esistenti in pagina
@@ -175,28 +176,31 @@ var SUCCESS = 0;
 var FAILURE = 1;
 var PERCENT_15 = 0.15; //login percentage
 var PERCENT_75 = 0.75; //alfresco file upload
-var alfrescoRoot = "http://intra.e-projectsrl.net/alfresco"; //ep alfresco
 var clHeartEmpty = "icon-heart-empty";
 var clHeart = "icon-heart";
 var	clGreen = "icon-green";
+//var alfrescoRoot = "http://intra.e-projectsrl.net/alfresco"; //ep alfresco
 var alfrescoRoot = "http://localhost:8080/alfresco";
 var actualProfile;
 
-//mostra info su file caricati
+//mostra info su file caricati (usato per TEST)
 function showFileInfo(event) {
-	$("#filedata").css("border", "3px dotted #0B85A1");
+	$("#filedata").css("border", "3px dotted #0B85A1"); //segnalo la cosa con un po' di css
 	event.preventDefault();	
 	//store files data
 	var files = event.target.files || event.originalEvent.dataTransfer.files;
 	
+	/*
 	for (var i = 0, f; f = files[i]; i++) {
 		console.log("[main] f[" + i + "].name = " + f.name);
 		console.log("[main] f[" + i + "].size = " + f.size);
 		console.log("[main] f[" + i + "].lastModifiedDate = " + f.lastModifiedDate.toLocaleDateString());
 	}
-	showMessage("[main] stored " + files.length + " files", GREEN_COLOR);
+	*/
+	console.log("[main.showFileInfo] Pronto a spedire '" + files[0].name + "'", GREEN_COLOR);
 }
 
+//usata a scopo di test
 function checkFormParam() {
 	var report = "";
 	$("input").each(function(input) {
@@ -210,11 +214,16 @@ function checkFormParam() {
 * Login e carico il file sulla repo Alfresco 
 */
 function upload() {
-	//stoppo animazioni se ce ne sono attive
-	//$("#status").finish();
 	$("#status-message").empty(); //pulisco area messaggi
-	
-	if (isEmptyString($("#siteid").val()) || isEmptyString($("#uploaddirectory").val()) || isEmptyString($("#username").val()) || isEmptyString($("#password").val())) {
+
+	var missingParameters = false;
+	$("#upload-form-wrapper input").each(function (index) {
+		if (isEmptyString( $(this).val() )) {
+			missingParameters = true;
+			return;
+		}
+	});
+	if (missingParameters) {
 		console.log("[main.upload] mancano dati per l'upload, quindi non lo eseguo");
 		showMessage("Compila tutti i dati del form o non posso caricare il file", RED_COLOR);
 		return;
@@ -222,23 +231,17 @@ function upload() {
 	
 	$("#upload-icon").addClass("icon-not-clickable"); //rendo il pulsante di upload non cliccabile
 	$("#overwrite").val($("#overwrite").is(":checked")); //setto il valore di overwrite (true o false)
-
-	/* serve per un check se c'è un file stored nella memoria per caricarlo su Alfresco
-	if ($.isEmptyObject($("#filedata").val())) {
-		console.log("[main.upload]: nessun file caricato");
-		showMessage("Carica un file da inviare ad Alfresco", RED_COLOR);
-		return;
-	}
-	*/
 	
 	//salvo dati di upload per la prossima volta
 	var toSave = {
+		alfroot: $("#alfroot").val(),
 		siteid: $("#siteid").val(),
 		username: $("#username").val(),
 		password: $("#password").val(),
 		uploaddirectory: $("#uploaddirectory").val(),
 		overwrite: $("#overwrite").val()
 	}
+	
 	saveLastUsedUploadData(toSave, function(result) {
 		if (result === "ok") {
 			console.log("[main.upload] dati di upload salvati per la prossima volta");
@@ -254,17 +257,22 @@ function upload() {
 		"username": $("#username").val(), 
 		"password": $("#password").val()
 	};
+	console.log("[main.upload] login via POST su: " + $("#alfroot").val().trim() + "/service/api/login/"+ JSON.stringify(usr));
 	
 	//chiamata ajax per gestire il login-ticket
 	$.ajax({
 		type: "POST",
-		url: alfrescoRoot + "/service/api/login",
+		//url: alfrescoRoot + "/service/api/login",
+		url: $("#alfroot").val().trim() + "/service/api/login",
 		contentType: "application/json; charset=utf-8", //questo è fondamentale
 		data: JSON.stringify(usr),
 		
 		//prima
 		beforeSend: function() {
-			//$("#status-bar").show();
+			//disabilito la possibilità di modificare i dati di upload
+			$("#upload-form-wrapper input").each(function (index) {
+				$(this).prop("readonly", true);
+			});
 			showMessage("Login...", GREEN_COLOR);
 			NProgress.start();
 		},
@@ -284,6 +292,11 @@ function upload() {
 			manageAjaxError(json);
 			
 			$("#upload-icon").removeClass("icon-not-clickable"); //riabilito il click sul pulsante di upload
+			
+			//riabilito la possibilità di modificare i dati di upload
+			$("#upload-form-wrapper input").each(function (index) {
+				$(this).prop("readonly", false);
+			});
 		}
 	});
 }
@@ -294,17 +307,17 @@ function alfrescoUpload(ticket) {
 	console.log("[main.alfrescoUpload] formData = " + formData);
 	$.ajax({
 		type: "POST",
-		url: alfrescoRoot + "/service/api/upload?alf_ticket=" + ticket,
+		url: $("#alfroot").val().trim() + "/service/api/upload?alf_ticket=" + ticket,
 		cache: false,
 		contentType: false, //altrimenti jQuery manipola i dati
 		processData: false,
 		dataType: "json",
 		data: formData,
 				
-		//prima
+		//prima di spedire sistemo i dati
 		beforeSend: function() {
 			showMessage("Upload...", GREEN_COLOR);
-			console.log("[main] upload...");
+			console.log("[main.alfrescoUpload] upload...");
 			
 			var uploadDir = $("#uploaddirectory").val();
 			$("#uploaddirectory").val(uploadDir.substring(1, uploadDir.length - 1)); //tolgo le barre
@@ -333,7 +346,14 @@ function alfrescoUpload(ticket) {
 		},
 		complete: function () {
 			console.log("[main.alfrescoUpload] upload-complete");
+			
 			$("#upload-icon").removeClass("icon-not-clickable"); //riabilito il click sul pulsante di upload
+
+			//riabilito la possibilità di modificare i dati di upload
+			$("#upload-form-wrapper input").each(function (index) {
+				$(this).prop("readonly", false);
+			});
+			
 			NProgress.done();
 		}
 	});
@@ -349,7 +369,7 @@ function manageAjaxError(json) {
 		message = resp.responseJSON.message;;
 	}
 	else {
-		message = "Unknown Error (maybe '" + alfrescoRoot + "' is not available)";
+		message = "Unknown Error (maybe '" + $("#alfroot").val() + "' is not available)";
 	}
 	console.log("[main.manageAjaxError]" + message);
 	showMessage(message, RED_COLOR);
@@ -364,20 +384,21 @@ function refreshProfilesList(callback) {
 			showMessage("Errore nel recupero lista profili: " + result, RED_COLOR);
 			callback("ko");
 		}
-		else if ($.isEmptyObject(result)) {
-			console.log("[main.refreshProfilesList] lista profili vuota su db");
-		}
 		else {		
-			var profiles = result;	
-
 			$("#select-profile").empty(); //svuoto la lista su pagina
-			
-			//aggiorno la lista lista su pagina
-			for (var i = 0; i < profiles.length; i++) {
-				$("#select-profile").append("<option value='" + profiles[i] + "'>" + profiles[i] + "</option>");
+			if (!$.isEmptyObject(result)) {
+				var profiles = result;
+				
+				//aggiorno la lista lista su pagina
+				for (var i = 0; i < profiles.length; i++) {
+					$("#select-profile").append("<option value='" + profiles[i] + "'>" + profiles[i] + "</option>");
+				}
+				console.log("[main.refreshProfilesList] lista profili su pagina svuotata e ripopolata: [" + profiles + "]");
+				$("#select-profile").prop("selectedIndex", -1); //default scelta vuota				
 			}
-			console.log("[main.refreshProfilesList] lista profili su pagina svuotata e ripopolata: [" + profiles + "]");
-			$("#select-profile").prop("selectedIndex", -1); //default scelta vuota
+			else {
+				console.log("[main.refreshProfilesList] lista profili vuota su db");
+			}
 			callback("ok");
 		}
 	});
@@ -403,6 +424,7 @@ function loadLastUsedUploadData() {
 //carica dati di upload nel form in pagina
 function setUploadData(data) {
 
+	$("#alfroot").val(data.alfroot);
 	$("#siteid").val(data.siteid);
 	$("#username").val(data.username);
 	$("#password").val(data.password);
@@ -419,25 +441,16 @@ function setUploadData(data) {
 }
 
 //show message in page (type=0 means success, type=1 means error)
-function showMessage(message, color) {
-	/*
-	if (type == SUCCESS) {
-		$("#status-message").css("color", GREEN_COLOR);
-		blinkBorder("status-message", GREEN_COLOR);
-	}
-	else {
-		$("#status-message").css("color", RED_COLOR);
-		blinkBorder("status-message", RED_COLOR);
-	}
-	*/
-	
+function showMessage(message, color) {	
+	$("#status-message-wrap").finish(); //concludo tutte le animazioni sull'elemento
 	$("#status-message").css("color", color);
-	blinkBorder("status-message", color);
+	blinkBorder("status-message-wrap", color);
 	$("#status-message").empty();
 	$("#status-message").text(message);
 }
 
+//evidenzia bordi di un elemento
 function blinkBorder(elementId, color) {
 	console.log("[main.blinkBorder] blinko #" + elementId + ", colore " + color);
-	$("#status-message").css("border-color", color).animate( {"border-color": "white"}, 1000);
+	$("#status-message-wrap").css("border-color", color).animate( {"border-color": "white"}, 1000);
 }
