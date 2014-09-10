@@ -276,7 +276,7 @@ function exportAll() {
 				console.log("[exportAll] errore nell'export: " + chrome.runtime.lastError.message);
 			}
 			else {
-				console.log("[exportAll] downloadId = " + id);
+				console.log("[exportAll] export ok. downloadId = " + id);
 			}
 		});
 	});
