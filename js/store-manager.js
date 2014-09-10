@@ -255,6 +255,34 @@ function getAll(callback) {
 }
 
 /**
+ * Esporta tutti i dati dello store locale su un file di backup
+ */
+function exportAll() {
+	//estraggo tutto il db
+	chrome.storage.sync.get(null, function(items) { //null implies all items
+		console.log("[exportAll] esporto tutti i dati su file");
+		var result = JSON.stringify(items);
+		var buff = btoa(result);
+		
+		//salvo come file 
+		var url = "data:application/json;base64," + buff;
+		chrome.downloads.download({
+			url: url,
+			filename: "alfresco-upload-backup.json",
+			saveAs: true
+		}, function(id) {
+			console.log("[exportAll] chrome.downloads.download callback");
+			if (chrome.runtime.lastError) {
+				console.log("[exportAll] errore nell'export: " + chrome.runtime.lastError.message);
+			}
+			else {
+				console.log("[exportAll] downloadId = " + id);
+			}
+		});
+	});
+}
+	
+/**
  * Quanti MB occupa il db?
  */
 function getBytesInUse(callback) {

@@ -3,9 +3,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
 	<title>Alfresco Upload</title>
-	<link rel="stylesheet" type="text/css" href="../css/upload.css">
+	<link rel="stylesheet" type="text/css" href="../entypo-font/css/entypo.css">
 	<link rel="stylesheet" type="text/css" href="../css/nprogress.css">
-	<link rel="stylesheet" type="text/css" href="../entypo-font/css/entypo.css">	
+	<link rel="stylesheet" type="text/css" href="../css/upload.css">
 </head>
 
 <body>
@@ -13,13 +13,20 @@
 		<img src="../img/ep_logo_azzurro.svg" height="52px" width="250px" alt="E-Project" />
 	</div>
 	
+	<div id="import-export-wrap">
+		<span id="export-icon" class="icon-export icon" title="Esporta profili"></span>
+		<span id="import-icon" class="icon-download icon" title="Importa profili"></span>
+		
+	</div>
+	
+
 	<div id="upload-form-wrapper" class="div-center">
 		<label>Alfresco URL</label>
-		<input id="alfroot" type="text" placeholder="Alfresco root (http://mio.server.com/alfresco)"><br>
+		<input id="alfroot" type="text" placeholder="Alfresco root (http://mio.server.com/alfresco)" /><br>
 		<label>User</label>
-		<input id="username" type="text" placeholder="Alfresco user"><br>
+		<input id="username" type="text" placeholder="Alfresco user" /><br>
 		<label>Password</label>
-		<input id="password" type="password" placeholder="Alfresco password"><br>
+		<input id="password" type="password" placeholder="Alfresco password" /><br>
 		<form id="upload-form" name="uploadForm" enctype="multipart/form-data">
 			<label>Sito</label>
 			<input id="siteid" type="text" name="siteid" placeholder="Nome del sito" /><br />
@@ -36,12 +43,14 @@
 			<input id="contenttype" type="hidden" name="contenttype" value="cm:content" />
 		</form>
 		<p id="submit-btn-wrap">
-			<span id="upload-icon" class="icon-upload-cloud icon-not-clickable icon"></span>
+			<span id="upload-icon" class="icon-upload-cloud icon-not-clickable icon" title="Carica il file su Alfresco Share"></span>
 		</p>
 	</div>
 	
 	<div id="status-message-wrap">
-		<div id="status-message"></div>
+		<div id="status-message">
+			<!-- testo popolato da JS -->
+		</div>
 	</div>
 	
 	<div id="control" class="div-center">
@@ -54,14 +63,14 @@
 		<span id="up-icon" class="icon-up-bold icon"></span>
 		<span id="heart-icon" class="icon-heart-empty icon"></span>
 		-->
-		<span id="save-icon" class="icon-floppy icon"></span>
-		<span id="trash-icon" class="icon-trash icon"></span>
+		<span id="save-icon" class="icon-floppy icon" title="Salva il profilo"></span>
+		<span id="trash-icon" class="icon-trash icon" title="Elimina profilo selezionato"></span>
 		
 		<!-- TEST 
 		<input id="clear-db" type="button" name="cleardb" class="btn-submit" value="Clear DB" />
 		<input id="save-prof" type="button" name="saveprof" class="btn-submit" value="Salva Profili" />
 		<input id="mbusati" type="button" name="refresh" class="btn-submit" value="MB in uso?" />
-		<input id="blink" type="button" name="blink" class="btn-submit" value="Blink" />
+		<input id="showpath" type="button" name="showpath" class="btn-submit" value="Mostra path-salvataggio" />
 		<!-- END TEST -->
 	
 	</div>

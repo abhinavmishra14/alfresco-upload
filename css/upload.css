@@ -4,6 +4,20 @@
 #control {
 	text-align: right
 }
+/*
+#export-icon {
+	font-size: 35px
+}
+#import-icon {
+	font-size: 35px
+}
+*/
+#import-export-wrap {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 5px
+}
 #filedata {
 	border: 3px dotted #0B85A1;
 	height: 120px;

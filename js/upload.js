@@ -16,6 +16,9 @@ $(function() {
 		var left = (screen.width/2) - (w/2);
 		var top = (screen.height/2) - ( h/2);
 		chrome.windows.create({'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top} , function(window) {});
+	});	
+	$("#export-icon").click(function (e) {
+		exportAll();
 	});
 	$("#filedata").on("dragenter", function (e) {
 		e.stopPropagation();
@@ -157,6 +160,7 @@ $(function() {
 	//$("#clear-db").click(clearDb); //clear db
 	//$("#save-prof").click(updateProfilesList); //save profiles
 	//$("#mbusati").click(getBytesInUse);
+	$("#showpath").click(saveFile);
 	///////////////////////
 	
 	//carica la lista di profili esistenti in pagina
@@ -453,4 +457,34 @@ function showMessage(message, color) {
 function blinkBorder(elementId, color) {
 	console.log("[main.blinkBorder] blinko #" + elementId + ", colore " + color);
 	$("#status-message-wrap").css("border-color", color).animate( {"border-color": "white"}, 1000);
+}
+
+///////////TEST////////////////
+function showPath(fileEntry) {
+	chrome.fileSystem.getDisplayPath(fileEntry, function(path) {
+		console.log(path)
+	});
+}
+
+function saveFile() {
+	console.log("save file");
+	chrome.fileSystem.getWritableEntry(chosenFileEntry, function(writableFileEntry) {
+		writableFileEntry.createWriter(function(writer) {
+		  writer.onerror = errorHandler;
+		  writer.onwriteend = callback;
+
+		chosenFileEntry.file(function(file) {
+		  writer.write(file);
+		});
+	  }, errorHandler);
+	});
+	
+	var content = "sa<gsafhnh";
+	var zipName = "backup.aubckp";
+	var dataURL = "data:application/zip;base64," + content;
+	chrome.downloads.download({
+		url:      dataURL,
+		filename: zipName,
+		saveAs:   true
+	});
 }

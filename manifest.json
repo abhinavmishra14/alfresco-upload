@@ -32,9 +32,11 @@
 	//"options_page": "pages/options.html",	
 	
 	"permissions": [
+		"downloads",
 		"notifications",
 		"tabs", 
 		"storage",
+		"unlimitedStorage", 
 		"http://*/*"
 	]
 }
