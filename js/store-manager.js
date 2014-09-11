@@ -257,10 +257,9 @@ function getAll(callback) {
 /**
  * Esporta tutti i dati dello store locale su un file di backup
  */
-function exportAll() {
+function exportAll(callback) {
 	//estraggo tutto il db
 	chrome.storage.sync.get(null, function(items) { //null implies all items
-		console.log("[exportAll] esporto tutti i dati su file");
 		var result = JSON.stringify(items);
 		var buff = btoa(result);
 		
@@ -273,10 +272,12 @@ function exportAll() {
 		}, function(id) {
 			console.log("[exportAll] chrome.downloads.download callback");
 			if (chrome.runtime.lastError) {
-				console.log("[exportAll] errore nell'export: " + chrome.runtime.lastError.message);
+				//console.log("[exportAll] errore nell'export: " + chrome.runtime.lastError.message);
+				callback(chrome.runtime.lastError.message);
 			}
 			else {
-				console.log("[exportAll] export ok. downloadId = " + id);
+				//console.log("[exportAll] export ok. downloadId = " + id);
+				callback("ok");
 			}
 		});
 	});

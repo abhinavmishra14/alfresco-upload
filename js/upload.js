@@ -10,15 +10,68 @@ chrome.browserAction.onClicked.addListener(function(activeTab){
 //on DOM content loaded
 $(function() {
 	//ADD LISTENERS
+	
+	//Chrome listeners
 	chrome.browserAction.onClicked.addListener(function() { //apre pagina di popup
 		var w = 540;
 		var h = 640;
 		var left = (screen.width/2) - (w/2);
 		var top = (screen.height/2) - ( h/2);
-		chrome.windows.create({'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top} , function(window) {});
+		chrome.windows.create(
+			{'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top}, 
+			function(window) {
+				console.log("[main.chrome.browserAction.onClicked] pagina upload.html aperta")
+		});
 	});	
+	/* Listen for messages from pages */
+	chrome.runtime.onMessage.addListener(function (msg) {
+		if (msg.action === "import-settings") {
+			console.log("[main.#chrome.runtime.onMessage] catchato il messaggio " + msg.action);
+		}
+		if (msg.msg === "file_input") {
+			console.log("[main.#chrome.runtime.onMessage] catchato il messaggio " + msg.msg);
+		}
+	});
+	
 	$("#export-icon").click(function (e) {
-		exportAll();
+		console.log("[main.#export-icon.click] esporto dati su file");
+		exportAll(function(result) {
+			if (result === "ok") {
+				console.log("[main.#export-icon.click] export ok");
+				//showMessage("Dati esportati correttamente", GREEN_COLOR);
+			}
+			else {
+				console.log("[main.#export-icon.click] export KO: " + result);
+				showMessage("Errore nell'export dei dati su file: " + result, RED_COLOR);
+			}
+		});
+	});
+	$("#import-icon").click(function (e) {
+		console.log("[main.#import-icon.click] importo dati");
+		//chrome.runtime.sendMessage({action: "import-settings"});
+		
+		//creo nuovo popup
+		chrome.windows.create({url: "pages/import-dialog.html", type: "popup", width: 450, height: 450, focused: true}, function(window) {
+			console.log("[main.chrome.browserAction.onClicked] pagina upload.html aperta")
+		});		
+		
+		
+		//creo nuovo tab
+		/*
+		chrome.tabs.create({
+			url: chrome.extension.getURL("pages/import-dialog.html"),
+			active: false
+		}, function(tab) {		
+			//after the tab has been created, open a window to inject the tab
+			chrome.windows.create({
+				tabId: tab.id,
+				type: 'popup',
+				focused: true, 
+				width: 400,
+				height: 400
+			});
+		});
+		*/
 	});
 	$("#filedata").on("dragenter", function (e) {
 		e.stopPropagation();
@@ -160,7 +213,7 @@ $(function() {
 	//$("#clear-db").click(clearDb); //clear db
 	//$("#save-prof").click(updateProfilesList); //save profiles
 	//$("#mbusati").click(getBytesInUse);
-	$("#showpath").click(saveFile);
+	//$("#showpath").click(saveFile);
 	///////////////////////
 	
 	//carica la lista di profili esistenti in pagina
@@ -460,31 +513,3 @@ function blinkBorder(elementId, color) {
 }
 
 ///////////TEST////////////////
-function showPath(fileEntry) {
-	chrome.fileSystem.getDisplayPath(fileEntry, function(path) {
-		console.log(path)
-	});
-}
-
-function saveFile() {
-	console.log("save file");
-	chrome.fileSystem.getWritableEntry(chosenFileEntry, function(writableFileEntry) {
-		writableFileEntry.createWriter(function(writer) {
-		  writer.onerror = errorHandler;
-		  writer.onwriteend = callback;
-
-		chosenFileEntry.file(function(file) {
-		  writer.write(file);
-		});
-	  }, errorHandler);
-	});
-	
-	var content = "sa<gsafhnh";
-	var zipName = "backup.aubckp";
-	var dataURL = "data:application/zip;base64," + content;
-	chrome.downloads.download({
-		url:      dataURL,
-		filename: zipName,
-		saveAs:   true
-	});
-}

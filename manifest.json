@@ -9,7 +9,9 @@
 	"background": {
 		"scripts": [ 
 			"js/jquery-2.1.1.min.js",
-			"js/upload.js"
+			"js/upload.js",
+			"js/store-manager.js",
+			"js/utils.js"
 		],
 		"persistent": false
 	},
