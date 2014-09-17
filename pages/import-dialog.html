@@ -3,9 +3,10 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
 	<title>Alfresco Upload - Import</title>
+	<!--
 	<link rel="stylesheet" type="text/css" href="../entypo-font/css/entypo.css">
-	<link rel="stylesheet" type="text/css" href="../css/nprogress.css">
-	<link rel="stylesheet" type="text/css" href="../css/upload.css">
+	-->
+	<link rel="stylesheet" type="text/css" href="../css/import-dialog.css">
 </head>
 
 <body>
@@ -15,11 +16,16 @@
 	</div>
 	-->
 	<div id="import-form-wrapper" class="div-center">
+		<!--
 		<label>File</label>
-		<input id="backup-file" type="file" name="backup-file" />
+		-->
+		<input id="filedata-import" type="file" name="backup-file" />
 
-		<p id="import">
+		<p id="import-btn-wrap">
+			<!--
 			<span id="import-icon" class="icon-upload-cloud icon-not-clickable icon" title="Importa profili e impostazioni"></span>
+			-->
+			<input id="import-btn" type="button" name="import-btn" class="btn-submit" value="Importa" title="Importa profili e impostazioni" disabled />
 		</p>
 	</div>
 	
@@ -29,11 +35,20 @@
 		</div>
 	</div>
 	
+	<!-- jquery -->
 	<script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="../js/jquery-ui-1.11.1.min.js"></script>
+	
+	<!--
 	<script type="text/javascript" src="../js/nprogress.js"></script>
 	<script type="text/javascript" src="../js/store-manager.js"></script>
-	<script type="text/javascript" src="../js/upload.js"></script>
+	-->
+	
+	<!-- utils -->
 	<script type="text/javascript" src="../js/utils.js"></script>
+	
+	<!-- core -->
+	<script type="text/javascript" src="../js/import-dialog.js"></script>
+
 </body>
 </html>

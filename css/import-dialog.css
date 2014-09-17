@@ -1,65 +1,36 @@
-#actual-profile {
-	width: 130px
-}
-#control {
-	text-align: right
-}
-/*
-#export-icon {
-	font-size: 35px
-}
-#import-icon {
-	font-size: 35px
-}
-*/
-#filedata {
-	border: 3px dotted #0B85A1;
-	height: 120px;
-	color: #92AAB0;
-}
 #filedata-import {
 	border: 3px dotted #0B85A1;
 	height: 100px;
+	width: 100%;
 	color: #92AAB0;
 }
-#import {
-	position: absolute;
-	top: 200px;
-	right: auto;
-	left: auto
-}
-#import-export-wrap {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 5px
-}
-#select-profile {
-	width: 120px
-}
-#status-message-wrap {
+#import-status-message-wrap {
 	display: table;
 	height: 45px;
 	overflow: hidden;
-	width: 350px;
+	width: 100%;
 	margin: 0 auto;
 	border: 1px solid white;
 	border-radius: 5px
 }
-#status-message {
+#import-status-message {
 	display: table-cell;
 	vertical-align: middle;
 	width: 100%;
 	margin: 0 auto;
 	text-align: center;
 }
-#submit-btn-wrap {
-	text-align: right;
-	padding: 10px 0px 0px 0px;
-	margin: 0px
+/*
+#import-btn-wrap {
+	position: absolute;
+	top: 150px;
+	right: 50%
 }
-#upload-icon {
-	font-size: 60px
+*/
+#import-btn  {
+	display: block;
+    width: 130px;
+    margin: 10px auto 0px auto;
 }
 
 .absolute-center {
@@ -74,18 +45,6 @@
 	display: inline-block;
 	margin: 0 auto
 }
-
-/* NON USO L'ANIMAZIONE AL MOMENTO */
-.blinking-border {
-    /*-webkit-transition: all 1s;*/
-    -webkit-animation: DIV-BORDER 1s 1; /*nome,durata,ripetizioni*/
-}
-@-webkit-keyframes DIV-BORDER {
-    0% { border-color: green }
-    30% { border-color: white }
-	100% { border-color: green }
-}
-/*-------------------------------*/
 
 .btn-submit {
 	background-color: #001DD6
@@ -133,6 +92,9 @@ input[type=button] {
 	padding: 6px 16px 6px 16px;
 	text-decoration: none
 }
+input[type=button]:click {
+	background-color: #15E82E
+}
 input[type=button]:hover {
 	background-color: #24B2FF
 }
@@ -145,13 +107,3 @@ input[type=file] {
 input[type=text] {
 	width: 250px
 }
-input[type=password] {
-	width: 250px
-}
-label {
-	clear: left;
-	float: left;
-	width: 77px;
-	text-align: right;
-	padding-right: 10px
-}​

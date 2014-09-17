@@ -1,3 +1,11 @@
+/**
+ * Evidenzia bordi di un elemento da un colore al bianco per 1 secondo (ha bisogno di jquery-ui lib)
+ */
+function blinkBorder(elementId, color) {
+	console.log("[main.blinkBorder] blinko #" + elementId + ", colore " + color);
+	$("#" + elementId).css("border-color", color).animate( {"border-color": "white"}, 1000);
+}
+
 function disableButtonById(id) {
 	//disabilito pulsante di invio
 	$("#" + id).prop("disabled", true);

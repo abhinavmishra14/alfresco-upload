@@ -51,10 +51,9 @@ $(function() {
 		//chrome.runtime.sendMessage({action: "import-settings"});
 		
 		//creo nuovo popup
-		chrome.windows.create({url: "pages/import-dialog.html", type: "popup", width: 450, height: 450, focused: true}, function(window) {
+		chrome.windows.create({url: "pages/import-dialog.html", type: "popup", width: 450, height: 320, focused: true}, function(window) {
 			console.log("[main.chrome.browserAction.onClicked] pagina upload.html aperta")
 		});		
-		
 		
 		//creo nuovo tab
 		/*
@@ -504,12 +503,6 @@ function showMessage(message, color) {
 	blinkBorder("status-message-wrap", color);
 	$("#status-message").empty();
 	$("#status-message").text(message);
-}
-
-//evidenzia bordi di un elemento
-function blinkBorder(elementId, color) {
-	console.log("[main.blinkBorder] blinko #" + elementId + ", colore " + color);
-	$("#status-message-wrap").css("border-color", color).animate( {"border-color": "white"}, 1000);
 }
 
 ///////////TEST////////////////
