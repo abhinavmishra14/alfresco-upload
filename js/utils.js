@@ -3,7 +3,7 @@
  */
 function blinkBorder(elementId, color) {
 	$("#" + elementId).finish(); //termino eventuali animazioni precedenti
-	console.log("[main.blinkBorder] blinko #" + elementId + ", colore " + color);
+	//console.log("[main.blinkBorder] blinko #" + elementId + ", colore " + color);
 	$("#" + elementId).css("border-color", color).animate( {"border-color": "white"}, 1000);
 }
 
