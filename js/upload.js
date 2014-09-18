@@ -90,10 +90,10 @@ $(function() {
 
 	//gestione dei colori delle icone
 	$(".icon").hover( function(e) {
-		$(this).toggleClass("icon icon-highlited"); 
-		$(this).removeClass(clGreen); //gestisce il caso in cui si tiene premuto il pulsante sinistro del mouse e lo si rilascia fuori dall'elemento 
+		$(this).toggleClass("icon icon-highlited");
+		$(this).removeClass(clGreen); 
 	}).mousedown(function(e) {
-		$(this).toggleClass(clGreen); 
+		$(this).toggleClass(clGreen);
 	}).mouseup( function(e) {
 		$(this).toggleClass(clGreen); 
 	});
@@ -209,7 +209,7 @@ $(function() {
 	$("#upload-icon").click(upload); //submit button upload to Alfresco
 	
 	//SOLO PER TEST!!!!!
-	//$("#clear-db").click(clearDb); //clear db
+	$("#clear-db").click(clearDb); //clear db
 	//$("#save-prof").click(updateProfilesList); //save profiles
 	//$("#mbusati").click(getBytesInUse);
 	//$("#showpath").click(saveFile);
@@ -498,7 +498,6 @@ function setUploadData(data) {
 
 //show message in page (type=0 means success, type=1 means error)
 function showMessage(message, color) {	
-	$("#status-message-wrap").finish(); //concludo tutte le animazioni sull'elemento
 	$("#status-message").css("color", color);
 	blinkBorder("status-message-wrap", color);
 	$("#status-message").empty();

@@ -282,6 +282,24 @@ function exportAll(callback) {
 		});
 	});
 }
+
+/**
+ * Importa tutti i dati nello store locale parsando un file json
+ */
+function importAll(json, callback) {
+	//importo tutto il db
+	//console.log("[importAll] import in corso su storage");
+	chrome.storage.sync.set(json, function(result) { //null implies all items
+		if (chrome.runtime.lastError) {
+			//console.log("[importAll] errore nell'export: " + chrome.runtime.lastError.message);
+			callback(chrome.runtime.lastError.message);
+		}
+		else {
+			//console.log("[importAll] import ok");
+			callback("ok");
+		}
+	});
+}
 	
 /**
  * Quanti MB occupa il db?

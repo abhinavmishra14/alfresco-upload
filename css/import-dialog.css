@@ -20,59 +20,20 @@
 	margin: 0 auto;
 	text-align: center;
 }
-/*
-#import-btn-wrap {
-	position: absolute;
-	top: 150px;
-	right: 50%
-}
-*/
 #import-btn  {
 	display: block;
     width: 130px;
     margin: 10px auto 0px auto;
 }
 
-.absolute-center {
-	margin: auto;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0
-}
-.always-visible {
-	display: inline-block;
-	margin: 0 auto
-}
-
-.btn-submit {
+.btn-blue {
 	background-color: #001DD6
 }
-.btn-control {
-	background-color: #006FE6
+.btn-green {
+	background-color: #15E82E!important
 }
-.div-center {
-	width: 350px;
-	padding: 20px;
-	margin: 0 auto;	
-}
-.icon {
-	font-size: 25px;
-	color: #006FE6
-}
-.icon-highlited {
-	font-size: 25px;
-	color: #24B2FF
-}
-.icon-green {
-	font-size: 25px;
-	color: #15E82E
-}
-.icon-not-clickable {
-	pointer-events: none;
-	font-size: 25px;
-	color: #8E8F9C; /*grigio*/
+.btn-azure {
+	background-color: #24B2FF
 }
 
 * {
@@ -92,18 +53,10 @@ input[type=button] {
 	padding: 6px 16px 6px 16px;
 	text-decoration: none
 }
-input[type=button]:click {
-	background-color: #15E82E
-}
-input[type=button]:hover {
-	background-color: #24B2FF
-}
+
 input[type=button]:disabled {
 	background-color: #63808F
 }
 input[type=file] {
-	width: 250px
-}
-input[type=text] {
 	width: 250px
 }
