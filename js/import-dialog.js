@@ -22,8 +22,6 @@ $(function() {
 			$("#import-btn").prop("disabled", true);
 			return;
 		}
-		finally {
-		}
 		showImportMessage("File ok, puoi importare i dati", "green");
 		$("#import-btn").prop("disabled", false); //permetto di importare visto che c'è un file caricato e i dati parsati
     };
