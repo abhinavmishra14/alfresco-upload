@@ -118,6 +118,46 @@ function saveProfile(data, callback) {
 }
 
 /**
+ * Salva i dati di un profilo nello storage (chrome.storage). In input si aspetta un oggetto con:
+ * profilename: stringa
+ * username: stringa
+ * password: stringa
+ * siteid: stringa
+ * uploaddirectory: stringa
+ * overwrite: stringa (true o false)
+ *
+ * restituisce: "ok" se tutto bene, stringa d'errore se qualcosa va male 
+ */
+function saveProfileX(data, callback) {
+	var id = data.profilename; //salvo l'id del profilo
+	
+	chrome.storage.sync.get("epau_profiles", function(result) {
+		//console.log("[saveProfileX] epau_profiles PRIMA: " + JSON.stringify(result));
+		//console.log("[saveProfileX] result.epau_profiles = " + result.epau_profiles);
+		if (isUndefined(result.epau_profiles)) {
+			result.epau_profiles = {}; //inizializzo se undefined
+		}
+		result.epau_profiles[id] = data; //salvo indicizzando con l'id del profilo (se esistente sovrascrivo)
+		
+		chrome.storage.sync.set({"epau_profiles": result.epau_profiles}, function () {
+			//in caso di errore restituisco il messaggio d'errore di chrome
+			if (chrome.runtime.lastError) {
+				callback(chrome.runtime.lastError.message);
+			}
+			else {
+				/*
+				chrome.storage.sync.get({"epau_profiles": []}, function(result) {
+					console.log("[saveProfileX] epau_profiles DOPO: " + JSON.stringify(result));
+					console.log("[saveProfileX] questi i nomi dei profili: " + Object.keys(result.epau_profiles));
+				});
+				*/
+				callback("ok");
+			}
+		});
+	});
+}
+
+/**
  * Restituisce in callback un array con i dati di un profilo oppure un messaggio d'errore se qualcosa va storto
  *
  */
@@ -245,10 +285,10 @@ function getAll(callback) {
 			callback("db vuoto");
 		}
 		else {
-			//var allKeys = Object.keys(items);
-			//var allValues = Object.values(items);
-			//console.log("[getAll] keys: [" + allKeys + "]");
-			//console.log("[getAll] values: [" + allValues + "]");
+			var allKeys = Object.keys(items);
+			var allValues = Object.values(items);
+			console.log("[getAll] keys: [" + allKeys + "]");
+			console.log("[getAll] values: [" + allValues + "]");
 			callback(items);
 		}
 	});

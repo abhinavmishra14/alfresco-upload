@@ -121,7 +121,17 @@ $(function() {
 			};
 			var id = data.profilename;
 			
+			saveProfileX(data, function(result) {
+				if (result === "ok") {
+					console.log("[main.#save-icon.click] aggiunto profilo ok");
+				}
+				else {
+					console.log("[main.#save-icon.click] saveProfileX qualcosa non va");
+				}
+			});
+			
 			//salva profilo su storage (vedi store-manager.js)
+			/*
 			saveProfile(data, function(result) {			
 				if (result == "ok") {
 					showMessage("Profilo '" + id + "' salvato con successo", GREEN_COLOR);
@@ -151,6 +161,9 @@ $(function() {
 					showMessage("Errore nel salvataggio del profilo  '" + id + "': " + result, RED_COLOR);
 				}						
 			});
+			*/
+			
+			
 		}
 	});
 
@@ -210,6 +223,7 @@ $(function() {
 	
 	//SOLO PER TEST!!!!!
 	$("#clear-db").click(clearDb); //clear db
+	$("#mostra").click(getAll); //mostra tutto
 	//$("#save-prof").click(updateProfilesList); //save profiles
 	//$("#mbusati").click(getBytesInUse);
 	//$("#showpath").click(saveFile);
