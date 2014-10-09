@@ -111,7 +111,7 @@ function deleteProfile(id, callback) {
  * callback: dove ritorno il risultato
  */
 function saveLastUsedUploadData(data, callback) {
-	chrome.storage.sync.set({"last_used_upload_data": data}, function() {
+	chrome.storage.sync.set({"epau_last_used_upload_data": data}, function() {
 		if (chrome.runtime.lastError) {
 			callback(chrome.runtime.lastError.message);
 		}
@@ -128,13 +128,13 @@ function saveLastUsedUploadData(data, callback) {
  * callback: dove ritorno il risultato
  */
 function getLastUsedUploadData(callback) {
-	chrome.storage.sync.get("last_used_upload_data", function(result) {
+	chrome.storage.sync.get("epau_last_used_upload_data", function(result) {
 		if (chrome.runtime.lastError) {
 			callback(chrome.runtime.lastError.message);
 		}
 		else {
 			//console.log("[getLastUsedUploadData] recuperati ultimi dati di upload usati: " + JSON.stringify(result.last_used_upload_data));
-			callback(result.last_used_upload_data);
+			callback(result.epau_last_used_upload_data);
 		}
 	});
 }
