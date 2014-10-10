@@ -46,6 +46,8 @@ $(function() {
 			}
 		});
 	});
+	
+	/*
 	$("#import-icon").click(function (e) {
 		console.log("[main.#import-icon.click] importo dati");
 		//chrome.runtime.sendMessage({action: "import-settings"});
@@ -54,24 +56,8 @@ $(function() {
 		chrome.windows.create({url: "pages/import-dialog.html", type: "popup", width: 450, height: 320, focused: true}, function(window) {
 			//console.log("[main.chrome.browserAction.onClicked] pagina upload.html aperta");
 		});
-		
-		//creo nuovo tab
-		/*
-		chrome.tabs.create({
-			url: chrome.extension.getURL("pages/import-dialog.html"),
-			active: false
-		}, function(tab) {		
-			//after the tab has been created, open a window to inject the tab
-			chrome.windows.create({
-				tabId: tab.id,
-				type: 'popup',
-				focused: true, 
-				width: 400,
-				height: 400
-			});
-		});
-		*/
 	});
+	*/
 	$("#filedata").on("dragenter", function (e) {
 		e.stopPropagation();
 		e.preventDefault();
@@ -203,6 +189,23 @@ $(function() {
 			}
 		});
 		
+	});	
+	
+	//apro popup
+	$(".open-popup-link").magnificPopup({
+		type: "inline",
+		midClick: true,		
+		callbacks: {
+			elementParse: function(item) {
+				// Function will fire for each target element
+				// "item.el" is a target DOM element (if present)
+				// "item.src" is a source that you may modify
+				
+				//pulisco area di output e file caricato
+				$("#import-status-message").empty();
+				$("#filedata-import").val("");
+			}
+		}
 	});	
 	
 	//carica su Alfresco

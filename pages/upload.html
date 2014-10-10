@@ -4,6 +4,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
 	<title>Alfresco Upload</title>
 	<link rel="stylesheet" type="text/css" href="../entypo-font/css/entypo.css">
+	<link rel="stylesheet" type="text/css" href="../css/import-dialog.css">
+	<link rel="stylesheet" type="text/css" href="../css/magnific-popup.css">
 	<link rel="stylesheet" type="text/css" href="../css/nprogress.css">
 	<link rel="stylesheet" type="text/css" href="../css/upload.css">
 </head>
@@ -15,7 +17,32 @@
 	
 	<div id="import-export-wrap">
 		<span id="export-icon" class="icon-export icon" title="Esporta tutto su file"></span>
-		<span id="import-icon" class="icon-download icon" title="Importa da file"></span>
+		<a href="#import-popup" class="open-popup-link">
+			<span id="import-icon" class="icon-download icon" title="Importa da file"></span>
+		</a>
+		<!-- import popup (uses magnific popup)-->
+		<div id="import-popup" class="white-popup mfp-hide">
+			<div id="import-form-wrapper" class="div-center">
+				<!--
+				<label>File</label>
+				-->
+				<input id="filedata-import" type="file" name="backup-file" />
+
+				<p id="import-btn-wrap">
+					<!--
+					<span id="import-icon" class="icon-upload-cloud icon-not-clickable icon" title="Importa profili e impostazioni"></span>
+					-->
+					<input id="import-btn" type="button" name="import-btn" class="btn-blue" value="Importa" title="Importa profili e impostazioni" disabled />
+				</p>
+			</div>
+			
+			<div id="import-status-message-wrap">
+				<div id="import-status-message">
+					<!-- testo popolato da JS -->
+				</div>
+			</div>	
+		</div>
+		
 	</div>
 
 	<div id="upload-form-wrapper" class="div-center">
@@ -80,11 +107,13 @@
 	<script type="text/javascript" src="../js/jquery-ui-1.11.1.min.js"></script>
 	
 	<!-- plus -->
+	<script type="text/javascript" src="../js/magnific-popup.js"></script>
 	<script type="text/javascript" src="../js/nprogress.js"></script>
 	<script type="text/javascript" src="../js/store-manager.js"></script>
 	<script type="text/javascript" src="../js/utils.js"></script>
 	
 	<!-- core -->
+	<script type="text/javascript" src="../js/import-dialog.js"></script>
 	<script type="text/javascript" src="../js/upload.js"></script>
 </body>
 </html>

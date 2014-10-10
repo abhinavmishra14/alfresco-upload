@@ -116,6 +116,16 @@
 	color: #8E8F9C; /*grigio*/
 }
 
+/* classe per i popup */
+.white-popup {
+	position: relative;
+	background: #FFF;
+	padding: 20px;
+	width:auto;
+	max-width: 500px;
+	margin: 20px auto;
+}
+
 * {
 	font-family: 'Open Sans', sans-serif;
 	font-size: small
