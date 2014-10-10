@@ -53,7 +53,7 @@ $(function() {
 		//creo nuovo popup
 		chrome.windows.create({url: "pages/import-dialog.html", type: "popup", width: 450, height: 320, focused: true}, function(window) {
 			console.log("[main.chrome.browserAction.onClicked] pagina upload.html aperta")
-		});		
+		});
 		
 		//creo nuovo tab
 		/*

@@ -237,25 +237,37 @@ function exportAll(callback) {
 }
 
 /**
- * Importa tutti i dati nello store locale parsando un file json
+ * Importa tutti i dati dei profili nello store locale parsando un oggetto json
  */
-function importAll(json, callback) {
-	//importo tutto il db
-	//console.log("[importAll] import in corso su storage");
-	chrome.storage.sync.set(json, function(result) { //null implies all items
-		if (chrome.runtime.lastError) {
-			//console.log("[importAll] errore nell'export: " + chrome.runtime.lastError.message);
-			callback(chrome.runtime.lastError.message);
+function importProfiles(json, callback) {
+	//importo i profili
+	//console.log("[importProfiles] import in corso su storage");
+	var profiles = {};
+	var newProfiles = {};
+	chrome.storage.sync.get("epau_profiles", function(result) {
+		profiles = result.epau_profiles;
+		newProfiles = json.epau_profiles;
+		
+		//pusho i profili nuovi
+		for (var profile in newProfiles) {
+			profiles[profile] = newProfiles[profile];
 		}
-		else {
-			//console.log("[importAll] import ok");
-			callback("ok");
-		}
+		
+		chrome.storage.sync.set({"epau_profiles": profiles}, function(result) { //null implies all items
+			if (chrome.runtime.lastError) {
+				//console.log("[importProfiles] errore nell'export: " + chrome.runtime.lastError.message);
+				callback(chrome.runtime.lastError.message);
+			}
+			else {
+				//console.log("[importProfiles] import ok");
+				callback("ok");
+			}
+		});
 	});
 }
 	
 /**
- * Quanti MB occupa il db?
+ * Quanti byte occupa il db?
  */
 function getBytesInUse(callback) {
 	chrome.storage.sync.getBytesInUse(null, function(result) {

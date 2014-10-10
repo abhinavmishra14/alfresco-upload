@@ -16,6 +16,12 @@ $(function() {
 		//console.log("[main.$.fileReader.onload] file = " + event.target.result);
 		try {
 			importContent = JSON.parse(event.target.result);
+			var jsonString = JSON.stringify(importContent);
+			//console.log("contenuto file json: " + JSON.stringify(importContent));
+			if (jsonString.search("epau_profiles") == -1) {
+				showImportMessage("Il file è ok, ma non ci sono profili da importare", "green");
+				return;
+			}
 		}
 		catch (e) {
 			showImportMessage("Il file caricato pare incompatibile. Sicuro che sia un export dell'estensione alfresco-upload?", "red");
@@ -34,7 +40,7 @@ $(function() {
 	$("#filedata-import").change(function (e) {
 		$("#filedata-import").css("border", "3px dotted #0B85A1");
 		e.preventDefault();
-		var files = event.target.files || event.originalEvent.dataTransfer.files;		
+		var files = event.target.files || event.originalEvent.dataTransfer.files;
 		console.log("[main.#filedata-import.change] Pronto a importare '" + files[0].name + "'");
 		showImportMessage("Sto importando '" + files[0].name + "'", "green");
 		
@@ -45,7 +51,7 @@ $(function() {
 	//eventi sul pulsante di import
 	$("#import-btn").click(function (e) {		
 		//importo, vedi store-manager.js
-		importAll(importContent, function(result) {
+		importProfiles(importContent, function(result) {
 			if (result === "ok") {
 				console.log("[main.#import-btn.click] Import ok");		
 				showImportMessage("Dati importati correttamente. Riavvia l'estensione per vederli", "green");
