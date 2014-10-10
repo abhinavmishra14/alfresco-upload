@@ -197,8 +197,7 @@ $(function() {
 		midClick: true,		
 		callbacks: {
 			elementParse: function(item) {
-				// Function will fire for each target element
-				// "item.el" is a target DOM element (if present)
+				// Function will fire for each target element "item.el" is a target DOM element (if present)
 				// "item.src" is a source that you may modify
 				
 				//pulisco area di output e file caricato
