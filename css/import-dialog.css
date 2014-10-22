@@ -25,38 +25,3 @@
     width: 130px;
     margin: 10px auto 0px auto;
 }
-
-.btn-blue {
-	background-color: #001DD6
-}
-.btn-green {
-	background-color: #15E82E!important
-}
-.btn-azure {
-	background-color: #24B2FF
-}
-
-* {
-	font-family: 'Open Sans', sans-serif;
-	font-size: small
-}
-img {
-	display: block;
-	margin: 0 auto
-}
-input[type=button] {
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 4px;
-	border: 0px solid;
-	color: #ffffff;
-	padding: 6px 16px 6px 16px;
-	text-decoration: none
-}
-
-input[type=button]:disabled {
-	background-color: #63808F
-}
-input[type=file] {
-	width: 250px
-}

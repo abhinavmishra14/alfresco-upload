@@ -17,11 +17,6 @@
 	height: 120px;
 	color: #92AAB0;
 }
-#filedata-import {
-	border: 3px dotted #0B85A1;
-	height: 100px;
-	color: #92AAB0;
-}
 #import {
 	position: absolute;
 	top: 200px;
@@ -87,11 +82,14 @@
 }
 /*-------------------------------*/
 
-.btn-submit {
+.btn-blue {
 	background-color: #001DD6
 }
-.btn-control {
-	background-color: #006FE6
+.btn-green {
+	background-color: #15E82E!important
+}
+.btn-azure {
+	background-color: #24B2FF
 }
 .div-center {
 	width: 350px;
@@ -116,7 +114,7 @@
 	color: #8E8F9C; /*grigio*/
 }
 
-/* classe per i popup */
+/* classe per i popup (magnific popup) */
 .white-popup {
 	position: relative;
 	background: #FFF;
