@@ -42,7 +42,8 @@ $(function() {
 			}
 			else {
 				console.log("[main.#export-icon.click] export KO: " + result);
-				showMessage("Errore nell'export dei dati su file: " + result, RED_COLOR);
+				//showMessage("Errore nell'export dei dati su file: " + result, RED_COLOR);
+				showMessage(chrome.i18n.getMessage("error_export_on_file") + ": "  + result, RED_COLOR);
 			}
 		});
 	});
@@ -71,7 +72,8 @@ $(function() {
 		$("#upload-icon").removeClass("icon-not-clickable"); //permetto di inviare visto che c'è un file caricato
 		
 		console.log("[main.#filedata.change] Pronto a spedire '" + files[0].name + "'");
-		showMessage("Pronto a spedire '" + files[0].name + "'", GREEN_COLOR);
+		//showMessage("Pronto a spedire '" + files[0].name + "'", GREEN_COLOR);
+		showMessage(chrome.i18n.getMessage("ready_to_send_file") + " '" + files[0].name + "'", GREEN_COLOR);
 	});
 
 	//gestione dei colori delle icone
@@ -92,7 +94,8 @@ $(function() {
 	//salva profilo
 	$("#save-icon").click(function(e) {
 		if (!$("#actual-profile").val().trim()) { //se non c'è il nome profilo (ha lunghezza 0)
-			showMessage("Dai un nome al profilo prima di salvarlo!", RED_COLOR);
+			//showMessage("Dai un nome al profilo prima di salvarlo!", RED_COLOR);
+			showMessage(chrome.i18n.getMessage("error_naming_profile") + "!", RED_COLOR);
 		}
 		else {
 			//preparo dati da salvare

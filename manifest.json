@@ -25,6 +25,8 @@
 		"default_title": "Carica un file sul tuo Alfresco"
 	},
 	
+	"default_locale": "en",
+	
 	"icons": { 
 		"16": "img/alfresco_logo_16.png",
 		"48": "img/alfresco_logo_48.png",

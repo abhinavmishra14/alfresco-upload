@@ -1,0 +1,14 @@
+{
+	"error_export_on_file": {
+		"message": "Export error",
+		"description": "Error on file export"
+	}
+	"error_naming_profile": {
+		"message": "Please give the profile a name before saving it",
+		"description": "Error when saving a new profile. First you have to give it a name"
+	}
+	"ready_to_send_file": {
+		"message": "Ready to send file",
+		"description": "Message shown when a file is loaded and ready to be sent to Alfresco"
+	}
+}

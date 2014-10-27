@@ -1,0 +1,15 @@
+{
+	"error_export_on_file": {
+		"message": "Errore nell'export su file",
+		"description": "Errore nell'export su file"
+	}
+	"error_naming_profile": {
+		"message": "Dai un nome al profilo prima di salvarlo",
+		"description": "Errore mostrato quando si tenta di salvare un profilo senza prima dargli un nome"
+	}
+
+	"ready_to_send_file": {
+		"message": "Pronto a spedire il file",
+		"description": "Messaggio mostrato quando un file è pronto per essere spedito ad Alfresco"
+	}
+}
