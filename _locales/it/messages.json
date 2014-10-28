@@ -1,15 +1,32 @@
-{
-	"error_export_on_file": {
-		"message": "Errore nell'export su file",
+ï»¿{
+	"appDefaultTitle": {
+		"message": "Carica un file sul tuo Alfresco", 
+		"description": "Tooltip visibile quando si passa col mouse sull'icona dell'estensione"
+	}, 
+	"appDescription": {
+		"message": "Carica file sul tuo Alfresco in modo rapido e semplice", 
+		"description": "descrizione dell'app"
+	}, 
+	"msg_error_export_on_file": {
+		"message": "Errore nell'export su file", 
 		"description": "Errore nell'export su file"
-	}
-	"error_naming_profile": {
-		"message": "Dai un nome al profilo prima di salvarlo",
+	}, 
+	"msg_error_naming_profile": {
+		"message": "Dai un nome al profilo prima di salvarlo", 
 		"description": "Errore mostrato quando si tenta di salvare un profilo senza prima dargli un nome"
-	}
-
-	"ready_to_send_file": {
-		"message": "Pronto a spedire il file",
-		"description": "Messaggio mostrato quando un file è pronto per essere spedito ad Alfresco"
+	}, 
+	"msg_ready_to_send_file": {
+		"message": "Pronto a spedire il file", 
+		"description": "Messaggio mostrato quando un file risulta pronto per essere spedito ad Alfresco"
+	}, 
+	"msg_save_profile": {
+		"message": "Profilo '$id$' salvato", 
+		"description": "Messaggio mostrato quando un profilo viene salvato correttamente", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "il mio profilo"
+			}
+		}
 	}
 }

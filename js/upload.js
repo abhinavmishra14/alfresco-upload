@@ -43,7 +43,7 @@ $(function() {
 			else {
 				console.log("[main.#export-icon.click] export KO: " + result);
 				//showMessage("Errore nell'export dei dati su file: " + result, RED_COLOR);
-				showMessage(chrome.i18n.getMessage("error_export_on_file") + ": "  + result, RED_COLOR);
+				showMessage(chrome.i18n.getMessage("msg_error_export_on_file") + ": "  + result, RED_COLOR);
 			}
 		});
 	});
@@ -73,7 +73,7 @@ $(function() {
 		
 		console.log("[main.#filedata.change] Pronto a spedire '" + files[0].name + "'");
 		//showMessage("Pronto a spedire '" + files[0].name + "'", GREEN_COLOR);
-		showMessage(chrome.i18n.getMessage("ready_to_send_file") + " '" + files[0].name + "'", GREEN_COLOR);
+		showMessage(chrome.i18n.getMessage("msg_ready_to_send_file") + " '" + files[0].name + "'", GREEN_COLOR);
 	});
 
 	//gestione dei colori delle icone
@@ -95,7 +95,7 @@ $(function() {
 	$("#save-icon").click(function(e) {
 		if (!$("#actual-profile").val().trim()) { //se non c'è il nome profilo (ha lunghezza 0)
 			//showMessage("Dai un nome al profilo prima di salvarlo!", RED_COLOR);
-			showMessage(chrome.i18n.getMessage("error_naming_profile") + "!", RED_COLOR);
+			showMessage(chrome.i18n.getMessage("msg_error_naming_profile") + "!", RED_COLOR);
 		}
 		else {
 			//preparo dati da salvare
@@ -114,6 +114,7 @@ $(function() {
 			saveProfile(data, function(result) {			
 				if (result == "ok") {
 					showMessage("Profilo '" + id + "' salvato con successo", GREEN_COLOR);
+					showMessage(chrome.i18n.getMessage("msg_save_profile", id), GREEN_COLOR);
 					
 					//aggiorno lista profili su pagina solo se il profilo non è già elencato
 					var exists = false;

@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	
 	"name": "Alfresco Upload",
-	"description": "Carica file in Alfresco Share",
+	"description": "__MSG_appDescription__",
 	"version": "1.0",
 	"author": "Stefano La Tartaruga",
 
@@ -22,7 +22,7 @@
 			"38": "img/alfresco_logo_38.png"
 		},
 		//"default_popup": "pages/upload.html",
-		"default_title": "Carica un file sul tuo Alfresco"
+		"default_title": "__MSG_appDefaultTitle__"
 	},
 	
 	"default_locale": "en",
