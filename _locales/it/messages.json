@@ -15,6 +15,20 @@
 		"message": "Dai un nome al profilo prima di salvarlo", 
 		"description": "Errore mostrato quando si tenta di salvare un profilo senza prima dargli un nome"
 	}, 
+	"msg_error_save_profile": {
+		"message": "Errore nel salvataggio del profilo '$id$': $result$", 
+		"description": "Messaggio d'errore mostrato quando ci sono problemi col salvataggio del profilo", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "mio profilo"
+			}, 
+			"result": {
+				"content": "$2",
+				"example": "problemi col salvataggio dati su db"
+			}
+		}
+	},
 	"msg_ready_to_send_file": {
 		"message": "Pronto a spedire il file", 
 		"description": "Messaggio mostrato quando un file risulta pronto per essere spedito ad Alfresco"

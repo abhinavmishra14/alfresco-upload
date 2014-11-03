@@ -113,7 +113,7 @@ $(function() {
 			//salva profilo su storage (vedi store-manager.js)
 			saveProfile(data, function(result) {			
 				if (result == "ok") {
-					showMessage("Profilo '" + id + "' salvato con successo", GREEN_COLOR);
+					//showMessage("Profilo '" + id + "' salvato con successo", GREEN_COLOR);
 					showMessage(chrome.i18n.getMessage("msg_save_profile", id), GREEN_COLOR);
 					
 					//aggiorno lista profili su pagina solo se il profilo non è già elencato
@@ -138,7 +138,8 @@ $(function() {
 					}
 				}
 				else {
-					showMessage("Errore nel salvataggio del profilo  '" + id + "': " + result, RED_COLOR);
+					//showMessage("Errore nel salvataggio del profilo  '" + id + "': " + result, RED_COLOR);
+					showMessage(chrome.i18n.getMessage("msg_error_save_profile", [id, result]), RED_COLOR);
 				}						
 			});			
 		}

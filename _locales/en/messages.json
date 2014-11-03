@@ -15,6 +15,20 @@
 		"message": "Please give the profile a name before saving it", 
 		"description": "Error when saving a new profile. First you have to give it a name"
 	}, 
+	"msg_error_save_profile": {
+		"message": "Error saving profile '$id$': $result$", 
+		"description": "Message shown when a profile is saved", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "my profile"
+			}, 
+			"result": {
+				"content": "$2",
+				"example": "problems with database"
+			}
+		}
+	}, 
 	"msg_ready_to_send_file": {
 		"message": "Ready to send file", 
 		"description": "Message shown when a file is loaded and ready to be sent to Alfresco"
