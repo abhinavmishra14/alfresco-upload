@@ -52,7 +52,7 @@
 			"id": {
 				"content": "$1",
 				"example": "id del profilo"
-			}
+			}, 
 			"result": {
 				"content": "$2",
 				"example": "messaggio d'errore"
