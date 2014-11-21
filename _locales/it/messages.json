@@ -7,9 +7,57 @@
 		"message": "Carica file sul tuo Alfresco in modo rapido e semplice", 
 		"description": "descrizione dell'app"
 	}, 
+	"msg_delete_profile": {
+		"message": "Profilo '$id$' cancellato", 
+		"description": "Messaggio mostrato quando un profilo viene cancellato con successo", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "il mio profilo"
+			}
+		}
+	},
+	"msg_error_delete_profile": {
+		"message": "Errore nella cancellazione del profilo '$id$': $result", 
+		"description": "Messaggio d'errore in cancellazione profilo", 
+		"placeholders": {
+			"id": {
+				"content": "$1", 
+				"example": "il mio profilo"
+			}, 
+			"result": {
+				"content": "$2", 
+				"example": "mancata connessione al db"
+			}
+		}
+	}, 
+	"msg_error_delete_profile_not_exist": {
+		"message": "Il profilo '$id$' non esiste", 
+		"description": "Messaggio d'errore quando si tenta di cancellare un profilo inesistente", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "il mio profilo"
+			}
+		}
+	}, 
 	"msg_error_export_on_file": {
 		"message": "Errore nell'export su file", 
 		"description": "Errore nell'export su file"
+	}, 
+	"msg_error_load_profile": {
+		"message": "Problemi nel caricamento del profilo '$id$': $result", 
+		"description": "Errore mostrato quando non si riescono a recuperare dati pe un profilo di caricamento", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "id del profilo"
+			}
+			"result": {
+				"content": "$2",
+				"example": "messaggio d'errore"
+			}
+		}
 	}, 
 	"msg_error_naming_profile": {
 		"message": "Dai un nome al profilo prima di salvarlo", 
@@ -28,7 +76,25 @@
 				"example": "problemi col salvataggio dati su db"
 			}
 		}
-	},
+	}, 
+	"msg_load_profile": {
+		"message": "Profile '$id$' caricato", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "id del profilo"
+			}
+		}
+	}, 
+	"msg_error_load_profile_not_existent": {
+		"message": "Il profilo '$id$' non esiste!", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "id del profilo"
+			}
+		}
+	}, 
 	"msg_ready_to_send_file": {
 		"message": "Pronto a spedire il file", 
 		"description": "Messaggio mostrato quando un file risulta pronto per essere spedito ad Alfresco"

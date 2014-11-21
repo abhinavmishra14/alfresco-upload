@@ -7,9 +7,66 @@
 		"message": "Quickly load files to your Alfresco", 
 		"description": "App description"
 	}, 
+	"msg_delete_profile": {
+		"message": "Profile '$id$' deleted", 
+		"description": "Message shown when a profile is deleted succesfully", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "my profile"
+			}
+		}
+	}, 
+	"msg_error_delete_profile": {
+		"message": "Problems deleting profile '$id$': $result", 
+		"description": "Error message shown when problems occurs deleting a profile", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "my profile"
+			}, 
+			"result": {
+				"content": "$2",
+				"example": "no db connection"
+			}
+		}
+	}, 
+	"msg_error_delete_profile_not_exist": {
+		"message": "Profile '$id$' does not exist", 
+		"description": "Error message shown when deleting a non-existent profile", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "my profile"
+			}
+		}
+	}, 
 	"msg_error_export_on_file": {
 		"message": "Export error", 
 		"description": "Error on file export"
+	}, 
+	"msg_error_load_profile": {
+		"message": "Problem loading profile '$id$': $result", 
+		"description": "Error message shown when problems occur loading profile from db", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "profile id"
+			}, 
+			"result": {
+				"content": "$2",
+				"example": "error message"
+			}
+		}
+	}, 
+	"msg_error_load_profile_not_existent": {
+		"message": "Profile '$id$' does not exist", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "profile id"
+			}
+		}
 	}, 
 	"msg_error_naming_profile": {
 		"message": "Please give the profile a name before saving it", 
@@ -26,6 +83,15 @@
 			"result": {
 				"content": "$2",
 				"example": "problems with database"
+			}
+		}
+	}, 
+	"msg_load_profile": {
+		"message": "Profile '$id$' loaded", 
+		"placeholders": {
+			"id": {
+				"content": "$1",
+				"example": "profile id"
 			}
 		}
 	}, 

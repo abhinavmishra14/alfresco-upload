@@ -156,14 +156,17 @@ $(function() {
 			deleteProfile(id, function(result) {
 				console.log("[main.#trash-icon.click] elimina profilo result = " + result);
 				if (result === "ok") {
-					showMessage("Profilo '" + id + "' rimosso con successo", GREEN_COLOR);
+					//showMessage("Profilo '" + id + "' rimosso con successo", GREEN_COLOR);
+					showMessage(chrome.i18n.getMessage("msg_delete_profile", id), GREEN_COLOR);
 					refreshProfilesList(); //aggiorno lista profili su tendina
 				}
 				else if (result === "ne") {
-					showMessage("Il profilo '" + id + "' non esiste, non posso eliminarlo", RED_COLOR);
+					//showMessage("Il profilo '" + id + "' non esiste, non posso eliminarlo", RED_COLOR);
+					showMessage(chrome.i18n.getMessage("msg_error_delete_profile_not_exist", id), RED_COLOR);
 				}
 				else {
-					showMessage("Errore nella cancellazione del profilo '" + id + "': " + result, RED_COLOR);
+					//showMessage("Errore nella cancellazione del profilo '" + id + "': " + result, RED_COLOR);
+					showMessage(chrome.i18n.getMessage("msg_error_delete_profile", [id, result]), RED_COLOR);
 				}
 			});
 		}
@@ -181,15 +184,18 @@ $(function() {
 			if (typeof result === 'string' ) {
 				//errore
 				console.log("[main#select-profile.change] errore nel recupero del profilo: '" + id + "'");
-				showMessage("Errore nel recupero del profilo: '" + id + "'", RED_COLOR);
+				showMessage(chrome.i18n.getMessage("msg_error_load_profile", [id, result]), RED_COLOR);
+				//showMessage("Errore nel recupero del profilo: '" + id + "'", RED_COLOR);
 			}
 			else if (!$.isEmptyObject(result)) {
 				setUploadData(result);
-				showMessage("Caricato profilo '" + id + "'", GREEN_COLOR);
+				//showMessage("Caricato profilo '" + id + "'", GREEN_COLOR);
+				showMessage(chrome.i18n.getMessage("msg_load_profile", id), GREEN_COLOR);
 				console.log("[main.#select-profile.change] dati upload in form aggiornati");
 			}
 			else {
-				showMessage("Il profilo '" + id + "' non esiste, mi dispiace", RED_COLOR);
+				//showMessage("Il profilo '" + id + "' non esiste, mi dispiace", RED_COLOR);
+				showMessage(chrome.i18n.getMessage("msg_error_load_profile_not_existent", id), RED_COLOR);
 				console.log("[main.#select-profile.change] profilo '" + id + "' inesistente o vuoto, non carico dati di upload su form");
 			}
 		});
