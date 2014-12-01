@@ -295,7 +295,8 @@ function upload() {
 	});
 	if (missingParameters) {
 		console.log("[main.upload] mancano dati per l'upload, quindi non lo eseguo");
-		showMessage("Compila tutti i dati del form o non posso caricare il file", RED_COLOR);
+		//showMessage("Compila tutti i dati del form o non posso caricare il file", RED_COLOR);
+		showMessage(chrome.i18n.getMessage("msg_error_missing_upload_params"), RED_COLOR);
 		return;
 	}
 	
@@ -318,7 +319,8 @@ function upload() {
 		}
 		else {
 			console.log("[main.upload] errore nel salvataggio dei metadati di upload: " + result);
-			showMessage("Errore nel salvataggio dei metadati di upload: " + result, RED_COLOR);
+			//showMessage("Errore nel salvataggio dei metadati di upload: " + result, RED_COLOR);
+			showMessage(chrome.i18n.getMessage("msg_error_saving_upload_params", result), RED_COLOR);
 		}
 	});
 	
@@ -344,6 +346,7 @@ function upload() {
 				$(this).prop("readonly", true);
 			});
 			showMessage("Login...", GREEN_COLOR);
+			
 			NProgress.start();
 		},
 		success: function (json) {
@@ -451,7 +454,8 @@ function refreshProfilesList(callback) {
 	getProfilesList(function(result) {
 		if (typeof result === 'string' ) {
 			//errore
-			showMessage("Errore nel recupero lista profili: " + result, RED_COLOR);
+			//showMessage("Errore nel recupero lista profili: " + result, RED_COLOR);
+			showMessage(chrome.i18n.getMessage("msg_error_refreshing_profiles_list", result), RED_COLOR);
 			callback("ko");
 		}
 		else {		
@@ -479,7 +483,8 @@ function loadLastUsedUploadData() {
 	getLastUsedUploadData(function(data) {
 		if (typeof data === 'string' ) {
 			//errore
-			showMessage("Errore nel recupero metadati di upload: " + data, RED_COLOR);
+			//showMessage("Errore nel recupero metadati di upload: " + data, RED_COLOR);
+			showMessage(chrome.i18n.getMessage("msg_error_loading_last_used_upload_data", data), RED_COLOR);
 		}
 		else if (isUndefined(data) || $.isEmptyObject(data)) {
 			console.log("[main.loadLastUsedUploadData] nessun dato di upload salvato (mai tentato un upload?)");

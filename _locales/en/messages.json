@@ -68,9 +68,30 @@
 			}
 		}
 	}, 
+	"msg_error_loading_last_used_upload_data": {
+		"message": "Problems loading last used upload data in the form: $data$" ,
+		"placeholders": {
+			"data": {
+				"content": "$1",
+				"example": "Error message"
+			}
+		}
+	}, 
+	"msg_error_missing_upload_params": {
+		"message": "Please fill the form to upload the file"
+	}, 
 	"msg_error_naming_profile": {
 		"message": "Please give the profile a name before saving it", 
 		"description": "Error when saving a new profile. First you have to give it a name"
+	}, 
+	"msg_error_refreshing_profiles_list": {
+		"message": "Problems refreshing profiles list: $result$" ,
+		"placeholders": {
+			"result": {
+				"content": "$1",
+				"example": "Error message"
+			}
+		}
 	}, 
 	"msg_error_save_profile": {
 		"message": "Error saving profile '$id$': $result$", 
@@ -83,6 +104,15 @@
 			"result": {
 				"content": "$2",
 				"example": "problems with database"
+			}
+		}
+	}, 
+	"msg_error_saving_upload_params": {
+		"message": "Problems saving upload data from the form: $result$" ,
+		"placeholders": {
+			"result": {
+				"content": "$1",
+				"example": "Error message"
 			}
 		}
 	}, 

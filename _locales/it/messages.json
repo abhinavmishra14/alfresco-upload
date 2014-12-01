@@ -59,6 +59,18 @@
 			}
 		}
 	}, 
+	"msg_error_loading_last_used_upload_data": {
+		"message": "Problemi nel caricamento su form degli ultimi dati di upload usati: $data$" ,
+		"placeholders": {
+			"data": {
+				"content": "$1",
+				"example": "Messaggio d'errore"
+			}
+		}
+	}, 
+	"msg_error_missing_upload_params": {
+		"message": "Per favore compila tutti i dati del form o non posso caricare il file"
+	}, 
 	"msg_error_naming_profile": {
 		"message": "Dai un nome al profilo prima di salvarlo", 
 		"description": "Errore mostrato quando si tenta di salvare un profilo senza prima dargli un nome"
@@ -74,6 +86,24 @@
 			"result": {
 				"content": "$2",
 				"example": "problemi col salvataggio dati su db"
+			}
+		}
+	}, 
+	"msg_error_refreshing_profiles_list": {
+		"message": "Problemi nel refresh della lista profili salvati: $result$" ,
+		"placeholders": {
+			"result": {
+				"content": "$1",
+				"example": "Messaggio d'errore"
+			}
+		}
+	}, 
+	"msg_error_saving_upload_params": {
+		"message": "Problemi col salvataggio dei dati di uplad presi da form: $result$" ,
+		"placeholders": {
+			"result": {
+				"content": "$1",
+				"example": "Mesaggio d'errore"
 			}
 		}
 	}, 
