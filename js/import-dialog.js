@@ -19,16 +19,19 @@ $(function() {
 			var jsonString = JSON.stringify(importContent);
 			//console.log("contenuto file json: " + JSON.stringify(importContent));
 			if (jsonString.search("epau_profiles") == -1) {
-				showImportMessage("Il file è ok, ma non ci sono profili da importare", "green");
+				//showImportMessage("Il file è ok, ma non ci sono profili da importare", "green");
+				showImportMessage(chrome.i18n.getMessage("msg_import_no_profiles"), "green");
 				return;
 			}
 		}
 		catch (e) {
-			showImportMessage("Il file caricato pare incompatibile. Sicuro che sia un export dell'estensione alfresco-upload?", "red");
+			//showImportMessage("Il file caricato pare incompatibile. Sicuro che sia un export dell'estensione alfresco-upload?", "red");
+			showImportMessage(chrome.i18n.getMessage("msg_import_error_file_ko"), "red");
 			$("#import-btn").prop("disabled", true);
 			return;
 		}
-		showImportMessage("File ok, puoi importare i dati", "green");
+		//showImportMessage("File ok, puoi importare i dati", "green");
+		showImportMessage(chrome.i18n.getMessage("msg_import_file_ok"), "green");
 		$("#import-btn").prop("disabled", false); //permetto di importare visto che c'è un file caricato e i dati parsati
     };
 
@@ -42,7 +45,8 @@ $(function() {
 		e.preventDefault();
 		var files = event.target.files || event.originalEvent.dataTransfer.files;
 		console.log("[main.#filedata-import.change] Pronto a importare '" + files[0].name + "'");
-		showImportMessage("Sto importando '" + files[0].name + "'", "green");
+		//showImportMessage("Sto importando '" + files[0].name + "'", "green");
+		showImportMessage(chrome.i18n.getMessage("msg_import_file_importing", files[0].name), "green");
 		
 		//converto il file e se è ok faccio l'import
 		fileReader.readAsText(files[0]);
@@ -54,11 +58,13 @@ $(function() {
 		importProfiles(importContent, function(result) {
 			if (result === "ok") {
 				console.log("[main.#import-btn.click] Import ok");		
-				showImportMessage("Dati importati correttamente. Riavvia l'estensione per vederli", "green");
+				//showImportMessage("Dati importati correttamente. Riavvia l'estensione per vederli", "green");
+				showImportMessage(chrome.i18n.getMessage("msg_import_done"), "green");
 			}
 			else {
 				console.log("[main.#import-btn.click] Import ko: " + result);
-				showImportMessage("Import ko: " + result, "red");
+				//showImportMessage("Import ko: " + result, "red");
+				showImportMessage(chrome.i18n.getMessage("msg_import_error_ko", result), "red");
 			}
 			$("#import-btn").prop("disabled", true);
 		});

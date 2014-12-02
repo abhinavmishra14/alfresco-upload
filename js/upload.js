@@ -39,6 +39,7 @@ $(function() {
 			if (result === "ok") {
 				console.log("[main.#export-icon.click] export ok");
 				//showMessage("Dati esportati correttamente", GREEN_COLOR);
+				showMessage(chrome.i18n.getMessage("msg_export_on_file"), GREEN_COLOR);
 			}
 			else {
 				console.log("[main.#export-icon.click] export KO: " + result);

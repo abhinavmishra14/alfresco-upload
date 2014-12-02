@@ -17,6 +17,10 @@
 			}
 		}
 	}, 
+	"msg_export_on_file": {
+		"message": "Export OK", 
+		"description": "Message shown when the export on file is completed succesfully"
+	}, 
 	"msg_error_delete_profile": {
 		"message": "Problems deleting profile '$id$': $result", 
 		"description": "Error message shown when problems occurs deleting a profile", 
@@ -115,6 +119,36 @@
 				"example": "Error message"
 			}
 		}
+	}, 
+	"msg_import_done": {
+		"message": "Data imported succesfully! Please reload the extension to see them applied"
+	}, 
+	"msg_import_error_file_ko": {
+		"message": "The uploaded file seems incompatible. Are you sure you loaded a json file of alfresco-upload extension?"
+	}, 
+	"msg_import_error_ko": {
+		"message": "Importing data from file failed with error: '$error$'", 
+		"placeholders": {
+			"error": {
+				"content": "$1",
+				"example": "error message"
+			}
+		}
+	}, 
+	"msg_import_file_importing": {
+		"message": "Importing data from file '$filename$'", 
+		"placeholders": {
+			"filename": {
+				"content": "$1",
+				"example": "filename"
+			}
+		}
+	}, 
+	"msg_import_file_ok": {
+		"message": "The file is ok! You can now import data from it"
+	}, 
+	"msg_import_no_profiles": {
+		"message": "The file is ok but it does not contains profiles to import"
 	}, 
 	"msg_load_profile": {
 		"message": "Profile '$id$' loaded", 

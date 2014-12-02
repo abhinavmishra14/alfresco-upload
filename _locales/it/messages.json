@@ -16,7 +16,11 @@
 				"example": "il mio profilo"
 			}
 		}
-	},
+	}, 
+	"msg_export_on_file": {
+		"message": "Dati esportati correttamente su file", 
+		"description": "Messaggio mostrato quando l'export su file va a buon fine"
+	}, 
 	"msg_error_delete_profile": {
 		"message": "Errore nella cancellazione del profilo '$id$': $result", 
 		"description": "Messaggio d'errore in cancellazione profilo", 
@@ -106,6 +110,36 @@
 				"example": "Mesaggio d'errore"
 			}
 		}
+	}, 
+	"msg_import_done": {
+		"message": "Dati importati correttamente! Riavvia l'estensione per vederli"
+	}, 
+	"msg_import_error_file_ko": {
+		"message": "Il file caricato pare incompatibile. Sicuro che sia un json derivato dall'export dell'estensione alfresco-upload?"
+	}, 
+	"msg_import_error_ko": {
+		"message": "Import da file fallito: '$error$'", 
+		"placeholders": {
+			"error": {
+				"content": "$1",
+				"example": "messaggio d'errore"
+			}
+		}
+	}, 
+	"msg_import_file_importing": {
+		"message": "Sto importando i dati dal file '$filename$'", 
+		"placeholders": {
+			"filename": {
+				"content": "$1",
+				"example": "nome del file"
+			}
+		}
+	}, 
+	"msg_import_file_ok": {
+		"message": "Il file è ok! Puoi importare i dati in esso contenuti"
+	}, 
+	"msg_import_no_profiles": {
+		"message": "Il file è ok ma non contiene profili da importare"
 	}, 
 	"msg_load_profile": {
 		"message": "Profile '$id$' caricato", 
