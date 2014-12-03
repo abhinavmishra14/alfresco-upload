@@ -49,6 +49,9 @@ $(function() {
 		});
 	});
 	
+	$("#export-icon").attr("title", chrome.i18n.getMessage("html_export_title"));
+	$("#import-icon").attr("title", chrome.i18n.getMessage("html_import_title"));
+	
 	/*
 	$("#import-icon").click(function (e) {
 		console.log("[main.#import-icon.click] importo dati");
@@ -69,12 +72,12 @@ $(function() {
 		$("#filedata").css("border", "3px dotted #0B85A1");
 		e.preventDefault();
 		var files = event.target.files || event.originalEvent.dataTransfer.files;
-		
-		$("#upload-icon").removeClass("icon-not-clickable"); //permetto di inviare visto che c'è un file caricato
-		
-		console.log("[main.#filedata.change] Pronto a spedire '" + files[0].name + "'");
-		//showMessage("Pronto a spedire '" + files[0].name + "'", GREEN_COLOR);
-		showMessage(chrome.i18n.getMessage("msg_ready_to_send_file") + " '" + files[0].name + "'", GREEN_COLOR);
+		if (!isUndefined(files) && !isUndefined(files[0])) {
+			$("#upload-icon").removeClass("icon-not-clickable"); //permetto di inviare visto che c'è un file caricato
+			console.log("[main.#filedata.change] Pronto a spedire '" + files[0].name + "'");
+			//showMessage("Pronto a spedire '" + files[0].name + "'", GREEN_COLOR);
+			showMessage(chrome.i18n.getMessage("msg_ready_to_send_file") + " '" + files[0].name + "'", GREEN_COLOR);
+		}
 	});
 
 	//gestione dei colori delle icone
@@ -437,13 +440,19 @@ function alfrescoUpload(ticket) {
 function manageAjaxError(json) {
 	console.log("[main.manageAjaxError] upload-resp = " + JSON.stringify(json) );
 	resp = JSON.parse(JSON.stringify(json));
-	var message;
+	var message = chrome.i18n.getMessage("msg_error_ajax");
 	if (resp.responseJSON !== undefined ) {
 		//message = "code: " + resp.responseJSON.status.code + "\nname: " + resp.responseJSON.status.name + "\ndescription: " + resp.responseJSON.status.description + "\nmessage: " + resp.responseJSON.message;
-		message = resp.responseJSON.message;;
+		//message = resp.responseJSON.message;;
+		message = chrome.i18n.getMessage("msg_error_ajax", [resp.responseJSON.status.code, resp.responseJSON.message]);
+	}
+	else if (resp.statusText !== undefined && resp.status !== 0) {
+		//message = "ERR: " + resp.statusText + "-" + resp.status;
+		message = chrome.i18n.getMessage("msg_error_ajax", [resp.status, resp.statusText]);
 	}
 	else {
-		message = "Unknown Error (maybe '" + $("#alfroot").val() + "' is not available)";
+		//message = "Unknown Error (maybe '" + $("#alfroot").val() + "' is not available)";
+		message = chrome.i18n.getMessage("msg_error_ajax", ["Unknown", "Unknown Error (maybe '" + $("#alfroot").val() + "' is not available)"]);
 	}
 	console.log("[main.manageAjaxError]" + message);
 	showMessage(message, RED_COLOR);

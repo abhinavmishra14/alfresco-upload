@@ -7,6 +7,14 @@
 		"message": "Quickly load files to your Alfresco", 
 		"description": "App description"
 	}, 
+	"html_export_title": {
+		"message": "Export all on file", 
+		"description": "Message that appears hovering on export icon"
+	}, 
+	"html_import_title": {
+		"message": "Import from file", 
+		"description": "Message that appears hovering on import icon"
+	}, 
 	"msg_delete_profile": {
 		"message": "Profile '$id$' deleted", 
 		"description": "Message shown when a profile is deleted succesfully", 
@@ -20,6 +28,20 @@
 	"msg_export_on_file": {
 		"message": "Export OK", 
 		"description": "Message shown when the export on file is completed succesfully"
+	}, 
+	"msg_error_ajax": {
+		"message": "Error on AJAX call to Alfresco services [$code$]: $message$", 
+		"description": "Message shown when a server error occurs on AJAX calls", 
+		"placeholders": {
+			"code": {
+				"content": "$1",
+				"example": "Error code (501, 502, ecc)"
+			}, 
+			"message": {
+				"content": "$2",
+				"example": "Error message"
+			}
+		}
 	}, 
 	"msg_error_delete_profile": {
 		"message": "Problems deleting profile '$id$': $result", 

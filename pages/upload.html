@@ -16,9 +16,9 @@
 	</div>
 	
 	<div id="import-export-wrap">
-		<span id="export-icon" class="icon-export icon" title="Esporta tutto su file"></span>
+		<span id="export-icon" class="icon-export icon"></span>
 		<a href="#import-popup" class="open-popup-link">
-			<span id="import-icon" class="icon-download icon" title="Importa da file"></span>
+			<span id="import-icon" class="icon-download icon"></span>
 		</a>
 		<!-- import popup (uses magnific popup)-->
 		<div id="import-popup" class="white-popup mfp-hide">
@@ -32,7 +32,7 @@
 					<!--
 					<span id="import-icon" class="icon-upload-cloud icon-not-clickable icon" title="Importa profili e impostazioni"></span>
 					-->
-					<input id="import-btn" type="button" name="import-btn" class="btn-blue" value="Importa" title="Importa profili e impostazioni" disabled />
+					<input id="import-btn" type="button" name="import-btn" class="btn-blue" value="Import" title="Import settings and profiles" disabled />
 				</p>
 			</div>
 			
@@ -47,17 +47,17 @@
 
 	<div id="upload-form-wrapper" class="div-center">
 		<label>Alfresco URL</label>
-		<input id="alfroot" type="text" placeholder="Alfresco root (http://mio.server.com/alfresco)" /><br>
+		<input id="alfroot" type="text" placeholder="Alfresco root (http://my.server.com/alfresco)" /><br>
 		<label>Username</label>
 		<input id="username" type="text" placeholder="Alfresco username" /><br>
 		<label>Password</label>
 		<input id="password" type="password" placeholder="Alfresco password" /><br>
 		<form id="upload-form" name="uploadForm" enctype="multipart/form-data">
-			<label>Sito</label>
-			<input id="siteid" type="text" name="siteid" placeholder="Nome del sito" /><br />
+			<label>Site</label>
+			<input id="siteid" type="text" name="siteid" placeholder="Site name" /><br />
 			<label>Directory</label>
-			<input id="uploaddirectory" type="text" name="uploaddirectory" placeholder="Directory di upload" /><br />
-			<label>Versiona</label>
+			<input id="uploaddirectory" type="text" name="uploaddirectory" placeholder="Upload directory" /><br />
+			<label>Versioning</label>
 			<input id="overwrite" type="checkbox" name="overwrite" /><br />
 			<label>File</label>
 			<input id="filedata" type="file" name="filedata" />
@@ -68,7 +68,7 @@
 			<input id="contenttype" type="hidden" name="contenttype" value="cm:content" />
 		</form>
 		<p id="submit-btn-wrap">
-			<span id="upload-icon" class="icon-upload-cloud icon-not-clickable icon" title="Carica il file su Alfresco Share"></span>
+			<span id="upload-icon" class="icon-upload-cloud icon-not-clickable icon" title="Load the file to Alfresco"></span>
 		</p>
 	</div>
 	
@@ -79,8 +79,8 @@
 	</div>
 	
 	<div id="control" class="div-center">
-		<input id="actual-profile" name="actual-profile" placeholder="Nome profilo">
-		<select id="select-profile" placeholder="Scegli profilo">
+		<input id="actual-profile" name="actual-profile" placeholder="Profile name">
+		<select id="select-profile" placeholder="Choose profile">
 			<!-- lista popolata da JS -->
 		</select>
 
@@ -88,13 +88,13 @@
 		<span id="up-icon" class="icon-up-bold icon"></span>
 		<span id="heart-icon" class="icon-heart-empty icon"></span>
 		-->
-		<span id="save-icon" class="icon-floppy icon" title="Salva il profilo"></span>
-		<span id="trash-icon" class="icon-trash icon" title="Elimina profilo selezionato"></span>
+		<span id="save-icon" class="icon-floppy icon" title="Save profile"></span>
+		<span id="trash-icon" class="icon-trash icon" title="Delete selected profile"></span>
 		
-		
+		<!-- TEST 	
 		<input id="clear-db" type="button" name="cleardb" class="btn-blue" value="Clear DB" />
 		<input id="mostra" type="button" name="mostra" class="btn-blue" value="Mostra tutto" />
-		<!-- TEST 
+
 		<input id="save-prof" type="button" name="saveprof" class="btn-blue" value="Salva Profili" />
 		<input id="mbusati" type="button" name="refresh" class="btn-blue" value="MB in uso?" />
 		<input id="showpath" type="button" name="showpath" class="btn-blue" value="Mostra path-salvataggio" />
