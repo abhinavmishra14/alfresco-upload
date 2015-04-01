@@ -245,6 +245,11 @@ function importProfiles(json, callback) {
 	var profiles = {};
 	var newProfiles = {};
 	chrome.storage.sync.get("epau_profiles", function(result) {
+		
+		if (isUndefined(result.epau_profiles)) {
+			result.epau_profiles = {}; //inizializzo se undefined
+		}
+		
 		profiles = result.epau_profiles;
 		newProfiles = json.epau_profiles;
 		
@@ -253,7 +258,7 @@ function importProfiles(json, callback) {
 			profiles[profile] = newProfiles[profile];
 		}
 		
-		chrome.storage.sync.set({"epau_profiles": profiles}, function(result) { //null implies all items
+		chrome.storage.sync.set({"epau_profiles": profiles}, function(result) {
 			if (chrome.runtime.lastError) {
 				//console.log("[importProfiles] errore nell'export: " + chrome.runtime.lastError.message);
 				callback(chrome.runtime.lastError.message);

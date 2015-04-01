@@ -21,7 +21,7 @@ $(function() {
 			{'url': 'pages/upload.html', 'type': 'popup', 'width': w, 'height': h, 'left': left, 'top': top}, 
 			function(window) {
 				console.log("[main.chrome.browserAction.onClicked] pagina upload.html aperta")
-		});
+			});
 	});	
 	/* Listen for messages from pages */
 	chrome.runtime.onMessage.addListener(function (msg) {
@@ -52,17 +52,6 @@ $(function() {
 	$("#export-icon").attr("title", chrome.i18n.getMessage("html_export_title"));
 	$("#import-icon").attr("title", chrome.i18n.getMessage("html_import_title"));
 	
-	/*
-	$("#import-icon").click(function (e) {
-		console.log("[main.#import-icon.click] importo dati");
-		//chrome.runtime.sendMessage({action: "import-settings"});
-		
-		//creo nuovo popup
-		chrome.windows.create({url: "pages/import-dialog.html", type: "popup", width: 450, height: 320, focused: true}, function(window) {
-			//console.log("[main.chrome.browserAction.onClicked] pagina upload.html aperta");
-		});
-	});
-	*/
 	$("#filedata").on("dragenter", function (e) {
 		e.stopPropagation();
 		e.preventDefault();
