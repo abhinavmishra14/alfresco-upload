@@ -322,7 +322,8 @@ function upload() {
 		"username": $("#username").val(), 
 		"password": $("#password").val()
 	};
-	console.log("[main.upload] login via POST su: " + $("#alfroot").val().trim() + "/service/api/login/"+ JSON.stringify(usr));
+	//console.log("[main.upload] login via POST su: " + $("#alfroot").val().trim() + "/service/api/login/"+ JSON.stringify(usr));
+	console.log("[main.upload] login via POST su: " + $("#alfroot").val().trim() + "/service/api/login/["+ JSON.stringify(usr.username) + "]");
 	
 	//chiamata ajax per gestire il login-ticket
 	$.ajax({
@@ -448,14 +449,13 @@ function manageAjaxError(json) {
 }
 
 //aggiorna la lista dei profili in pagina
-function refreshProfilesList(callback) {
+function refreshProfilesList() {
 	//recupero lista profili (vedi store-manager.js)
 	getProfilesList(function(result) {
 		if (typeof result === 'string' ) {
 			//errore
 			//showMessage("Errore nel recupero lista profili: " + result, RED_COLOR);
 			showMessage(chrome.i18n.getMessage("msg_error_refreshing_profiles_list", result), RED_COLOR);
-			callback("ko");
 		}
 		else {		
 			$("#select-profile").empty(); //svuoto la lista su pagina
@@ -472,7 +472,6 @@ function refreshProfilesList(callback) {
 			else {
 				console.log("[main.refreshProfilesList] lista profili vuota su db");
 			}
-			callback("ok");
 		}
 	});
 }
