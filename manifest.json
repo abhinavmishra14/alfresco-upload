@@ -1,7 +1,7 @@
 ﻿{
 	"manifest_version": 2,
 	
-	"name": "Alfresco Upload",
+	"name": "alfrescoUP",
 	"description": "__MSG_appDescription__",
 	"version": "1.0",
 	"author": "Stefano La Tartaruga",
@@ -18,8 +18,8 @@
 
 	"browser_action": {
 		"default_icon": { 
-			"19": "img/alfresco_logo_19.png", 
-			"38": "img/alfresco_logo_38.png"
+			"19": "img/alfrescoup_19.png", 
+			"38": "img/alfrescoup_38.png"
 		},
 		//"default_popup": "pages/upload.html",
 		"default_title": "__MSG_appDefaultTitle__"
@@ -28,9 +28,9 @@
 	"default_locale": "en",
 	
 	"icons": { 
-		"16": "img/alfresco_logo_16.png",
-		"48": "img/alfresco_logo_48.png",
-		"128": "img/alfresco_logo_128.png" 
+		"16": "img/alfrescoup_16.png",
+		"48": "img/alfrescoup_48.png",
+		"128": "img/alfrescoup_128.png" 
 	},
 
 	//"options_page": "pages/options.html",	
