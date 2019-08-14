@@ -57,15 +57,28 @@ $(function() {
 		e.preventDefault();
 		$(this).css("border", "3px solid #0B85A1");
 	});
+	
 	$("#filedata").change(function (e) {
 		$("#filedata").css("border", "3px dotted #0B85A1");
 		e.preventDefault();
 		var files = event.target.files || event.originalEvent.dataTransfer.files;
 		if (!isUndefined(files) && !isUndefined(files[0])) {
-			$("#upload-icon").removeClass("icon-not-clickable"); //permetto di inviare visto che c'è un file caricato
-			console.log("[main.#filedata.change] Pronto a spedire '" + files[0].name + "'");
+			$("#upload-icon").removeClass("icon-not-clickable"); //permetto di inviare visto che c'ï¿½ un file caricato
+			//Implemented multiple files selection, so commented these messages.
+			//console.log("[main.#filedata.change] Pronto a spedire '" + files[0].name + "'");
 			//showMessage("Pronto a spedire '" + files[0].name + "'", GREEN_COLOR);
-			showMessage(chrome.i18n.getMessage("msg_ready_to_send_file") + " '" + files[0].name + "'", GREEN_COLOR);
+			//showMessage(chrome.i18n.getMessage("msg_ready_to_send_file") + " '" + files[0].name + "'", GREEN_COLOR);
+			
+			//Show all selected file information
+			var allFileNamesAndSize = "";
+			for (var each = 0, f; f = files[each]; each++) {
+				if (each > 0) {
+					allFileNamesAndSize = allFileNamesAndSize + ",";
+				}
+				allFileNamesAndSize = allFileNamesAndSize + " " +f.name;
+			}
+			console.log("[main.#filedata.change] Pronto a spedire '" + allFileNamesAndSize + "'");
+			showMessage(chrome.i18n.getMessage("msg_ready_to_send_files") + " '" + allFileNamesAndSize + "'", GREEN_COLOR);
 		}
 	});
 
@@ -86,7 +99,7 @@ $(function() {
 		
 	//salva profilo
 	$("#save-icon").click(function(e) {
-		if (!$("#actual-profile").val().trim()) { //se non c'è il nome profilo (ha lunghezza 0)
+		if (!$("#actual-profile").val().trim()) { //se non c'ï¿½ il nome profilo (ha lunghezza 0)
 			//showMessage("Dai un nome al profilo prima di salvarlo!", RED_COLOR);
 			showMessage(chrome.i18n.getMessage("msg_error_naming_profile") + "!", RED_COLOR);
 		}
@@ -109,7 +122,7 @@ $(function() {
 					//showMessage("Profilo '" + id + "' salvato con successo", GREEN_COLOR);
 					showMessage(chrome.i18n.getMessage("msg_save_profile", id), GREEN_COLOR);
 					
-					//aggiorno lista profili su pagina solo se il profilo non è già elencato
+					//aggiorno lista profili su pagina solo se il profilo non ï¿½ giï¿½ elencato
 					var exists = false;
 					$("#select-profile option").each(function(option) {
 						//console.log("[main] this.value = " + $(this).attr("value"));
@@ -246,23 +259,6 @@ var	clGreen = "icon-green";
 var alfrescoRoot = "http://localhost:8080/alfresco";
 var actualProfile;
 
-//mostra info su file caricati (usato per TEST)
-function showFileInfo(event) {
-	$("#filedata").css("border", "3px dotted #0B85A1"); //segnalo la cosa con un po' di css
-	event.preventDefault();	
-	//store files data
-	var files = event.target.files || event.originalEvent.dataTransfer.files;
-	
-	/*
-	for (var i = 0, f; f = files[i]; i++) {
-		console.log("[main] f[" + i + "].name = " + f.name);
-		console.log("[main] f[" + i + "].size = " + f.size);
-		console.log("[main] f[" + i + "].lastModifiedDate = " + f.lastModifiedDate.toLocaleDateString());
-	}
-	*/
-	console.log("[main.showFileInfo] Pronto a spedire '" + files[0].name + "'", GREEN_COLOR);
-}
-
 //usata a scopo di test
 function checkFormParam() {
 	var report = "";
@@ -330,12 +326,12 @@ function upload() {
 		type: "POST",
 		//url: alfrescoRoot + "/service/api/login",
 		url: $("#alfroot").val().trim() + "/service/api/login",
-		contentType: "application/json; charset=utf-8", //questo è fondamentale
+		contentType: "application/json; charset=utf-8", //questo ï¿½ fondamentale
 		data: JSON.stringify(usr),
 		
 		//prima
 		beforeSend: function() {
-			//disabilito la possibilità di modificare i dati di upload
+			//disabilito la possibilitï¿½ di modificare i dati di upload
 			$("#upload-form-wrapper input").each(function (index) {
 				$(this).prop("readonly", true);
 			});
@@ -351,7 +347,17 @@ function upload() {
 			var ticket = resp.data.ticket; //salvo il ticket per effettuare il caricamento
 			
 			//ajax per upload del form con il file
-			alfrescoUpload(ticket);
+			var formData = new FormData(document.getElementById("upload-form"));
+			var filesLength = document.getElementById('filedata').files.length;
+			for (var each = 0; each < filesLength; each++) {
+				var eachFile = document.getElementById('filedata').files[each];
+				formData.set("filedata", eachFile);
+				console.log("##############################File data############################## [Start]");
+				console.log(formData.get('filedata')); //Print and check if the file data was really set
+				console.log("##############################File data############################## [End]");
+				alfrescoUploadMulti(ticket, formData);
+			}
+
 		},	
 		error: function (json) {
 			console.log("[main.upload] login-resp = " + JSON.stringify(json));
@@ -360,7 +366,7 @@ function upload() {
 			
 			$("#upload-icon").removeClass("icon-not-clickable"); //riabilito il click sul pulsante di upload
 			
-			//riabilito la possibilità di modificare i dati di upload
+			//riabilito la possibilitï¿½ di modificare i dati di upload
 			$("#upload-form-wrapper input").each(function (index) {
 				$(this).prop("readonly", false);
 			});
@@ -368,10 +374,65 @@ function upload() {
 	});
 }
 
+//To upload multiple files
+function alfrescoUploadMulti(ticket, formData) {
+	console.log("[main.alfrescoUploadMulti] upload multiple...");
+	$("#uploaddirectory").val('/' + $("#uploaddirectory").val() + '/');
+	$.ajax({
+		type: "POST",
+		url: $("#alfroot").val().trim() + "/service/api/upload?alf_ticket=" + ticket,
+		cache: false,
+		contentType: false, 
+		processData: false,
+		dataType: "json",
+		//async: false,
+		data: formData,
+				
+		beforeSend: function() {
+			showMessage("Upload...", GREEN_COLOR);
+			console.log("[main.alfrescoUploadMulti] uploading...");
+			var uploadDir = $("#uploaddirectory").val();
+			$("#uploaddirectory").val(uploadDir.substring(1, uploadDir.length - 1));
+		},
+		
+		xhr: function() {
+			var xhr = new window.XMLHttpRequest();
+			xhr.upload.addEventListener("progress", function(e) {
+				if (e.lengthComputable) {
+					var percentComplete = e.loaded / e.total;
+					percentComplete = PERCENT_15 + percentComplete * PERCENT_75;
+					NProgress.set(percentComplete);
+				}
+			}, false);
+			return xhr;
+		},
+		
+		success: function (json) {   
+			console.log("[main.alfrescoUploadMulti] upload-success");
+			showMessage("UPLOAD OK", GREEN_COLOR);		
+			console.log("[main.alfrescoUploadMulti] upload-response: " + JSON.stringify(json));
+		},
+		
+		error: function (json) {
+			manageAjaxError(json);
+		},
+		
+		complete: function () {
+			console.log("[main.alfrescoUploadMulti] upload-complete");
+			$("#upload-icon").removeClass("icon-not-clickable"); 
+			$("#upload-form-wrapper input").each(function (index) {
+				$(this).prop("readonly", false);
+			});
+			NProgress.done();
+		}
+	});
+}
+
+//To upload single file
+//Deprecated. Use 'alfrescoUploadMulti' method
 function alfrescoUpload(ticket) {
 	$("#uploaddirectory").val('/' + $("#uploaddirectory").val() + '/'); //metto le barre altrimenti ALfresco non riconosce la folder (vedi upload.post.js)
 	var formData = new FormData(document.getElementById("upload-form"));
-	console.log("[main.alfrescoUpload] formData = " + formData);
 	$.ajax({
 		type: "POST",
 		url: $("#alfroot").val().trim() + "/service/api/upload?alf_ticket=" + ticket,
@@ -384,7 +445,7 @@ function alfrescoUpload(ticket) {
 		//prima di spedire sistemo i dati
 		beforeSend: function() {
 			showMessage("Upload...", GREEN_COLOR);
-			console.log("[main.alfrescoUpload] upload...");
+			console.log("[main.alfrescoUpload] uploading...");
 			
 			var uploadDir = $("#uploaddirectory").val();
 			$("#uploaddirectory").val(uploadDir.substring(1, uploadDir.length - 1)); //tolgo le barre
@@ -415,12 +476,10 @@ function alfrescoUpload(ticket) {
 			console.log("[main.alfrescoUpload] upload-complete");
 			
 			$("#upload-icon").removeClass("icon-not-clickable"); //riabilito il click sul pulsante di upload
-
-			//riabilito la possibilità di modificare i dati di upload
+			//riabilito la possibilitï¿½ di modificare i dati di upload
 			$("#upload-form-wrapper input").each(function (index) {
 				$(this).prop("readonly", false);
 			});
-			
 			NProgress.done();
 		}
 	});
@@ -520,5 +579,3 @@ function showMessage(message, color) {
 	$("#status-message").empty();
 	$("#status-message").text(message);
 }
-
-///////////TEST////////////////

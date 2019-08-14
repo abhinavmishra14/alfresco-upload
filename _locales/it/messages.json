@@ -1,198 +1,202 @@
-﻿{
-	"appDefaultTitle": {
-		"message": "Carica un file sul tuo Alfresco", 
-		"description": "Tooltip visibile quando si passa col mouse sull'icona dell'estensione"
-	}, 
-	"appDescription": {
-		"message": "Carica file sul tuo Alfresco in modo rapido e semplice", 
-		"description": "descrizione dell'app"
-	}, 
-	"html_export_title": {
-		"message": "Esporta tutto su file", 
-		"description": "Messaggio che appare quando si sosta sull'icona di export"
-	}, 
-	"html_import_title": {
-		"message": "Importa da file", 
-		"description": "Messaggio che appare quando si sosta sull'icona di import"
-	}, 
-	"msg_delete_profile": {
-		"message": "Profilo '$id$' cancellato", 
-		"description": "Messaggio mostrato quando un profilo viene cancellato con successo", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "il mio profilo"
-			}
-		}
-	}, 
-	"msg_export_on_file": {
-		"message": "Dati esportati correttamente su file", 
-		"description": "Messaggio mostrato quando l'export su file va a buon fine"
-	}, 
-	"msg_error_ajax": {
-		"message": "Errore nella chiamata AJAX ai servizi Alfresco [$code$]: $message$", 
-		"description": "Mesaggio d'errore quando falliscono le chiamate AJAX ai servizi Alfresco", 
-		"placeholders": {
-			"code": {
-				"content": "$1",
-				"example": "Codice d'errore (501, 502, ecc)"
-			}, 
-			"message": {
-				"content": "$2",
-				"example": "Messaggio d'errore"
-			}
-		}
-	}, 
-	"msg_error_delete_profile": {
-		"message": "Errore nella cancellazione del profilo '$id$': $result", 
-		"description": "Messaggio d'errore in cancellazione profilo", 
-		"placeholders": {
-			"id": {
-				"content": "$1", 
-				"example": "il mio profilo"
-			}, 
-			"result": {
-				"content": "$2", 
-				"example": "mancata connessione al db"
-			}
-		}
-	}, 
-	"msg_error_delete_profile_not_exist": {
-		"message": "Il profilo '$id$' non esiste", 
-		"description": "Messaggio d'errore quando si tenta di cancellare un profilo inesistente", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "il mio profilo"
-			}
-		}
-	}, 
-	"msg_error_export_on_file": {
-		"message": "Errore nell'export su file", 
-		"description": "Errore nell'export su file"
-	}, 
-	"msg_error_load_profile": {
-		"message": "Problemi nel caricamento del profilo '$id$': $result", 
-		"description": "Errore mostrato quando non si riescono a recuperare dati pe un profilo di caricamento", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "id del profilo"
-			}, 
-			"result": {
-				"content": "$2",
-				"example": "messaggio d'errore"
-			}
-		}
-	}, 
-	"msg_error_loading_last_used_upload_data": {
-		"message": "Problemi nel caricamento su form degli ultimi dati di upload usati: $data$" ,
-		"placeholders": {
-			"data": {
-				"content": "$1",
-				"example": "Messaggio d'errore"
-			}
-		}
-	}, 
-	"msg_error_missing_upload_params": {
-		"message": "Per favore compila tutti i dati del form o non posso caricare il file"
-	}, 
-	"msg_error_naming_profile": {
-		"message": "Dai un nome al profilo prima di salvarlo", 
-		"description": "Errore mostrato quando si tenta di salvare un profilo senza prima dargli un nome"
-	}, 
-	"msg_error_save_profile": {
-		"message": "Errore nel salvataggio del profilo '$id$': $result$", 
-		"description": "Messaggio d'errore mostrato quando ci sono problemi col salvataggio del profilo", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "mio profilo"
-			}, 
-			"result": {
-				"content": "$2",
-				"example": "problemi col salvataggio dati su db"
-			}
-		}
-	}, 
-	"msg_error_refreshing_profiles_list": {
-		"message": "Problemi nel refresh della lista profili salvati: $result$" ,
-		"placeholders": {
-			"result": {
-				"content": "$1",
-				"example": "Messaggio d'errore"
-			}
-		}
-	}, 
-	"msg_error_saving_upload_params": {
-		"message": "Problemi col salvataggio dei dati di uplad presi da form: $result$" ,
-		"placeholders": {
-			"result": {
-				"content": "$1",
-				"example": "Mesaggio d'errore"
-			}
-		}
-	}, 
-	"msg_import_done": {
-		"message": "Dati importati correttamente! Riavvia l'estensione per vederli"
-	}, 
-	"msg_import_error_file_ko": {
-		"message": "Il file caricato pare incompatibile. Sicuro che sia un json derivato dall'export dell'estensione alfresco-upload?"
-	}, 
-	"msg_import_error_ko": {
-		"message": "Import da file fallito: '$error$'", 
-		"placeholders": {
-			"error": {
-				"content": "$1",
-				"example": "messaggio d'errore"
-			}
-		}
-	}, 
-	"msg_import_file_importing": {
-		"message": "Sto importando i dati dal file '$filename$'", 
-		"placeholders": {
-			"filename": {
-				"content": "$1",
-				"example": "nome del file"
-			}
-		}
-	}, 
-	"msg_import_file_ok": {
-		"message": "Il file è ok! Puoi importare i dati in esso contenuti"
-	}, 
-	"msg_import_no_profiles": {
-		"message": "Il file è ok ma non contiene profili da importare"
-	}, 
-	"msg_load_profile": {
-		"message": "Profile '$id$' caricato", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "id del profilo"
-			}
-		}
-	}, 
-	"msg_error_load_profile_not_existent": {
-		"message": "Il profilo '$id$' non esiste!", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "id del profilo"
-			}
-		}
-	}, 
-	"msg_ready_to_send_file": {
-		"message": "Pronto a spedire il file", 
-		"description": "Messaggio mostrato quando un file risulta pronto per essere spedito ad Alfresco"
-	}, 
-	"msg_save_profile": {
-		"message": "Profilo '$id$' salvato", 
-		"description": "Messaggio mostrato quando un profilo viene salvato correttamente", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "il mio profilo"
-			}
-		}
-	}
+{
+   "appDefaultTitle": {
+      "description": "Tooltip visibile quando si passa col mouse sull'icona dell'estensione",
+      "message": "Carica un file sul tuo Alfresco"
+   },
+   "appDescription": {
+      "description": "descrizione dell'app",
+      "message": "Carica file sul tuo Alfresco in modo rapido e semplice"
+   },
+   "html_export_title": {
+      "description": "Messaggio che appare quando si sosta sull'icona di export",
+      "message": "Esporta tutto su file"
+   },
+   "html_import_title": {
+      "description": "Messaggio che appare quando si sosta sull'icona di import",
+      "message": "Importa da file"
+   },
+   "msg_delete_profile": {
+      "description": "Messaggio mostrato quando un profilo viene cancellato con successo",
+      "message": "Profilo '$id$' cancellato",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "il mio profilo"
+         }
+      }
+   },
+   "msg_error_ajax": {
+      "description": "Mesaggio d'errore quando falliscono le chiamate AJAX ai servizi Alfresco",
+      "message": "Errore nella chiamata AJAX ai servizi Alfresco [$code$]: $message$",
+      "placeholders": {
+         "code": {
+            "content": "$1",
+            "example": "Codice d'errore (501, 502, ecc)"
+         },
+         "message": {
+            "content": "$2",
+            "example": "Messaggio d'errore"
+         }
+      }
+   },
+   "msg_error_delete_profile": {
+      "description": "Messaggio d'errore in cancellazione profilo",
+      "message": "Errore nella cancellazione del profilo '$id$': $result",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "il mio profilo"
+         },
+         "result": {
+            "content": "$2",
+            "example": "mancata connessione al db"
+         }
+      }
+   },
+   "msg_error_delete_profile_not_exist": {
+      "description": "Messaggio d'errore quando si tenta di cancellare un profilo inesistente",
+      "message": "Il profilo '$id$' non esiste",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "il mio profilo"
+         }
+      }
+   },
+   "msg_error_export_on_file": {
+      "description": "Errore nell'export su file",
+      "message": "Errore nell'export su file"
+   },
+   "msg_error_load_profile": {
+      "description": "Errore mostrato quando non si riescono a recuperare dati pe un profilo di caricamento",
+      "message": "Problemi nel caricamento del profilo '$id$': $result",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "id del profilo"
+         },
+         "result": {
+            "content": "$2",
+            "example": "messaggio d'errore"
+         }
+      }
+   },
+   "msg_error_load_profile_not_existent": {
+      "message": "Il profilo '$id$' non esiste!",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "id del profilo"
+         }
+      }
+   },
+   "msg_error_loading_last_used_upload_data": {
+      "message": "Problemi nel caricamento su form degli ultimi dati di upload usati: $data$",
+      "placeholders": {
+         "data": {
+            "content": "$1",
+            "example": "Messaggio d'errore"
+         }
+      }
+   },
+   "msg_error_missing_upload_params": {
+      "message": "Per favore compila tutti i dati del form o non posso caricare il file"
+   },
+   "msg_error_naming_profile": {
+      "description": "Errore mostrato quando si tenta di salvare un profilo senza prima dargli un nome",
+      "message": "Dai un nome al profilo prima di salvarlo"
+   },
+   "msg_error_refreshing_profiles_list": {
+      "message": "Problemi nel refresh della lista profili salvati: $result$",
+      "placeholders": {
+         "result": {
+            "content": "$1",
+            "example": "Messaggio d'errore"
+         }
+      }
+   },
+   "msg_error_save_profile": {
+      "description": "Messaggio d'errore mostrato quando ci sono problemi col salvataggio del profilo",
+      "message": "Errore nel salvataggio del profilo '$id$': $result$",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "mio profilo"
+         },
+         "result": {
+            "content": "$2",
+            "example": "problemi col salvataggio dati su db"
+         }
+      }
+   },
+   "msg_error_saving_upload_params": {
+      "message": "Problemi col salvataggio dei dati di uplad presi da form: $result$",
+      "placeholders": {
+         "result": {
+            "content": "$1",
+            "example": "Mesaggio d'errore"
+         }
+      }
+   },
+   "msg_export_on_file": {
+      "description": "Messaggio mostrato quando l'export su file va a buon fine",
+      "message": "Dati esportati correttamente su file"
+   },
+   "msg_import_done": {
+      "message": "Dati importati correttamente! Riavvia l'estensione per vederli"
+   },
+   "msg_import_error_file_ko": {
+      "message": "Il file caricato pare incompatibile. Sicuro che sia un json derivato dall'export dell'estensione alfresco-upload?"
+   },
+   "msg_import_error_ko": {
+      "message": "Import da file fallito: '$error$'",
+      "placeholders": {
+         "error": {
+            "content": "$1",
+            "example": "messaggio d'errore"
+         }
+      }
+   },
+   "msg_import_file_importing": {
+      "message": "Sto importando i dati dal file '$filename$'",
+      "placeholders": {
+         "filename": {
+            "content": "$1",
+            "example": "nome del file"
+         }
+      }
+   },
+   "msg_import_file_ok": {
+      "message": "Il file è ok! Puoi importare i dati in esso contenuti"
+   },
+   "msg_import_no_profiles": {
+      "message": "Il file è ok ma non contiene profili da importare"
+   },
+   "msg_load_profile": {
+      "message": "Profile '$id$' caricato",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "id del profilo"
+         }
+      }
+   },
+   "msg_ready_to_send_file": {
+      "description": "Messaggio mostrato quando un file risulta pronto per essere spedito ad Alfresco",
+      "message": "Pronto a spedire il file"
+   },
+   "msg_ready_to_send_files": {
+      "description": "Messaggio mostrato quando un file risulta pronto per essere spedito ad Alfresco",
+      "message": "Pronto a spedire il files: "
+   },
+   "msg_save_profile": {
+      "description": "Messaggio mostrato quando un profilo viene salvato correttamente",
+      "message": "Profilo '$id$' salvato",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "il mio profilo"
+         }
+      }
+   }
 }
