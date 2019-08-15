@@ -19,3 +19,9 @@ Chrome extension for uploading files in Alfresco repository. It also allows sele
 
 6- After successful installation, turn off the developer mode and start using the extension.
 
+### Screenshot:
+
+<img src="https://github.com/abhinavmishra14/alfresco-upload/blob/master/screenshots/ALFExtensionMultiUploader.png"
+     alt="Alfresco multiple file uploader"
+     style="float: left; margin-right: 10px;" />
+
