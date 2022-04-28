@@ -1,198 +1,202 @@
-﻿{
-	"appDefaultTitle": {
-		"message": "Load a file to your Alfresco", 
-		"description": "App default title (visible on extension icon hover)"
-	}, 
-	"appDescription": {
-		"message": "Quickly load files to your Alfresco", 
-		"description": "App description"
-	}, 
-	"html_export_title": {
-		"message": "Export all on file", 
-		"description": "Message that appears hovering on export icon"
-	}, 
-	"html_import_title": {
-		"message": "Import from file", 
-		"description": "Message that appears hovering on import icon"
-	}, 
-	"msg_delete_profile": {
-		"message": "Profile '$id$' deleted", 
-		"description": "Message shown when a profile is deleted succesfully", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "my profile"
-			}
-		}
-	}, 
-	"msg_export_on_file": {
-		"message": "Export OK", 
-		"description": "Message shown when the export on file is completed succesfully"
-	}, 
-	"msg_error_ajax": {
-		"message": "Error on AJAX call to Alfresco services [$code$]: $message$", 
-		"description": "Message shown when a server error occurs on AJAX calls", 
-		"placeholders": {
-			"code": {
-				"content": "$1",
-				"example": "Error code (501, 502, ecc)"
-			}, 
-			"message": {
-				"content": "$2",
-				"example": "Error message"
-			}
-		}
-	}, 
-	"msg_error_delete_profile": {
-		"message": "Problems deleting profile '$id$': $result", 
-		"description": "Error message shown when problems occurs deleting a profile", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "my profile"
-			}, 
-			"result": {
-				"content": "$2",
-				"example": "no db connection"
-			}
-		}
-	}, 
-	"msg_error_delete_profile_not_exist": {
-		"message": "Profile '$id$' does not exist", 
-		"description": "Error message shown when deleting a non-existent profile", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "my profile"
-			}
-		}
-	}, 
-	"msg_error_export_on_file": {
-		"message": "Export error", 
-		"description": "Error on file export"
-	}, 
-	"msg_error_load_profile": {
-		"message": "Problem loading profile '$id$': $result", 
-		"description": "Error message shown when problems occur loading profile from db", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "profile id"
-			}, 
-			"result": {
-				"content": "$2",
-				"example": "error message"
-			}
-		}
-	}, 
-	"msg_error_load_profile_not_existent": {
-		"message": "Profile '$id$' does not exist", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "profile id"
-			}
-		}
-	}, 
-	"msg_error_loading_last_used_upload_data": {
-		"message": "Problems loading last used upload data in the form: $data$" ,
-		"placeholders": {
-			"data": {
-				"content": "$1",
-				"example": "Error message"
-			}
-		}
-	}, 
-	"msg_error_missing_upload_params": {
-		"message": "Please fill the form to upload the file"
-	}, 
-	"msg_error_naming_profile": {
-		"message": "Please give the profile a name before saving it", 
-		"description": "Error when saving a new profile. First you have to give it a name"
-	}, 
-	"msg_error_refreshing_profiles_list": {
-		"message": "Problems refreshing profiles list: $result$" ,
-		"placeholders": {
-			"result": {
-				"content": "$1",
-				"example": "Error message"
-			}
-		}
-	}, 
-	"msg_error_save_profile": {
-		"message": "Error saving profile '$id$': $result$", 
-		"description": "Message shown when a profile is saved", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "my profile"
-			}, 
-			"result": {
-				"content": "$2",
-				"example": "problems with database"
-			}
-		}
-	}, 
-	"msg_error_saving_upload_params": {
-		"message": "Problems saving upload data from the form: $result$" ,
-		"placeholders": {
-			"result": {
-				"content": "$1",
-				"example": "Error message"
-			}
-		}
-	}, 
-	"msg_import_done": {
-		"message": "Data imported succesfully! Please reload the extension to see them applied"
-	}, 
-	"msg_import_error_file_ko": {
-		"message": "The uploaded file seems incompatible. Are you sure you loaded a json file of alfresco-upload extension?"
-	}, 
-	"msg_import_error_ko": {
-		"message": "Importing data from file failed with error: '$error$'", 
-		"placeholders": {
-			"error": {
-				"content": "$1",
-				"example": "error message"
-			}
-		}
-	}, 
-	"msg_import_file_importing": {
-		"message": "Importing data from file '$filename$'", 
-		"placeholders": {
-			"filename": {
-				"content": "$1",
-				"example": "filename"
-			}
-		}
-	}, 
-	"msg_import_file_ok": {
-		"message": "The file is ok! You can now import data from it"
-	}, 
-	"msg_import_no_profiles": {
-		"message": "The file is ok but it does not contains profiles to import"
-	}, 
-	"msg_load_profile": {
-		"message": "Profile '$id$' loaded", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "profile id"
-			}
-		}
-	}, 
-	"msg_ready_to_send_file": {
-		"message": "Ready to send file", 
-		"description": "Message shown when a file is loaded and ready to be sent to Alfresco"
-	},  
-	"msg_save_profile": {
-		"message": "Profile '$id$' saved", 
-		"description": "Message shown when a profile is saved", 
-		"placeholders": {
-			"id": {
-				"content": "$1",
-				"example": "my profile"
-			}
-		}
-	}
+{
+   "appDefaultTitle": {
+      "description": "App default title (visible on extension icon hover)",
+      "message": "Load a file to your Alfresco"
+   },
+   "appDescription": {
+      "description": "App description",
+      "message": "Quickly load files to your Alfresco"
+   },
+   "html_export_title": {
+      "description": "Message that appears hovering on export icon",
+      "message": "Export all on file"
+   },
+   "html_import_title": {
+      "description": "Message that appears hovering on import icon",
+      "message": "Import from file"
+   },
+   "msg_delete_profile": {
+      "description": "Message shown when a profile is deleted succesfully",
+      "message": "Profile '$id$' deleted",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "my profile"
+         }
+      }
+   },
+   "msg_error_ajax": {
+      "description": "Message shown when a server error occurs on AJAX calls",
+      "message": "Error on AJAX call to Alfresco services [$code$]: $message$",
+      "placeholders": {
+         "code": {
+            "content": "$1",
+            "example": "Error code (501, 502, ecc)"
+         },
+         "message": {
+            "content": "$2",
+            "example": "Error message"
+         }
+      }
+   },
+   "msg_error_delete_profile": {
+      "description": "Error message shown when problems occurs deleting a profile",
+      "message": "Problems deleting profile '$id$': $result",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "my profile"
+         },
+         "result": {
+            "content": "$2",
+            "example": "no db connection"
+         }
+      }
+   },
+   "msg_error_delete_profile_not_exist": {
+      "description": "Error message shown when deleting a non-existent profile",
+      "message": "Profile '$id$' does not exist",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "my profile"
+         }
+      }
+   },
+   "msg_error_export_on_file": {
+      "description": "Error on file export",
+      "message": "Export error"
+   },
+   "msg_error_load_profile": {
+      "description": "Error message shown when problems occur loading profile from db",
+      "message": "Problem loading profile '$id$': $result",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "profile id"
+         },
+         "result": {
+            "content": "$2",
+            "example": "error message"
+         }
+      }
+   },
+   "msg_error_load_profile_not_existent": {
+      "message": "Profile '$id$' does not exist",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "profile id"
+         }
+      }
+   },
+   "msg_error_loading_last_used_upload_data": {
+      "message": "Problems loading last used upload data in the form: $data$",
+      "placeholders": {
+         "data": {
+            "content": "$1",
+            "example": "Error message"
+         }
+      }
+   },
+   "msg_error_missing_upload_params": {
+      "message": "Please fill the form to upload the file"
+   },
+   "msg_error_naming_profile": {
+      "description": "Error when saving a new profile. First you have to give it a name",
+      "message": "Please give the profile a name before saving it"
+   },
+   "msg_error_refreshing_profiles_list": {
+      "message": "Problems refreshing profiles list: $result$",
+      "placeholders": {
+         "result": {
+            "content": "$1",
+            "example": "Error message"
+         }
+      }
+   },
+   "msg_error_save_profile": {
+      "description": "Message shown when a profile is saved",
+      "message": "Error saving profile '$id$': $result$",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "my profile"
+         },
+         "result": {
+            "content": "$2",
+            "example": "problems with database"
+         }
+      }
+   },
+   "msg_error_saving_upload_params": {
+      "message": "Problems saving upload data from the form: $result$",
+      "placeholders": {
+         "result": {
+            "content": "$1",
+            "example": "Error message"
+         }
+      }
+   },
+   "msg_export_on_file": {
+      "description": "Message shown when the export on file is completed succesfully",
+      "message": "Export OK"
+   },
+   "msg_import_done": {
+      "message": "Data imported succesfully! Please reload the extension to see them applied"
+   },
+   "msg_import_error_file_ko": {
+      "message": "The uploaded file seems incompatible. Are you sure you loaded a json file of alfresco-upload extension?"
+   },
+   "msg_import_error_ko": {
+      "message": "Importing data from file failed with error: '$error$'",
+      "placeholders": {
+         "error": {
+            "content": "$1",
+            "example": "error message"
+         }
+      }
+   },
+   "msg_import_file_importing": {
+      "message": "Importing data from file '$filename$'",
+      "placeholders": {
+         "filename": {
+            "content": "$1",
+            "example": "filename"
+         }
+      }
+   },
+   "msg_import_file_ok": {
+      "message": "The file is ok! You can now import data from it"
+   },
+   "msg_import_no_profiles": {
+      "message": "The file is ok but it does not contains profiles to import"
+   },
+   "msg_load_profile": {
+      "message": "Profile '$id$' loaded",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "profile id"
+         }
+      }
+   },
+   "msg_ready_to_send_file": {
+      "description": "Message shown when a file is loaded and ready to be sent to Alfresco",
+      "message": "Ready to send file"
+   },  
+   "msg_ready_to_send_files": {
+      "description": "Message shown when a file is loaded and ready to be sent to Alfresco",
+      "message": "Ready to send files: "
+   },
+   "msg_save_profile": {
+      "description": "Message shown when a profile is saved",
+      "message": "Profile '$id$' saved",
+      "placeholders": {
+         "id": {
+            "content": "$1",
+            "example": "my profile"
+         }
+      }
+   }
 }

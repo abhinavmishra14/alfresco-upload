@@ -4,12 +4,15 @@
 	"name": "AlfrescoUP (Alfresco file uploader)",
 	"short_name": "AlfrescoUP", 
 	"description": "__MSG_appDescription__",
-	"version": "1.0",
+	"version": "1.1",
 	"author": "Stefano Lazzaro",
 
 	"background": {
 		"scripts": [ 
 			"js/jquery-2.1.1.min.js",
+			"js/jquery-ui-1.11.1.min.js",
+			"js/magnific-popup.min.js",
+			"js/nprogress.js",
 			"js/upload.js",
 			"js/store-manager.js",
 			"js/utils.js"
